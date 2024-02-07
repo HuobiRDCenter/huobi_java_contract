@@ -13,7 +13,7 @@ If you already use SDK v1 or v2, it is strongly suggested migrate to v3 as we re
   - [Folder structure](#Folder-structure)
   - [Run examples](#Run-examples)
   - [Client](#client)
-  - [Migrate from v1 or v2](#Migrate-from-v1 or v2)
+  - [Migrate from v1 or v2](#Migrate-from-v1-or-v2)
 - [Request example](#Request-example)
   - [Reference data](#Reference-data)
   - [Market data](#Market-data)
