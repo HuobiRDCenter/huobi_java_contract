@@ -4,26 +4,26 @@
 
 This is Huobi Java SDK v3, you can import to your project and use this SDK to query all market data, trading and manage your account. The SDK supports RESTful API invoking, and subscribing the market, account and order update from the WebSocket connection.
 
-If you already use SDK v1 or v2, it is strongly suggested migrate to v3 as we refactor the implementation to make it simpler and easy to maintain. We will stop the maintenance of v2 in the near future. Please refer to the instruction on how to migrate v1 or v2 to v3 in section [Migrate from v1 or v2](#Migrate-from-v1)
+If you already use SDK v1 or v2, it is strongly suggested migrate to v3 as we refactor the implementation to make it simpler and easy to maintain. The SDK v3 is completely consistent with the API documentation of the new HTX open platform. Compared to SDK versions v1 and v2, due to changes in parameters of many interfaces, in order to match the latest interface parameter situation, v3 version has made adjustments to parameters of more than 80 interfaces to ensure that requests can be correctly initiated and accurate response data can be obtained. Meanwhile, the v3 version has added over 130 new interfaces available for use, greatly expanding the number of available interfaces.  We will stop the maintenance of v2 in the near future. Please refer to the instruction on how to migrate v1 or v2 to v3 in section [Migrate from v1 or v2](#Migrate-from-v1-or-v2)
 
 ## Table of Contents
 
 - [Quick start](#Quick-start)
 - [Usage](#Usage)
-    - [Folder structure](#Folder-structure)
-    - [Run examples](#Run-examples)
-    - [Client](#client)
-    - [Migrate from v1 or v2](#Migrate-from-v1 or v2)
+  - [Folder structure](#Folder-structure)
+  - [Run examples](#Run-examples)
+  - [Client](#client)
+  - [Migrate from v1 or v2](#Migrate-from-v1 or v2)
 - [Request example](#Request-example)
-    - [Reference data](#Reference-data)
-    - [Market data](#Market-data)
-    - [Account](#account)
-    - [Trade](#trade)
-    - [Transfer](#transfer)
-    - [Strategy](#strategy)
+  - [Reference data](#Reference-data)
+  - [Market data](#Market-data)
+  - [Account](#account)
+  - [Trade](#trade)
+  - [Transfer](#transfer)
+  - [Strategy](#strategy)
 - [Subscription example](#Subscription-example)
-    - [Subscribe market update](#Subscribe-market-update)
-    - [Request market update](#request-market-update)
+  - [Subscribe market update](#Subscribe-market-update)
+  - [Request market update](#request-market-update)
 
 ## Quick start
 
@@ -57,23 +57,24 @@ logger.debug("1.获取行情深度数据：{}", JSON.toJSONString(result));
 This is the folder and package structure of SDK source code and the description
 
 - **src/main/java/com/huobi/api**: The core of the SDK for RESTful API
-    - **constants**: The RESTful API interface path
-    - **enums**: The enum and constant definition
-    - **exception**: The exception definition
-    - **request**: The data model for request
-    - **response**: The data model for response
-    - **service**: The client that are responsible to access data，and the internal implementation for each client
-    - **utils**: The utilities that include signature, HTTP client etc
+  - **constants**: The RESTful API interface path
+  - **enums**: The enum and constant definition
+  - **exception**: The exception definition
+  - **request**: The data model for request
+  - **response**: The data model for response
+  - **service**: The client that are responsible to access data，and the internal implementation for each client
+  - **utils**: The utilities that include signature, HTTP client etc
 - **src/main/java/com/huobi/wss**: The core of the SDK for WebSocket API
-    - **constants**: The RESTful API interface path
-    - **event**: The data model for response
-    - **handle**: The subscription and  request processor for contract market, order information
-    - **request**: The data model for request
-    - **utils**: The utilities that include signature, Zip tool etc
+  - **constants**: The RESTful API interface path
+  - **event**: The data model for response
+  - **handle**: The subscription and  request processor for contract market, order information
+  - **request**: The data model for request
+  - **utils**: The utilities that include signature, Zip tool etc
+
 - **src/test/java/com/huobi**: The test of the SDK
-    - **usdt**: The unit test for **USDT-M service** package
-    - **future**: The unit test for **Coin-M Futures service** package
-    - **swap**: The unit test for **Coin-M Swaps service** package
+  - **usdt**: The unit test for **USDT-M service** package
+  - **future**: The unit test for **Coin-M Futures service** package
+  - **swap**: The unit test for **Coin-M Swaps service** package
 
 ### Run Examples
 
