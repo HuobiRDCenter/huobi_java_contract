@@ -67,6 +67,8 @@ public class ContractSubPositionInfoResponse {
         private BigDecimal lastPrice;
         @SerializedName("adl_risk_percent")
         private BigDecimal adlRiskPercent;
+        @SerializedName("liq_px")
+        private String liqPx;
         @SerializedName("new_risk_rate")
         private BigDecimal newRiskRate;
 
