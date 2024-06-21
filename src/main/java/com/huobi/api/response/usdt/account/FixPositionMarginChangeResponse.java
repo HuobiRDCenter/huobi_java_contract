@@ -20,6 +20,16 @@ public class FixPositionMarginChangeResponse {
     @Builder
     @Data
     public static class DataBean {
+        @SerializedName("amount")
+        private Double amount;
+        @SerializedName("asset")
+        private String asset;
+        @SerializedName("contract_code")
+        private String contractCode;
+        @SerializedName("type")
+        private Integer type;
+        @SerializedName("direction")
+        private Integer direction;
         @SerializedName("order_id")
         private String orderId;
         @SerializedName("client_order_id")
