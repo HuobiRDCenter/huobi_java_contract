@@ -56,8 +56,6 @@ public class SwapSubAccountInfoResponse {
         private BigDecimal marginFrozen;
         @SerializedName("margin_available")
         private BigDecimal marginAvailable;
-        @SerializedName("profit_real")
-        private BigDecimal profitReal;
         @SerializedName("profit_unreal")
         private BigDecimal profitUnreal;
         @SerializedName("risk_rate")
