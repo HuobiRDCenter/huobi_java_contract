@@ -73,4 +73,7 @@
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.java-websocket:Java-WebSocket:1.4.0" level="project" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="07044647-e97b-4e3f-b899-5aa000d880f2" />
+  </component>
 </module>
