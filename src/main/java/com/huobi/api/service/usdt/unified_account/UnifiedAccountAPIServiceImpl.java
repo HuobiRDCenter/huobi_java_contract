@@ -17,6 +17,7 @@ import java.util.Map;
 public class UnifiedAccountAPIServiceImpl implements UnifiedAccountAPIService{
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
+    String sign = "";
     String url_prex = "https://api.hbdm.com";
 
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -68,7 +69,7 @@ public class UnifiedAccountAPIServiceImpl implements UnifiedAccountAPIService{
         String body;
         Map<String, Object> params = new HashMap<>();
         try {
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.LINEAR_SWAP_FEE_SWITCH, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.LINEAR_SWAP_FEE_SWITCH, params,sign);
             logger.debug("body:{}", body);
             LinearSwapFeeSwitchResponse response = JSON.parseObject(body, LinearSwapFeeSwitchResponse.class);
             if (response.getCode() != null && response.getCode() == 200) {
@@ -103,7 +104,7 @@ public class UnifiedAccountAPIServiceImpl implements UnifiedAccountAPIService{
             if (request.getClientOrderId() != null) {
                 params.put("clientOrderId", request.getClientOrderId());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.FIX_POSITION_MARGIN_CHANGE, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.FIX_POSITION_MARGIN_CHANGE, params,sign);
             logger.debug("body:{}", body);
             FixPositionMarginChangeResponse response = JSON.parseObject(body, FixPositionMarginChangeResponse.class);
             if (response.getCode() != null && response.getCode() == 200) {
@@ -175,7 +176,7 @@ public class UnifiedAccountAPIServiceImpl implements UnifiedAccountAPIService{
             if (accountType != null) {
                 params.put("account_type", accountType);
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.SWAP_SWITCH_ACCOUNT_TYPE, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.SWAP_SWITCH_ACCOUNT_TYPE, params,sign);
             logger.debug("body:{}", body);
             SwapSwitchAccountTypeResponse response = JSON.parseObject(body, SwapSwitchAccountTypeResponse.class);
             if (response.getCode() != null && response.getCode() == 200) {

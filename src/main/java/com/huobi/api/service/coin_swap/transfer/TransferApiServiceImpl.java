@@ -14,6 +14,7 @@ public class TransferApiServiceImpl implements TransferApiService {
 
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
+    String sign = "";
     String url_prex = "https://api.huobi.pro";
 
     public TransferApiServiceImpl(String api_key, String secret_key) {
@@ -34,7 +35,7 @@ public class TransferApiServiceImpl implements TransferApiService {
             params.put("to", request.getTo());
             params.put("currency",request.getCurrency());
             params.put("amount",request.getAmount());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.USDT_SWAP_TRANSFER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.USDT_SWAP_TRANSFER, params,sign);
             UsdtSwapTransferResponse response = JSON.parseObject(body, UsdtSwapTransferResponse.class);
             return response;
 

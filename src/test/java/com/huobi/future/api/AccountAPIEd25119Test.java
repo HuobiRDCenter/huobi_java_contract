@@ -11,10 +11,12 @@ import org.junit.runners.MethodSorters;
 import java.math.BigDecimal;
 
 @FixMethodOrder(MethodSorters.JVM)
-public class AccountAPITest implements BaseTest {
+public class AccountAPIEd25119Test implements BaseTest {
 
 
-    AccountAPIServiceImpl huobiAPIService = new AccountAPIServiceImpl("", "");
+    AccountAPIServiceImpl huobiAPIService = new AccountAPIServiceImpl("d9ac8093-rfhfg2mkl3-2e62bf70-5a187", "-----BEGIN PRIVATE KEY-----\n" +
+            "MC4CAQAwBQYDK2VwBCIEIPmpqB2LP/arPRUXNm02mbaScnAcj1ChGKFiBAmg1KVj\n" +
+            "-----END PRIVATE KEY-----");
 
     @Test
     public void getContractBalanceValuation(){

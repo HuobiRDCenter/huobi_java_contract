@@ -23,6 +23,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
 
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
+    String sign= "";
     String url_prex = "https://api.hbdm.com";
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -75,7 +76,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getSlOrderPriceType()!=null){
                 params.put("sl_order_price_type",request.getSlOrderPriceType());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_ORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_ORDER, params,sign);
             ContractOrderResponse response = JSON.parseObject(body, ContractOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
@@ -138,7 +139,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
 
             params.put("orders_data", listMap);
 
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_BATCHORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_BATCHORDER, params,sign);
             ContractBatchorderResponse response = JSON.parseObject(body, ContractBatchorderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
@@ -168,7 +169,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
                 params.put("client_order_id", request.getClientOrderId());
             }
             params.put("symbol", request.getSymbol().toUpperCase());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_CANCEL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_CANCEL, params,sign);
             ContractCancelResponse response = JSON.parseObject(body, ContractCancelResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
@@ -205,7 +206,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getOffset()!=null){
                 params.put("offset",request.getOffset());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_CANCELALL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_CANCELALL, params,sign);
             ContractCancelallResponse response = JSON.parseObject(body, ContractCancelallResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
@@ -231,7 +232,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getOrderId() != null) {
                 params.put("order_id", request.getOrderId());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_ORDER_INFO, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_ORDER_INFO, params,sign);
             ContractOrderInfoResponse response = JSON.parseObject(body, ContractOrderInfoResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
@@ -266,7 +267,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getPageSize() != null) {
                 params.put("page_size", request.getPageSize());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_ORDER_DETAIL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_ORDER_DETAIL, params,sign);
             ContractOrderDetailResponse response = JSON.parseObject(body, ContractOrderDetailResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
@@ -302,7 +303,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getTradeType()!=null){
                 params.put("trade_type",request.getTradeType());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_OPENORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_OPENORDERS, params,sign);
             ContractOpenordersResponse response = JSON.parseObject(body, ContractOpenordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
@@ -336,7 +337,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getOrderPriceType() != null) {
                 params.put("order_price_type", request.getOrderPriceType());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.LIGHTNING_CLOSE_POSITION, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.LIGHTNING_CLOSE_POSITION, params,sign);
             LightningClosePositionResponse response = JSON.parseObject(body, LightningClosePositionResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
@@ -355,7 +356,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             Map<String,Object> params=new HashMap<>();
             params.put("symbol",symbol.toUpperCase());
             params.put("lever_rate",leverRate);
-            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_SWITCH_LEVER_RATE,params);
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_SWITCH_LEVER_RATE,params,sign);
             logger.debug("body:{}",body);
             ContractSwitchLeverRateResponse response=JSON.parseObject(body,ContractSwitchLeverRateResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())){
@@ -378,7 +379,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getTimeOut()!=null){
                 params.put("time_out",request.getTimeOut());
             }
-            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_CANCEL_AFTER,params);
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_CANCEL_AFTER,params,sign);
             logger.debug("body:{}",body);
             ContractCancelAfterResponse response=JSON.parseObject(body,ContractCancelAfterResponse.class);
             if (response.getCode() !=  null && response.getCode() == 200){
@@ -428,7 +429,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getSortBy())) {
                 params.put("sort_by", request.getSortBy());
             }
-            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_HISORDERS_V3,params);
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_HISORDERS_V3,params,sign);
             logger.debug("body:{}",body);
             ContractHisordersV3Response response=JSON.parseObject(body,ContractHisordersV3Response.class);
             if (response.getCode() !=  null && response.getCode() == 200){
@@ -475,7 +476,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getOrderType())) {
                 params.put("order_type", request.getOrderType());
             }
-            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_HISORDERS_EXACT_V3,params);
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_HISORDERS_EXACT_V3,params,sign);
             logger.debug("body:{}",body);
             ContractHisordersExactV3Response response=JSON.parseObject(body,ContractHisordersExactV3Response.class);
             if (response.getCode() !=  null && response.getCode() == 200){
@@ -510,7 +511,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getSymbol())) {
                 params.put("symbol", request.getSymbol());
             }
-            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_MATCHRESULTS_V3,params);
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_MATCHRESULTS_V3,params,sign);
             logger.debug("body:{}",body);
             ContractMatchResultsV3Response response=JSON.parseObject(body,ContractMatchResultsV3Response.class);
             if (response.getCode() !=  null && response.getCode() == 200){
@@ -548,7 +549,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getContract())) {
                 params.put("contract", request.getContract().toUpperCase());
             }
-            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_MATCHRESULTS_EXACT_V3,params);
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CONTRACT_MATCHRESULTS_EXACT_V3,params,sign);
             logger.debug("body:{}",body);
             ContractMatchResultsExactV3Response response=JSON.parseObject(body,ContractMatchResultsExactV3Response.class);
             if (response.getCode() !=  null && response.getCode() == 200){

@@ -17,6 +17,7 @@ import java.util.Map;
 public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
+    String sign = "";
     String url_prex = "https://api.hbdm.com";
 
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -59,7 +60,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if(request.getReduceOnly()!=null){
                 params.put("reduce_only",request.getReduceOnly());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRIGGER_ORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRIGGER_ORDER, params,sign);
             logger.debug("body:{}", body);
             SwapCrossTriggerOrderResponse response = JSON.parseObject(body, SwapCrossTriggerOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -86,7 +87,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
                 params.put("contract_type",request.getContractType());
             }
             params.put("order_id", request.getOrderId());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRIGGER_CANCEL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRIGGER_CANCEL, params,sign);
             logger.debug("body:{}", body);
             SwapCrossTriggerCancelResponse response = JSON.parseObject(body, SwapCrossTriggerCancelResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -118,7 +119,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if (request.getOffset() != null) {
                 params.put("offset", request.getOffset());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRIGGER_CANCELALL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRIGGER_CANCELALL, params,sign);
             logger.debug("body:{}", body);
             SwapCrossTriggerCancelallResponse response = JSON.parseObject(body, SwapCrossTriggerCancelallResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -153,7 +154,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if (StringUtils.isNotEmpty(request.getTradePartition())){
                 params.put("trade_partition",request.getTradePartition());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRIGGER_OPENORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRIGGER_OPENORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapCrossTriggerOpenordersResponse response = JSON.parseObject(body, SwapCrossTriggerOpenordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -188,7 +189,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if (request.getSortBy() != null) {
                 params.put("sort_by", request.getSortBy());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRIGGER_HISORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRIGGER_HISORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapCrossTriggerHisordersResponse response = JSON.parseObject(body, SwapCrossTriggerHisordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -234,7 +235,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if (request.getSlOrderPriceType() != null) {
                 params.put("sl_order_price_type", request.getSlOrderPriceType());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TPSL_ORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TPSL_ORDER, params,sign);
             logger.debug("body:{}", body);
             SwapTpslOrderResponse response = JSON.parseObject(body, SwapTpslOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -261,7 +262,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
                 params.put("contract_type",request.getContractType());
             }
             params.put("order_id", request.getOrderId());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TPSL_CANCEL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TPSL_CANCEL, params,sign);
             logger.debug("body:{}", body);
             SwapTpslCancelResponse response = JSON.parseObject(body, SwapTpslCancelResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -290,7 +291,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if (request.getDirection() != null) {
                 params.put("direction", request.getDirection());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TPSL_CANCELALL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TPSL_CANCELALL, params,sign);
             logger.debug("body:{}", body);
             SwapTpslCancelallResponse response = JSON.parseObject(body, SwapTpslCancelallResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -325,7 +326,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if (StringUtils.isNotEmpty(request.getTradePartition())){
                 params.put("trade_partition",request.getTradePartition());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TPSL_OPENORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TPSL_OPENORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapTpslOpenordersResponse response = JSON.parseObject(body, SwapTpslOpenordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -359,7 +360,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if (StringUtils.isNotEmpty(request.getSortBy())) {
                 params.put("sort_by", request.getSortBy());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TPSL_HISORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TPSL_HISORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapTpslHisordersResponse response = JSON.parseObject(body, SwapTpslHisordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -383,7 +384,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
                 params.put("pair",request.getPair().toUpperCase());
             }
             params.put("order_id", request.getOrderId());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_RELATION_TPSL_ORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_RELATION_TPSL_ORDER, params,sign);
             logger.debug("body:{}", body);
             SwapRelationTpslOrderResponse response = JSON.parseObject(body, SwapRelationTpslOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -423,7 +424,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if(request.getReduceOnly()!=null){
                 params.put("reduce_only",request.getReduceOnly());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRACK_ORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRACK_ORDER, params,sign);
             logger.debug("body:{}", body);
             SwapTrackOrderResponse response = JSON.parseObject(body, SwapTrackOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -450,7 +451,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
                 params.put("contract_type",request.getContractType());
             }
             params.put("order_id", request.getOrderId());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRACK_CANCEL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRACK_CANCEL, params,sign);
             logger.debug("body:{}", body);
             SwapTrackCancelResponse response = JSON.parseObject(body, SwapTrackCancelResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())){
@@ -482,7 +483,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if (request.getOffset()!=null) {
                 params.put("offset", request.getOffset());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRACK_CANCELALL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRACK_CANCELALL, params,sign);
             logger.debug("body:{}", body);
             SwapTrackCancelallResponse response = JSON.parseObject(body, SwapTrackCancelallResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())){
@@ -517,7 +518,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if (StringUtils.isNotEmpty(request.getTradePartition())){
                 params.put("trade_partition",request.getTradePartition());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRACK_OPENORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRACK_OPENORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapTrackOpenordersResponse response = JSON.parseObject(body, SwapTrackOpenordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())){
@@ -552,7 +553,7 @@ public class CrossStrategyAPIServiceImpl implements CrossStrategyAPIService{
             if (request.getSortBy()!=null){
                 params.put("sort_by",request.getSortBy());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRACK_HISORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRACK_HISORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapTrackHisordersResponse response = JSON.parseObject(body, SwapTrackHisordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())){

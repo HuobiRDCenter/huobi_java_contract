@@ -18,6 +18,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
 
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
+    String sign = "";
     String url_prex = "https://api.hbdm.com";
 
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -35,7 +36,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
             if (StringUtils.isNotEmpty(marginAccount)) {
                 params.put("margin_account", marginAccount.toUpperCase().toUpperCase());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_ACCOUNT_INFO, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_ACCOUNT_INFO, params,sign);
             logger.debug("body:{}", body);
             SwapCrossAccountInfoResponse response = JSON.parseObject(body, SwapCrossAccountInfoResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -62,7 +63,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
             if (StringUtils.isNotEmpty(contractType)) {
                 params.put("contract_type", contractType);
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_POSITION_INFO, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_POSITION_INFO, params,sign);
             logger.debug("body:{}", body);
             SwapCrossPositionInfoResponse response = JSON.parseObject(body, SwapCrossPositionInfoResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -81,7 +82,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("margin_account", marginAccount.toUpperCase().toUpperCase());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_ACCOUNT_POSITION_INFO, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_ACCOUNT_POSITION_INFO, params,sign);
             logger.debug("body:{}", body);
             SwapCrossAccountPositionInfoResponse response = JSON.parseObject(body, SwapCrossAccountPositionInfoResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -108,7 +109,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
             if (fromId != null) {
                 params.put("from_id", fromId);
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SUB_ACCOUNT_LIST, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SUB_ACCOUNT_LIST, params,sign);
             logger.debug("body:{}", body);
             SwapCrossSubAccountListResponse response = JSON.parseObject(body, SwapCrossSubAccountListResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -130,7 +131,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
                 params.put("margin_account", marginAccount.toUpperCase().toUpperCase());
             }
             params.put("sub_uid", subUid);
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SUB_ACCOUNT_INFO, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SUB_ACCOUNT_INFO, params,sign);
             logger.debug("body:{}", body);
             SwapCrossSubAccountInfoResponse response = JSON.parseObject(body, SwapCrossSubAccountInfoResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -158,7 +159,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
                 params.put("contract_type", contractType);
             }
             params.put("sub_uid", subUid);
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SUB_POSITION_INFO, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SUB_POSITION_INFO, params,sign);
             logger.debug("body:{}", body);
             SwapCrossSubPositionInfoResponse response = JSON.parseObject(body, SwapCrossSubPositionInfoResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -180,7 +181,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
             if (StringUtils.isNoneEmpty(marginAccount)) {
                 params.put("margin_account", marginAccount.toUpperCase());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRANSFER_LIMIT, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_TRANSFER_LIMIT, params,sign);
             logger.debug("body:{}", body);
             SwapCrossTransferLimitResponse response = JSON.parseObject(body, SwapCrossTransferLimitResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -210,7 +211,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
             if (businessType!=null){
                 params.put("business_type",businessType);
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_POSITION_LIMIT, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_POSITION_LIMIT, params,sign);
             logger.debug("body:{}", body);
             SwapCrossPositionLimitResponse response = JSON.parseObject(body, SwapCrossPositionLimitResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -241,7 +242,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
             if (StringUtils.isNotEmpty(businessType)) {
                 params.put("business_type", businessType);
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_AVAILABLE_LEVEL_RATE, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_AVAILABLE_LEVEL_RATE, params,sign);
             logger.debug("body:{}", body);
             SwapCrossAvailableLevelRateResponse response = JSON.parseObject(body, SwapCrossAvailableLevelRateResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -261,7 +262,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
             params.put("margin_account", marginAccount);
             params.put("page_index", pageIndex);
             params.put("page_size", pagesize);
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SUB_ACCOUNT_INFO_LIST, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SUB_ACCOUNT_INFO_LIST, params,sign);
             logger.debug("body:{}", body);
             SwapSubAccountInfoListResponse response = JSON.parseObject(body, SwapSubAccountInfoListResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -296,7 +297,7 @@ public class CrossAccountAPIServiceImpl implements CrossAccountAPIService {
             if (StringUtils.isNotEmpty(request.getTradePartition())){
                 params.put("trade_partition",request.getTradePartition());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_LEVER_POSITION_LIMIT, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_LEVER_POSITION_LIMIT, params,sign);
             logger.debug("body:{}", body);
             SwapLeverPositionLimitResponse response = JSON.parseObject(body, SwapLeverPositionLimitResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
