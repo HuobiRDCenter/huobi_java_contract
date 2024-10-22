@@ -22,6 +22,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
 
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
+    String sign = "";
     String url_prex = "https://api.hbdm.com";
 
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -67,7 +68,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             Map<String, Object> params = new HashMap<>();
             params.put("margin_account", marginAccount);
             params.put("position_mode", positionMode);
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SWITCH_POSITION_MODE, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SWITCH_POSITION_MODE, params,sign);
             logger.debug("body:{}", body);
             SwapSwitchPositionModeResponse response = JSON.parseObject(body, SwapSwitchPositionModeResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -129,7 +130,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if(request.getReduceOnly()!=null){
                 params.put("reduce_only",request.getReduceOnly());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_ORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_ORDER, params,sign);
             logger.debug("body:{}", body);
             SwapCrossOrderResponse response = JSON.parseObject(body, SwapCrossOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -200,7 +201,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
 
             params.put("orders_data", listMap);
 
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_BATCHORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_BATCHORDER, params,sign);
             logger.debug("body:{}", body);
             SwapCrossBatchorderResponse response = JSON.parseObject(body, SwapCrossBatchorderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -236,7 +237,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if (request.getContractType() != null) {
                 params.put("contract_type", request.getContractType());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_CANCEL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_CANCEL, params,sign);
             logger.debug("body:{}", body);
             SwapCrossCancelResponse response = JSON.parseObject(body, SwapCrossCancelResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -273,7 +274,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if (request.getOffset() != null) {
                 params.put("offset", request.getOffset());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_CANCELALL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_CANCELALL, params,sign);
             logger.debug("body:{}", body);
             SwapCrossCancelallResponse response = JSON.parseObject(body, SwapCrossCancelallResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -303,7 +304,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if (request.getOrderId() != null) {
                 params.put("order_id", request.getOrderId());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_ORDER_INFO, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_ORDER_INFO, params,sign);
             logger.debug("body:{}", body);
             SwapCrossOrderInfoResponse response = JSON.parseObject(body, SwapCrossOrderInfoResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -343,7 +344,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if (request.getPageSize() != null) {
                 params.put("page_size", request.getPageSize());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_ORDER_DETAIL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_ORDER_DETAIL, params,sign);
             logger.debug("body:{}", body);
             SwapCrossOrderDetailResponse response = JSON.parseObject(body, SwapCrossOrderDetailResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -385,7 +386,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if (StringUtils.isNotEmpty(request.getTradePartition())){
                 params.put("trade_partition",request.getTradePartition());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_OPENORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_OPENORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapCrossOpenordersResponse response = JSON.parseObject(body, SwapCrossOpenordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -420,7 +421,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if (request.getClientOrderId() != null) {
                 params.put("client_order_id", request.getClientOrderId());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_LIGHTNING_CLOSE_POSITION, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_LIGHTNING_CLOSE_POSITION, params,sign);
             logger.debug("body:{}", body);
             SwapCrossLightningClosePositionResponse response = JSON.parseObject(body, SwapCrossLightningClosePositionResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -450,7 +451,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
                 params.put("contract_type", contractType);
             }
             params.put("lever_rate", leverRate);
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SWITCH_LEVER_RATE, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_SWITCH_LEVER_RATE, params,sign);
             logger.debug("body:{}", body);
             SwapCrossSwitchLeverRateResponse response = JSON.parseObject(body, SwapCrossSwitchLeverRateResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -497,7 +498,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if (StringUtils.isNotEmpty(request.getPriceType())) {
                 params.put("price_type", request.getPriceType());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_HISORDERS_EXACT_V3, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_HISORDERS_EXACT_V3, params,sign);
             logger.debug("body:{}", body);
             SwapCrossHisordersExactV3Response response = JSON.parseObject(body, SwapCrossHisordersExactV3Response.class);
             if (response.getCode() != null && response.getCode() == 200){
@@ -541,7 +542,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if (StringUtils.isNotEmpty(request.getStatus())) {
                 params.put("status", request.getStatus());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_HISORDERS_V3, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_HISORDERS_V3, params,sign);
             logger.debug("body:{}", body);
             SwapCrossHisordersV3Response response = JSON.parseObject(body, SwapCrossHisordersV3Response.class);
             if (response.getCode() != null && response.getCode() == 200){
@@ -579,7 +580,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if (StringUtils.isNotEmpty(request.getPair())) {
                 params.put("pair", request.getPair());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_MATCHRESULTS_V3, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_MATCHRESULTS_V3, params,sign);
             logger.debug("body:{}", body);
             SwapCrossMatchResultsV3Response response = JSON.parseObject(body, SwapCrossMatchResultsV3Response.class);
             if (response.getCode() != null && response.getCode() == 200){
@@ -617,7 +618,7 @@ public class CrossTradeAPIServiceImpl implements CrossTradeAPIService {
             if (StringUtils.isNotEmpty(request.getPair())) {
                 params.put("pair", request.getPair());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_MATCHRESULTS_EXACT_V3, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapCrossAPIConstants.SWAP_CROSS_MATCHRESULTS_EXACT_V3, params,sign);
             logger.debug("body:{}", body);
             SwapCrossMatchResultsExactV3Response response = JSON.parseObject(body, SwapCrossMatchResultsExactV3Response.class);
             if (response.getCode() != null && response.getCode() == 200){

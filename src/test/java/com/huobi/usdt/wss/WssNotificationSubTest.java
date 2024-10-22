@@ -17,7 +17,8 @@ public class WssNotificationSubTest {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private String host = "api.hbdm.com";
     private String url = "/linear-swap-notification";
-    WssNotificationHandle wssNotificationHandle = new WssNotificationHandle(host, url, "", "");
+    private String sign="256";
+    WssNotificationHandle wssNotificationHandle = new WssNotificationHandle(host, url, "", "",sign);
 
     @Test
     public void test1() throws URISyntaxException, InterruptedException {
