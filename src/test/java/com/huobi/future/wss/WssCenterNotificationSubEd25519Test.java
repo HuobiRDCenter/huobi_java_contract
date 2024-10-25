@@ -1,4 +1,4 @@
-package com.huobi.usdt.wss;
+package com.huobi.future.wss;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
@@ -11,17 +11,21 @@ import org.slf4j.LoggerFactory;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public class WssCenterNotificationSubTest {
+public class WssCenterNotificationSubEd25519Test {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private String host = "api.hbdm.com";
     private String url = "/center-notification";
-    private String sign="256";
-    WssNotificationHandle wssNotificationHandle = new WssNotificationHandle(host, url, "", "",sign);
+    private String sign="25519";
+    //    这里的sign代表着是使用hmac256签名方法还是Ed25519签名方法。这里的publickey和privatekey公钥和私钥
+//    The sign indicates whether to use the hmac256 signature method or the Ed25519 signature method. Here are the publickey and privatekey public and private keys
+    private String publicKey="";
+    private String privateKey="";
+    WssNotificationHandle wssNotificationHandle = new WssNotificationHandle(host, url, publicKey, privateKey,sign);
 
     @Test
     public void test1() throws URISyntaxException, InterruptedException {
         List<String> channels = Lists.newArrayList();
-        channels.add("public.linear-swap.heartbeat");
+        channels.add("public.futures.heartbeat");
         wssNotificationHandle.sub(channels, response -> {
             logger.info("用户收到的数据===============:{}", JSON.toJSON(response));
             Long currentTimeMillis = System.currentTimeMillis();

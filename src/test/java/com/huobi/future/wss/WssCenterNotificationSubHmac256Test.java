@@ -11,11 +11,16 @@ import org.slf4j.LoggerFactory;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public class WssCenterNotificationSubTest {
+public class WssCenterNotificationSubHmac256Test {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private String host = "api.hbdm.com";
     private String url = "/center-notification";
-    WssNotificationHandle wssNotificationHandle = new WssNotificationHandle(host, url, "", "");
+    private String sign="256";
+    //    这里的sign代表着是使用hmac256签名方法还是Ed25519签名方法。这里的accesskey和secretkey代表了公钥和私钥。
+// The sign indicates whether to use the hmac256 signature method or the Ed25519 signature method. Here accesskey and secretkey represent the public and private keys.
+    private String accessKey="";
+    private String secretKey="";
+    WssNotificationHandle wssNotificationHandle = new WssNotificationHandle(host, url, accessKey, secretKey,sign);
 
     @Test
     public void test1() throws URISyntaxException, InterruptedException {
