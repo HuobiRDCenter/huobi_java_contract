@@ -1,0 +1,3 @@
+2024-10-25 14:19:33.392 [ERROR] [WebSocketConnectReadThread-11] [com.huobi.wss.handle.WssNotificationHandle.onClose:101] - onClose i:1006,s:,b:true
+2024-10-25 14:19:41.461 [ERROR] [pool-1-thread-1] [com.huobi.wss.handle.WssNotificationHandle.run:191] - isClosed:true,isClosing:false，准备重连
+2024-10-25 14:19:44.056 [ERROR] [pool-1-thread-1] [com.huobi.wss.handle.WssNotificationHandle.run:193] - 重连的结果为：true

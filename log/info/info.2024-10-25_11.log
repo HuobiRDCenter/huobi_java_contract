@@ -1,0 +1,4 @@
+2024-10-25 11:46:51.460 [INFO] [WebSocketConnectReadThread-11] [com.huobi.wss.handle.WssNotificationHandle.addAuth:157] - before send 
+2024-10-25 11:46:51.479 [INFO] [WebSocketConnectReadThread-11] [com.huobi.wss.handle.WssNotificationHandle.addAuth:159] - after send 
+2024-10-25 11:46:51.957 [INFO] [pool-2-thread-2] [com.huobi.future.wss.WssCenterNotificationSubEd25519Test.lambda$test1$0:30] - 用户收到的数据===============:{"op":"notify","topic":"public.futures.heartbeat","event":"init","ts":1729828011922,"data":{"heartbeat":1,"estimated_recovery_time":null}}
+2024-10-25 11:46:51.981 [INFO] [pool-2-thread-2] [com.huobi.future.wss.WssCenterNotificationSubEd25519Test.lambda$test1$0:33] - ts为：1729828011922,当前的时间戳为：1729828011961,时间间隔为：39毫秒

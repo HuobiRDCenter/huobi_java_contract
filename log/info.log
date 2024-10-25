@@ -1,0 +1,7 @@
+2024-10-25 14:19:33.392 [ERROR] [WebSocketConnectReadThread-11] [com.huobi.wss.handle.WssNotificationHandle.onClose:101] - onClose i:1006,s:,b:true
+2024-10-25 14:19:41.461 [ERROR] [pool-1-thread-1] [com.huobi.wss.handle.WssNotificationHandle.run:191] - isClosed:true,isClosing:false，准备重连
+2024-10-25 14:19:44.054 [INFO] [WebSocketConnectReadThread-33] [com.huobi.wss.handle.WssNotificationHandle.addAuth:157] - before send 
+2024-10-25 14:19:44.054 [INFO] [WebSocketConnectReadThread-33] [com.huobi.wss.handle.WssNotificationHandle.addAuth:159] - after send 
+2024-10-25 14:19:44.056 [ERROR] [pool-1-thread-1] [com.huobi.wss.handle.WssNotificationHandle.run:193] - 重连的结果为：true
+2024-10-25 14:19:44.645 [INFO] [pool-2-thread-6] [com.huobi.future.wss.WssCenterNotificationSubEd25519Test.lambda$test1$0:30] - 用户收到的数据===============:{"op":"notify","topic":"public.futures.heartbeat","event":"init","ts":1729837184699,"data":{"heartbeat":1,"estimated_recovery_time":null}}
+2024-10-25 14:19:44.651 [INFO] [pool-2-thread-6] [com.huobi.future.wss.WssCenterNotificationSubEd25519Test.lambda$test1$0:33] - ts为：1729837184699,当前的时间戳为：1729837184645,时间间隔为：-54毫秒
