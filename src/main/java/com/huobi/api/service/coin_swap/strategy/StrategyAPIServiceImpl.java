@@ -17,6 +17,7 @@ import java.util.Map;
 public class StrategyAPIServiceImpl implements StrategyAPIService{
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
+    String sign = "";
     String url_prex = "https://api.hbdm.com";
 
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -46,7 +47,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (request.getLeverRate() != null) {
                 params.put("lever_rate", request.getLeverRate());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRIGGER_ORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRIGGER_ORDER, params,sign);
             logger.debug("body:{}", body);
             SwapTriggerOrderResponse response = JSON.parseObject(body, SwapTriggerOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -65,7 +66,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             Map<String, Object> params = new HashMap<>();
             params.put("contract_code", request.getContractCode().toUpperCase());
             params.put("order_id", request.getOrderId());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRIGGER_CANCEL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRIGGER_CANCEL, params,sign);
             logger.debug("body:{}", body);
             SwapTriggerCancelResponse response = JSON.parseObject(body, SwapTriggerCancelResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -89,7 +90,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (request.getOffset()!=null){
                 params.put("offset",request.getOffset());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRIGGER_CANCELALL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRIGGER_CANCELALL, params,sign);
             logger.debug("body:{}", body);
             SwapTriggerCancelallResponse response = JSON.parseObject(body, SwapTriggerCancelallResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -116,7 +117,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (request.getTradeType()!=null){
                 params.put("trade_type",request.getTradeType());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRIGGER_OPENORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRIGGER_OPENORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapTriggerOpenordersResponse response = JSON.parseObject(body, SwapTriggerOpenordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -147,7 +148,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (request.getSortBy()!=null){
                 params.put("sort_by",request.getSortBy());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRIGGER_HISORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRIGGER_HISORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapTriggerHisordersResponse response = JSON.parseObject(body, SwapTriggerHisordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -185,7 +186,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (request.getSlOrderPriceType()!=null){
                 params.put("sl_order_price_type",request.getSlOrderPriceType());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TPSL_ORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TPSL_ORDER, params,sign);
             logger.debug("body:{}", body);
             SwapTpslOrderResponse response = JSON.parseObject(body, SwapTpslOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -204,7 +205,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
         try {
             params.put("contract_code",request.getContractCode().toUpperCase());
             params.put("order_id",request.getOrderId());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TPSL_CANCEL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TPSL_CANCEL, params,sign);
             logger.debug("body:{}", body);
             SwapTpslCancelResponse response = JSON.parseObject(body, SwapTpslCancelResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -225,7 +226,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (request.getDirection()!=null){
                 params.put("direction",request.getDirection());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TPSL_CANCELALL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TPSL_CANCELALL, params,sign);
             logger.debug("body:{}", body);
             SwapTpslCancelallResponse response = JSON.parseObject(body, SwapTpslCancelallResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -252,7 +253,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (request.getTradeType()!=null){
                 params.put("trade_type",request.getTradeType());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TPSL_OPENORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TPSL_OPENORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapTpslOpenordersResponse response = JSON.parseObject(body, SwapTpslOpenordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -281,7 +282,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (StringUtils.isNotEmpty(request.getSortBy())){
                 params.put("sort_by",request.getSortBy());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TPSL_HISORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TPSL_HISORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapTpslHisordersResponse response = JSON.parseObject(body, SwapTpslHisordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -300,7 +301,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
         try {
             params.put("contract_code",request.getContractCode().toUpperCase());
             params.put("order_id",request.getOrderId());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_RELATION_TPSL_ORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_RELATION_TPSL_ORDER, params,sign);
             logger.debug("body:{}", body);
             SwapRelationTpslOrderResponse response = JSON.parseObject(body, SwapRelationTpslOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -327,7 +328,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             params.put("callback_rate", request.getCallbackRate());
             params.put("active_price", request.getActivePrice());
             params.put("order_price_type", request.getOrderPriceType());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRACK_ORDER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRACK_ORDER, params,sign);
             logger.debug("body:{}", body);
             SwapTrackOrderResponse response = JSON.parseObject(body, SwapTrackOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
@@ -346,7 +347,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
         try {
             params.put("contract_code", request.getContractCode().toUpperCase());
             params.put("order_id", request.getOrderId());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRACK_CANCEL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRACK_CANCEL, params,sign);
             logger.debug("body:{}", body);
             SwapTrackCancelResponse response = JSON.parseObject(body, SwapTrackCancelResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())){
@@ -370,7 +371,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (request.getOffset()!=null) {
                 params.put("offset", request.getOffset());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRACK_CANCELALL, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRACK_CANCELALL, params,sign);
             logger.debug("body:{}", body);
             SwapTrackCancelallResponse response = JSON.parseObject(body, SwapTrackCancelallResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())){
@@ -397,7 +398,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (request.getPageSize()!=null){
                 params.put("page_size",request.getPageSize());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRACK_OPENORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRACK_OPENORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapTrackOpenordersResponse response = JSON.parseObject(body, SwapTrackOpenordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())){
@@ -427,7 +428,7 @@ public class StrategyAPIServiceImpl implements StrategyAPIService{
             if (request.getSortBy()!=null){
                 params.put("sort_by",request.getSortBy());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRACK_HISORDERS, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiCoinMarginedSwapAPIOptions.SWAP_TRACK_HISORDERS, params,sign);
             logger.debug("body:{}", body);
             SwapTrackHisordersResponse response = JSON.parseObject(body, SwapTrackHisordersResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())){

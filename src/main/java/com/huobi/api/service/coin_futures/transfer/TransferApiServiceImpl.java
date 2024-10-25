@@ -18,6 +18,7 @@ public class TransferApiServiceImpl implements TransferApiService {
 
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
+    String sign = "";
     String url_prex = "https://api.huobi.pro";
 
     public TransferApiServiceImpl(String api_key, String secret_key) {
@@ -40,7 +41,7 @@ public class TransferApiServiceImpl implements TransferApiService {
             params.put("currency", currency.toLowerCase());
             params.put("amount", amount);
             params.put("type", type);
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.FUTURES_TRANSFER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.FUTURES_TRANSFER, params,sign);
             FuturesTransferResponse response = JSON.parseObject(body, FuturesTransferResponse.class);
             return response;
 
@@ -69,7 +70,7 @@ public class TransferApiServiceImpl implements TransferApiService {
             if (StringUtils.isNotEmpty(request.getMarginAccount())) {
                 params.put("margin-account", request.getMarginAccount());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_TRANSFER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_TRANSFER, params,sign);
             AccountTransferResponse response = JSON.parseObject(body, AccountTransferResponse.class);
             return response;
 

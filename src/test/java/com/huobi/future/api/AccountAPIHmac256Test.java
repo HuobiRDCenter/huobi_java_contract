@@ -11,7 +11,7 @@ import org.junit.runners.MethodSorters;
 import java.math.BigDecimal;
 
 @FixMethodOrder(MethodSorters.JVM)
-public class AccountAPITest implements BaseTest {
+public class AccountAPIHmac256Test implements BaseTest {
 
 
     AccountAPIServiceImpl huobiAPIService = new AccountAPIServiceImpl("", "");

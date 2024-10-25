@@ -16,8 +16,11 @@ public class WssNotificationSubTest {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private String host="api.hbdm.com";
     private String url="/notification";//注意地址上一定要带上"/"。
+    private String sign="256";
+    private String key="";
+    private String secret="";
     //private String URL = "wss://api.hbdm.com/notification";//订单推送访问地址.更换请求的域名时，需将WssNotificationHandle类中的addAuth()方法里面的域名也一起替换掉。
-    WssNotificationHandle wssNotificationHandle = new WssNotificationHandle( host , url , "", "");
+    WssNotificationHandle wssNotificationHandle = new WssNotificationHandle( host , url , key, secret,sign);
 
 
     @Test
