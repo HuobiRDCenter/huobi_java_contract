@@ -57,18 +57,34 @@ public class HbdmHttpClient {
     }
 
 
-    public String doPost(String appKey, String appSecretKey, String uri, Map<String, Object> params) {
-        ApiSignature sign = new ApiSignature();
-        sign.createSignature(appKey, appSecretKey, "POST", uri, params);
-        try {
-            RequestBody body = RequestBody.create(JSON_TYPE, JSON.toJSONString(params));
-            Request.Builder builder = new Request.Builder().url(uri + "?" + toQueryString(params)).post(body);
-            Request request = builder.build();
-            Response response = httpClient.newCall(request).execute();
-            return response.body().string();
-        } catch (IOException e) {
-            throw new RuntimeException("IOException 目标url：" + uri, e);
+    public String doPost(String appKey, String appSecretKey, String uri, Map<String, Object> params,String sign2) {
+        if(sign2.equals("256")){
+            ApiSignature sign = new ApiSignature();
+            sign.createSignature(appKey, appSecretKey, "POST", uri, params);
+            try {
+                RequestBody body = RequestBody.create(JSON_TYPE, JSON.toJSONString(params));
+                Request.Builder builder = new Request.Builder().url(uri + "?" + toQueryString(params)).post(body);
+                Request request = builder.build();
+                Response response = httpClient.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                throw new RuntimeException("IOException 目标url：" + uri, e);
+            }
+        }else{
+            ApiSignatureEd25519 sign = new ApiSignatureEd25519();
+            sign.createSignature(appKey, appSecretKey, "POST", uri, params);
+            try {
+                RequestBody body = RequestBody.create(JSON_TYPE, JSON.toJSONString(params));
+                Request.Builder builder = new Request.Builder().url(uri + "?" + toQueryString(params)).post(body);
+                Request request = builder.build();
+                Response response = httpClient.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                throw new RuntimeException("IOException 目标url：" + uri, e);
+            }
         }
+
+
     }
 
 

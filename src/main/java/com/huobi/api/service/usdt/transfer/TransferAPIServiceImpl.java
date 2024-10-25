@@ -16,6 +16,7 @@ public class TransferAPIServiceImpl implements TransferAPIService {
 
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
+    String sign = "";
     String url_prex = "https://api.huobi.pro";
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -38,7 +39,7 @@ public class TransferAPIServiceImpl implements TransferAPIService {
             params.put("margin-account", request.getMargin_account());
             params.put("currency", request.getCurrency());
             params.put("amount", request.getAmount());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.USDT_SWAP_TRANSFER, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.USDT_SWAP_TRANSFER, params,sign);
             UsdtSwapTransferResponse response = JSON.parseObject(body, UsdtSwapTransferResponse.class);
             return response;
 

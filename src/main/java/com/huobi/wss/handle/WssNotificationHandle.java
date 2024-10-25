@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.huobi.wss.SubscriptionListener;
 import com.huobi.wss.util.ApiSignature;
+import com.huobi.wss.util.ApiSignatureEd25519;
 import com.huobi.wss.util.ZipUtil;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -33,17 +34,19 @@ public class WssNotificationHandle {
     private WebSocketClient webSocketClient;
     private String accessKey;
     private String secretKey;
+    private String sign;
     private String host;
     private String url;
     private String pushUrl;//订单推送访问地址
     private Long lastPingTime = System.currentTimeMillis();
 
 
-    public WssNotificationHandle(String host,String url, String accessKey, String secretKey) {
+    public WssNotificationHandle(String host,String url, String accessKey, String secretKey,String sign) {
         this.host = host;
         this.url=url;
         this.accessKey = accessKey;
         this.secretKey = secretKey;
+        this.sign = sign;
     }
 
     public void sub(List<String> channels, SubscriptionListener<String> callback) throws URISyntaxException {
@@ -138,21 +141,42 @@ public class WssNotificationHandle {
             return;
         }
         Map<String, String> map = new HashMap<>();
-        ApiSignature as = new ApiSignature();
-        try {
+        if(this.sign.equals("256")){
+            ApiSignature as = new ApiSignature();
+            try {
 
-            //组合签名map
-            //Combined signature map
-            as.createSignature(accessKey, secretKey, "GET", host, url, map);
-        } catch (Exception e) {
-            e.printStackTrace();
+                //组合签名map
+                //Combined signature map
+                as.createSignature(accessKey, secretKey, "GET", host, url, map);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            map.put("op", "auth");
+            map.put("type", "api");
+            String req = JSON.toJSONString(map);
+            logger.info("before send ");
+            webSocketClient.send(req);
+            logger.info("after send ");
+
+        }else{
+            ApiSignatureEd25519 as = new ApiSignatureEd25519();
+            try {
+
+                //组合签名map
+                //Combined signature map
+                as.createSignature(accessKey, secretKey, "GET", host, url, map);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            map.put("op", "auth");
+            map.put("type", "api");
+            String req = JSON.toJSONString(map);
+            logger.info("before send ");
+            webSocketClient.send(req);
+            logger.info("after send ");
+
         }
-        map.put("op", "auth");
-        map.put("type", "api");
-        String req = JSON.toJSONString(map);
-        logger.info("before send ");
-        webSocketClient.send(req);
-        logger.info("after send ");
+
     }
 
 
