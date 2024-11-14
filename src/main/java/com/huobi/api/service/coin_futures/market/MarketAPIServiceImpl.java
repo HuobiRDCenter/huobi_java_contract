@@ -2,10 +2,7 @@ package com.huobi.api.service.coin_futures.market;
 
 import com.alibaba.fastjson.JSON;
 import com.huobi.api.constants.HuobiFutureAPIConstants;
-import com.huobi.api.enums.TimePeriodTypeEnum;
 import com.huobi.api.exception.ApiException;
-import com.huobi.api.request.coin_futures.account.ContractSettlementRecordsRequest;
-import com.huobi.api.request.coin_futures.market.ContractLiquidationOrdersV3Request;
 import com.huobi.api.response.coin_futures.market.*;
 import com.huobi.api.response.usdt.market.BatchMergedV2Response;
 import com.huobi.api.util.HbdmHttpClient;

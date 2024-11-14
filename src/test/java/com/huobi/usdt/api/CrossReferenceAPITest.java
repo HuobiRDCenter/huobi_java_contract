@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.huobi.api.response.usdt.market.SwapCrossAdjustfactorResponse;
 import com.huobi.api.response.usdt.market.SwapLadderMarginResponse;
 import com.huobi.api.service.usdt.reference.CrossReferenceAPIServiceImpl;
-import com.huobi.api.service.usdt.reference.ReferenceAPIServiceImpl;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;

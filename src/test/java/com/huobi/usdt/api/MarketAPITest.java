@@ -2,9 +2,7 @@ package com.huobi.usdt.api;
 
 import com.alibaba.fastjson.JSON;
 import com.huobi.api.request.usdt.account.LinearSwapBasisRequest;
-import com.huobi.api.request.usdt.account.SwapLiquidationOrdersRequest;
 import com.huobi.api.request.usdt.account.SwapMarketHistoryKlineRequest;
-import com.huobi.api.response.usdt.account.*;
 import com.huobi.api.response.usdt.market.*;
 import com.huobi.api.service.usdt.market.MarketAPIServiceImpl;
 import org.junit.FixMethodOrder;

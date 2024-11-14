@@ -5,8 +5,6 @@ import com.huobi.api.constants.HuobiLinearSwapAPIConstants;
 import com.huobi.api.exception.ApiException;
 import com.huobi.api.request.usdt.account.SwapLiquidationOrdersV3Request;
 import com.huobi.api.response.usdt.account.SwapLiquidationOrdersV3Response;
-import com.huobi.api.response.usdt.account.SwapSwitchAccountTypeResponse;
-import com.huobi.api.response.usdt.account.SwapUnifiedAccountTypeResponse;
 import com.huobi.api.response.usdt.market.*;
 import com.huobi.api.util.HbdmHttpClient;
 import org.apache.commons.lang3.StringUtils;

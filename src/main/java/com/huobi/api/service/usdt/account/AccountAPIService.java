@@ -4,6 +4,8 @@ package com.huobi.api.service.usdt.account;
 
 
 import com.huobi.api.request.usdt.account.*;
+import com.huobi.api.response.usdt.account.ContractAccountBalanceResonse;
+import com.huobi.api.response.usdt.account.MultiAssetsMarginResponse;
 import com.huobi.api.response.usdt.account.*;
 
 import java.math.BigDecimal;
@@ -52,4 +54,8 @@ public interface AccountAPIService {
     SwapTransferInnerResponse getSwapTransferInner(String asset, String fromMarginAccount, String toMarginAccount, BigDecimal amount,Long clientOrderId);// 21.同账号不同保证金账户的划转
 
     SwapApiTradingStatusResponse getSwapApiTradingStatusResponse();// 22.获取用户API指标禁用信息
+
+    ContractAccountBalanceResonse getContractAccountBalance(); // 22. 联合保证金查询账户余额
+
+    MultiAssetsMarginResponse setMultiAssetsMargin(int assetsMode); // 23.设置联合保证金模式
 }

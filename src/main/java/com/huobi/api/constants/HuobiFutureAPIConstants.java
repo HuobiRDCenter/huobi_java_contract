@@ -96,4 +96,29 @@ public class HuobiFutureAPIConstants {
     public static final String FUTURES_TRANSFER = "/v1/futures/transfer"; // 1.现货-合约账户间进行资金的划转
     public static final String ACCOUNT_TRANSFER = "/v2/account/transfer"; // 2.现货-合约账户进行资金的划转
 
+    //联合保证金接口
+    public static final String ACCOUNT_BALANCE = "/v5/account/balance"; // 1.查询账户余额
+    public static final String ACCOUNT_MULTI_ASSETS_MARGIN = "/v5/account/multi_assets_margin"; // 2.设置联合保证金模式
+    public static final String TRADE_ORDER = "/v5/trade/order"; // 3.下单
+    public static final String TRADE_BACHORDER = "/v5/trade/batchorder"; // 4.批量下单
+    public static final String CANCEL_TRADE_ORDER = "/v5/trade/order"; // 5.撤单
+    public static final String CANCEL_TRADE_BATCHORDERS = "/v5/trade/batchOrders"; // 6.批量撤单
+    public static final String CANCEL_TRADE_ALLORDERS = "/v5/trade/allOrders"; // 7.全部撤单
+    public static final String TRADE_POSITION = "/v5/trade/position"; // 8.市价全平
+    public static final String TRADE_POSITIONALL = "/v5/trade/positionAll"; // 9.一键全平
+    public static final String TRADE_ORDER_OPENS = "/v5/trade/order/opens"; // 10.查询当前委托
+    public static final String TRADE_ORDER_TRADES = "/api/V5/trade/order/trades"; // 11.查询成交明细
+    public static final String TRADE_ORDER_HISTORY = "/api/v5/trade/order/history"; // 12.查询历史委托
+    public static final String TRADE_POSITION_OPENS = "/v5/trade/position/opens"; // 13.查询当前持仓
+    public static final String TRADE_POSITION_HISTORY = "/v5/trade/position/history"; // 14.查询历史持仓
+    public static final String POSITION_LEVER = "/v5/position/lever"; // 15.查询杠杆等级列表
+    public static final String SET_POSITION_LEVER = "/v5/position/lever"; // 16.设置杠杆等级
+    public static final String POSITION_MODE = "/api/v5/position/mode"; // 17.查询持仓模式
+    public static final String SET_POSITION_MODE = "/api/v5/position/mode"; // 18.设置持仓模式
+    public static final String POSITION_RISKLIMIT = "/v5/position/riskLimit"; // 19.查询持仓风险限额
+    public static final String MARKET_RISK_LIMIT = "/v5/market/risk_limit"; // 20.查询合约风险限额
+    public static final String ASSETS_DEDUCTION_CURRENCY = "/v5/assets_deduction_currency"; // 21.查询可抵扣手续费币种
+    public static final String MULTI_ASSETS_MARGIN_LIST = "/v5/market/multi_assets_margin/list"; // 22.查询联合保证金支持币种
+
+
 }

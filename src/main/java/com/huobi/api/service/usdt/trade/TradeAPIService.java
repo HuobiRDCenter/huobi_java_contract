@@ -36,4 +36,40 @@ public interface TradeAPIService {
     SwapLightningClosePositionResponse swapLightningClosePositionRequest(SwapLightningClosePositionRequest request);// 15.闪电平仓下单
 
     SwapPositionSideResponse swapPositionSideResponse(SwapPositionSideRequest request); // 16.查询持仓模式
+
+    TradeOrderResponse tradeOrderResponse(TradeOrderRequest request);
+
+    TradeBachOrderResponse tradeBachOrder(TradeBachOrderRequest request);
+
+    CancelTradeOrderResponse cancelTradeOrder(CancelTradeOrderRequest request);
+
+    CannelTradeBatchOrderResponse cannelTradeBatchOrderResponse(CannelTradeBatchOrderRequest request);
+
+    CannelTradeAllOrderResponse cannelTradeAllOrderResponse(CannelTradeAllOrderRequest request);
+
+    TradePositionResponse tradePositionResponse(TradePositionRequest request);
+
+    TradePositionAllResponse tradePositionAllResponse();
+
+    TradeOrderOpensResponse tradeOrderOpensResponse(TradeOrderOpensRequest request);
+
+    TradeOrderTradesResponse tradeOrderTradesResponse(TradeOrderTradesRequest request);
+
+    TradeOrderHistoryResponse tradeOrderHistoryResponse(TradeOrderHistoryRequest request);
+
+    TradePositionOpensResponse tradePositionOpensResponse(TradePositionOpensRequest request);
+
+    TradePositionHistoryResponse tradePositionHistoryResponse(TradePositionHistoryRequest request);
+
+    PositionLeverResponse positionLeverResponse(PositionLeverRequest request);
+
+    SetPositionLeverResponse setPositionLeverResponse(SetPositionLeverRequest request);
+
+    PositionModeResponse positionModeResponse();
+
+    PositionModeResponse setPositionModeResponse(SetPositionModeRequest request);
+
+    PositionRiskLimitResponse positionRiskLimitResponse(PositionRiskLimitRequest request);
+
+
 }

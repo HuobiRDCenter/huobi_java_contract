@@ -1,9 +1,12 @@
 package com.huobi.api.service.usdt.account;
 
 import com.alibaba.fastjson.JSON;
+import com.huobi.api.constants.HuobiFutureAPIConstants;
 import com.huobi.api.constants.HuobiLinearSwapAPIConstants;
 import com.huobi.api.exception.ApiException;
 import com.huobi.api.request.usdt.account.*;
+import com.huobi.api.response.usdt.account.ContractAccountBalanceResonse;
+import com.huobi.api.response.usdt.account.MultiAssetsMarginResponse;
 import com.huobi.api.response.usdt.account.*;
 import com.huobi.api.util.HbdmHttpClient;
 import org.apache.commons.lang3.StringUtils;
@@ -572,5 +575,39 @@ public class AccountAPIServiceImpl implements AccountAPIService {
         }
         throw new ApiException(body);
     }
+    @Override
+    public ContractAccountBalanceResonse getContractAccountBalance() {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_BALANCE, params);
+            logger.debug("body:{}",body);
+            ContractAccountBalanceResonse response = JSON.parseObject(body, ContractAccountBalanceResonse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
 
+    @Override
+    public MultiAssetsMarginResponse setMultiAssetsMargin(int assetsMode) {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            if (assetsMode == 0 || assetsMode == 1) {
+                params.put("assets_mode", assetsMode);
+            }
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_MULTI_ASSETS_MARGIN, params);
+            MultiAssetsMarginResponse response = JSON.parseObject(body, MultiAssetsMarginResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
 }
