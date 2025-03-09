@@ -23,9 +23,6 @@ public class ContractAccountBalanceResonse {
         @SerializedName("equity")
         private String equity;
 
-        @SerializedName("isolated_equity")
-        private String isolatedEquity;
-
         @SerializedName("initial_margin")
         private String initialMargin;
 
@@ -70,15 +67,6 @@ public class ContractAccountBalanceResonse {
 
         @SerializedName("profit_unreal")
         private String profitUnreal;
-
-        @SerializedName("isolated_available")
-        private String isolatedAvailable;
-
-        @SerializedName("isolated_hold")
-        private String isolatedHold;
-
-        @SerializedName("isolated_profit_unreal")
-        private String isolatedProfitUnreal;
 
         @SerializedName("initial_margin")
         private String initialMargin;

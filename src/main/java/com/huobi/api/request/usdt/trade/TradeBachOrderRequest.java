@@ -65,4 +65,10 @@ public class TradeBachOrderRequest {
 
     @SerializedName("sl_trigger_price_type")
     private String slTriggerPriceType;
+
+    @SerializedName("price_protect")
+    private Boolean priceProtect;
+
+    @SerializedName("trigger_protect")
+    private Boolean triggerProtect;
 }

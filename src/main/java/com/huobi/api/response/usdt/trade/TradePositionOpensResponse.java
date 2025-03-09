@@ -49,9 +49,6 @@ public class TradePositionOpensResponse {
         @SerializedName("maintenance_margin")
         private String maintenanceMargin;
 
-        @SerializedName("margin")
-        private String margin;
-
         @SerializedName("profit_unreal")
         private String profitUnreal;
 

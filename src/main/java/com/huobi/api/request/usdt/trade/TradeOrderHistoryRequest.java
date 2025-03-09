@@ -12,14 +12,8 @@ public class TradeOrderHistoryRequest {
     @SerializedName("contract_code")
     private String contractCode;
 
-    @SerializedName("side")
-    private String side;
-
-    @SerializedName("order_id")
-    private String orderId;
-
-    @SerializedName("client_order_id")
-    private String clientOrderId;
+    @SerializedName("business_type")
+    private String businessType;
 
     @SerializedName("state")
     private String state;

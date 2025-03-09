@@ -852,9 +852,6 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getContractCode())) {
                 params.put("contract_code", request.getContractCode());
             }
-            if (StringUtils.isNotEmpty(request.getSide())) {
-                params.put("side", request.getSide());
-            }
             if (StringUtils.isNotEmpty(request.getMarginMode())) {
                 params.put("margin_mode", request.getMarginMode());
             }
@@ -933,15 +930,6 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             Map<String,Object> params=new HashMap<>();
             if (StringUtils.isNotEmpty(request.getContractCode())) {
                 params.put("contract_code", request.getContractCode());
-            }
-            if (StringUtils.isNotEmpty(request.getSide())) {
-                params.put("side", request.getSide());
-            }
-            if (StringUtils.isNotEmpty(request.getOrderId())) {
-                params.put("order_id", request.getOrderId());
-            }
-            if (StringUtils.isNotEmpty(request.getClientOrderId())) {
-                params.put("client_order_id", request.getClientOrderId());
             }
             if (StringUtils.isNotEmpty(request.getState())) {
                 params.put("state", request.getState());

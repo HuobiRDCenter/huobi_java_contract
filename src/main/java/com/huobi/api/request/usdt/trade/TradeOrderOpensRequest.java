@@ -12,9 +12,6 @@ public class TradeOrderOpensRequest {
     @SerializedName("contract_code")
     private String contractCode;
 
-    @SerializedName("side")
-    private String side;
-
     @SerializedName("margin_mode")
     private String marginMode;
 
