@@ -2,15 +2,9 @@ package com.huobi.swap.api;
 
 import com.alibaba.fastjson.JSON;
 import com.huobi.api.request.coin_swap.account.LinearSwapBasisRequest;
-import com.huobi.api.request.coin_swap.account.SwapLiquidationOrdersRequest;
 import com.huobi.api.request.coin_swap.account.SwapMarketHistoryKlineRequest;
-import com.huobi.api.request.coin_swap.market.SwapSettlementRecordsRequest;
-import com.huobi.api.request.usdt.account.SwapLiquidationOrdersV3Request;
 import com.huobi.api.response.coin_swap.market.*;
-import com.huobi.api.response.usdt.account.SwapLiquidationOrdersV3Response;
 import com.huobi.api.response.usdt.market.BatchMergedV2Response;
-import com.huobi.api.response.usdt.market.SwapQueryElementsResponse;
-import com.huobi.api.response.usdt.market.SwapSettlementRecordsResponse;
 import com.huobi.api.service.coin_swap.market.MarketAPIServiceImpl;
 import org.junit.FixMethodOrder;
 import org.junit.Test;

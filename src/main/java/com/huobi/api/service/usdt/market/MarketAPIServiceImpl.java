@@ -1,10 +1,11 @@
 package com.huobi.api.service.usdt.market;
 
 import com.alibaba.fastjson.JSON;
+import com.huobi.api.constants.HuobiFutureAPIConstants;
 import com.huobi.api.constants.HuobiLinearSwapAPIConstants;
 import com.huobi.api.exception.ApiException;
+import com.huobi.api.request.usdt.market.MarketRiskLimitRequest;
 import com.huobi.api.request.usdt.account.LinearSwapBasisRequest;
-import com.huobi.api.request.usdt.account.SwapLiquidationOrdersRequest;
 import com.huobi.api.request.usdt.account.SwapMarketHistoryKlineRequest;
 import com.huobi.api.response.usdt.market.*;
 import com.huobi.api.util.HbdmHttpClient;
@@ -88,7 +89,7 @@ public class MarketAPIServiceImpl implements MarketAPIService {
     }
 
     @Override
-    public SwapMarketTradeResponse getSwapMarketTrade(String contractCode,String businessType) {
+    public SwapMarketTradeResponse getSwapMarketTrade(String contractCode, String businessType) {
         String body;
         try {
             Map<String, Object> params = new HashMap<>();
@@ -294,6 +295,67 @@ public class MarketAPIServiceImpl implements MarketAPIService {
         }
         throw new ApiException(body);
     }
+    @Override
+    public MarketRiskLimitResponse marketRiskLimitResponse(MarketRiskLimitRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getContractType())) {
+                params.put("contract_type", request.getContractType());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            if (StringUtils.isNotEmpty(request.getTier())) {
+                params.put("tier", request.getTier());
+            }
+            body=HbdmHttpClient.getInstance().doGet(url_prex + HuobiFutureAPIConstants.MARKET_RISK_LIMIT,params);
+            logger.debug("body:{}",body);
+            MarketRiskLimitResponse response=JSON.parseObject(body,MarketRiskLimitResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
 
+    @Override
+    public AssetsDeductionCurrencyResponse assetsDeductionCurrencyResponse() {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            body=HbdmHttpClient.getInstance().doGet(url_prex + HuobiFutureAPIConstants.ASSETS_DEDUCTION_CURRENCY,params);
+            logger.debug("body:{}",body);
+            AssetsDeductionCurrencyResponse response=JSON.parseObject(body,AssetsDeductionCurrencyResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public MarketMultiAssetsMarginListResponse marketMultiAssetsMarginListResponse() {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            body=HbdmHttpClient.getInstance().doGet(url_prex + HuobiFutureAPIConstants.MULTI_ASSETS_MARGIN_LIST,params);
+            logger.debug("body:{}",body);
+            MarketMultiAssetsMarginListResponse response=JSON.parseObject(body,MarketMultiAssetsMarginListResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
 
 }

@@ -1,7 +1,6 @@
 package com.huobi.api.response.coin_futures.market;
 
 import com.google.gson.annotations.SerializedName;
-import com.huobi.api.response.usdt.market.SwapQueryElementsResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

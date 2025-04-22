@@ -1,6 +1,7 @@
 package com.huobi.api.service.usdt.trade;
 
 import com.alibaba.fastjson.JSON;
+import com.huobi.api.constants.HuobiFutureAPIConstants;
 import com.huobi.api.constants.HuobiLinearSwapAPIConstants;
 import com.huobi.api.exception.ApiException;
 import com.huobi.api.request.usdt.trade.*;
@@ -567,6 +568,573 @@ public class TradeAPIServiceImpl implements TradeAPIService {
                 return response;
             }
         } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+    @Override
+    public TradeOrderResponse tradeOrderResponse(TradeOrderRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            if (StringUtils.isNotEmpty(request.getPositionSide())) {
+                params.put("position_side", request.getPositionSide());
+            }
+            if (StringUtils.isNotEmpty(request.getSide())) {
+                params.put("side", request.getSide());
+            }
+            if (StringUtils.isNotEmpty(request.getTpType())) {
+                params.put("type", request.getType());
+            }
+            if (StringUtils.isNotEmpty(request.getPriceMatch())) {
+                params.put("price_match", request.getPriceMatch());
+            }
+            if (StringUtils.isNotEmpty(request.getClientOrderId())) {
+                params.put("client_order_id", request.getClientOrderId());
+            }
+            if (StringUtils.isNotEmpty(request.getPrice())) {
+                params.put("price", request.getPrice());
+            }
+            if (StringUtils.isNotEmpty(request.getVolume())) {
+                params.put("volume", request.getVolume());
+            }
+            if (request.getReduceOnly() != null) {
+                params.put("reduce_only", request.getReduceOnly());
+            }
+            if (StringUtils.isNotEmpty(request.getTimeInForce())) {
+                params.put("time_in_force", request.getTimeInForce());
+            }
+            if (StringUtils.isNotEmpty(request.getTpTriggerPrice())) {
+                params.put("tp_trigger_price", request.getTpTriggerPrice());
+            }
+            if (StringUtils.isNotEmpty(request.getTpOrderPrice())) {
+                params.put("tp_order_price", request.getTpOrderPrice());
+            }
+            if (StringUtils.isNotEmpty(request.getTpType())) {
+                params.put("tp_type", request.getTpType());
+            }
+            if (StringUtils.isNotEmpty(request.getTpTriggerPriceType())) {
+                params.put("tp_trigger_price_type", request.getTpTriggerPriceType());
+            }
+            if (StringUtils.isNotEmpty(request.getSlTriggerPrice())) {
+                params.put("sl_trigger_price", request.getSlTriggerPrice());
+            }
+            if (StringUtils.isNotEmpty(request.getSlOrderPrice())) {
+                params.put("sl_order_price", request.getSlOrderPrice());
+            }
+            if (StringUtils.isNotEmpty(request.getSlType())) {
+                params.put("sl_type", request.getSlType());
+            }
+            if (StringUtils.isNotEmpty(request.getSlTriggerPriceType())) {
+                params.put("sl_trigger_price_type", request.getSlTriggerPriceType());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_ORDER,params);
+            logger.debug("body:{}",body);
+            TradeOrderResponse response=JSON.parseObject(body,TradeOrderResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public TradeBachOrderResponse tradeBachOrder(TradeBachOrderRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            if (StringUtils.isNotEmpty(request.getPositionSide())) {
+                params.put("position_side", request.getPositionSide());
+            }
+            if (StringUtils.isNotEmpty(request.getSide())) {
+                params.put("side", request.getSide());
+            }
+            if (StringUtils.isNotEmpty(request.getTpType())) {
+                params.put("type", request.getType());
+            }
+            if (StringUtils.isNotEmpty(request.getPriceMatch())) {
+                params.put("price_match", request.getPriceMatch());
+            }
+            if (StringUtils.isNotEmpty(request.getClientOrderId())) {
+                params.put("client_order_id", request.getClientOrderId());
+            }
+            if (StringUtils.isNotEmpty(request.getPrice())) {
+                params.put("price", request.getPrice());
+            }
+            if (StringUtils.isNotEmpty(request.getVolume())) {
+                params.put("volume", request.getVolume());
+            }
+            if (request.getReduceOnly() != null) {
+                params.put("reduce_only", request.getReduceOnly());
+            }
+            if (StringUtils.isNotEmpty(request.getTimeInForce())) {
+                params.put("time_in_force", request.getTimeInForce());
+            }
+            if (StringUtils.isNotEmpty(request.getTpTriggerPrice())) {
+                params.put("tp_trigger_price", request.getTpTriggerPrice());
+            }
+            if (StringUtils.isNotEmpty(request.getTpOrderPrice())) {
+                params.put("tp_order_price", request.getTpOrderPrice());
+            }
+            if (StringUtils.isNotEmpty(request.getTpType())) {
+                params.put("tp_type", request.getTpType());
+            }
+            if (StringUtils.isNotEmpty(request.getTpTriggerPriceType())) {
+                params.put("tp_trigger_price_type", request.getTpTriggerPriceType());
+            }
+            if (StringUtils.isNotEmpty(request.getSlTriggerPrice())) {
+                params.put("sl_trigger_price", request.getSlTriggerPrice());
+            }
+            if (StringUtils.isNotEmpty(request.getSlOrderPrice())) {
+                params.put("sl_order_price", request.getSlOrderPrice());
+            }
+            if (StringUtils.isNotEmpty(request.getSlType())) {
+                params.put("sl_type", request.getSlType());
+            }
+            if (StringUtils.isNotEmpty(request.getSlTriggerPriceType())) {
+                params.put("sl_trigger_price_type", request.getSlTriggerPriceType());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_BACHORDER,params);
+            logger.debug("body:{}",body);
+            TradeBachOrderResponse response=JSON.parseObject(body,TradeBachOrderResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public CancelTradeOrderResponse cancelTradeOrder(CancelTradeOrderRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getOrderId())) {
+                params.put("order_id", request.getOrderId());
+            }
+            if (StringUtils.isNotEmpty(request.getClientOrderId())) {
+                params.put("client_order_id", request.getClientOrderId());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CANCEL_TRADE_ORDER,params);
+            logger.debug("body:{}",body);
+            CancelTradeOrderResponse response=JSON.parseObject(body,CancelTradeOrderResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public CannelTradeBatchOrderResponse cannelTradeBatchOrderResponse(CannelTradeBatchOrderRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getOrderId())) {
+                params.put("order_id", request.getOrderId());
+            }
+            if (StringUtils.isNotEmpty(request.getClientOrderId())) {
+                params.put("client_order_id", request.getClientOrderId());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CANCEL_TRADE_BATCHORDERS,params);
+            logger.debug("body:{}",body);
+            CannelTradeBatchOrderResponse response=JSON.parseObject(body,CannelTradeBatchOrderResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public CannelTradeAllOrderResponse cannelTradeAllOrderResponse(CannelTradeAllOrderRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getSide())) {
+                params.put("side", request.getSide());
+            }
+            if (StringUtils.isNotEmpty(request.getPositionSide())) {
+                params.put("position_side", request.getPositionSide());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CANCEL_TRADE_ALLORDERS,params);
+            logger.debug("body:{}",body);
+            CannelTradeAllOrderResponse response=JSON.parseObject(body,CannelTradeAllOrderResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public TradePositionResponse tradePositionResponse(TradePositionRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            if (StringUtils.isNotEmpty(request.getPositionSide())) {
+                params.put("position_side", request.getPositionSide());
+            }
+            if (StringUtils.isNotEmpty(request.getClientOrderId())) {
+                params.put("client_order_id", request.getClientOrderId());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_POSITION,params);
+            logger.debug("body:{}",body);
+            TradePositionResponse response=JSON.parseObject(body,TradePositionResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public TradePositionAllResponse tradePositionAllResponse() {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_POSITIONALL,params);
+            logger.debug("body:{}",body);
+            TradePositionAllResponse response=JSON.parseObject(body,TradePositionAllResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public TradeOrderOpensResponse tradeOrderOpensResponse(TradeOrderOpensRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            if (StringUtils.isNotEmpty(request.getOrderId())) {
+                params.put("order_id", request.getOrderId());
+            }
+            if (StringUtils.isNotEmpty(request.getClientOrderId())) {
+                params.put("client_order_id", request.getClientOrderId());
+            }
+            if (request.getFrom() != null) {
+                params.put("from", request.getFrom());
+            }
+            if (request.getLimit() != null) {
+                params.put("limit", request.getLimit());
+            }
+            if (StringUtils.isNotEmpty(request.getDirect())) {
+                params.put("direct", request.getDirect());
+            }
+            body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_ORDER_OPENS,params);
+            logger.debug("body:{}",body);
+            TradeOrderOpensResponse response=JSON.parseObject(body,TradeOrderOpensResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public TradeOrderTradesResponse tradeOrderTradesResponse(TradeOrderTradesRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getOrderId())) {
+                params.put("order_id", request.getOrderId());
+            }
+            if (StringUtils.isNotEmpty(request.getClientOrderId())) {
+                params.put("client_order_id", request.getClientOrderId());
+            }
+            if (StringUtils.isNotEmpty(request.getStartTime())) {
+                params.put("start_time", request.getStartTime());
+            }
+            if (StringUtils.isNotEmpty(request.getEndTime())) {
+                params.put("end_time", request.getEndTime());
+            }
+            if (request.getFrom() != null) {
+                params.put("from", request.getFrom());
+            }
+            if (request.getLimit() != null) {
+                params.put("limit", request.getLimit());
+            }
+            if (StringUtils.isNotEmpty(request.getDirect())) {
+                params.put("direct", request.getDirect());
+            }
+            body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_ORDER_TRADES,params);
+            logger.debug("body:{}",body);
+            TradeOrderTradesResponse response=JSON.parseObject(body,TradeOrderTradesResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public TradeOrderHistoryResponse tradeOrderHistoryResponse(TradeOrderHistoryRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getState())) {
+                params.put("state", request.getState());
+            }
+            if (StringUtils.isNotEmpty(request.getType())) {
+                params.put("type", request.getType());
+            }
+            if (StringUtils.isNotEmpty(request.getPriceMatch())) {
+                params.put("price_match", request.getPriceMatch());
+            }
+            if (StringUtils.isNotEmpty(request.getStartTime())) {
+                params.put("start_time", request.getStartTime());
+            }
+            if (StringUtils.isNotEmpty(request.getEndTime())) {
+                params.put("end_time", request.getEndTime());
+            }
+            if (request.getFrom() != null) {
+                params.put("from", request.getFrom());
+            }
+            if (request.getLimit() != null) {
+                params.put("limit", request.getLimit());
+            }
+            if (StringUtils.isNotEmpty(request.getDirect())) {
+                params.put("direct", request.getDirect());
+            }
+            body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_ORDER_HISTORY,params);
+            logger.debug("body:{}",body);
+            TradeOrderHistoryResponse response=JSON.parseObject(body,TradeOrderHistoryResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public TradePositionOpensResponse tradePositionOpensResponse(TradePositionOpensRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_POSITION_OPENS,params);
+            logger.debug("body:{}",body);
+            TradePositionOpensResponse response=JSON.parseObject(body,TradePositionOpensResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public TradePositionHistoryResponse tradePositionHistoryResponse(TradePositionHistoryRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getContractType())) {
+                params.put("contract_type", request.getContractType());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            if (StringUtils.isNotEmpty(request.getStartTime())) {
+                params.put("start_time", request.getStartTime());
+            }
+            if (StringUtils.isNotEmpty(request.getEndTime())) {
+                params.put("end_time", request.getEndTime());
+            }
+            if (request.getFrom() != null) {
+                params.put("from", request.getFrom());
+            }
+            if (request.getLimit() != null) {
+                params.put("limit", request.getLimit());
+            }
+            if (StringUtils.isNotEmpty(request.getDirect())) {
+                params.put("direct", request.getDirect());
+            }
+            body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_POSITION_HISTORY,params);
+            logger.debug("body:{}",body);
+            TradePositionHistoryResponse response=JSON.parseObject(body,TradePositionHistoryResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public PositionLeverResponse positionLeverResponse(PositionLeverRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.POSITION_LEVER,params);
+            logger.debug("body:{}",body);
+            PositionLeverResponse response=JSON.parseObject(body,PositionLeverResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public SetPositionLeverResponse setPositionLeverResponse(SetPositionLeverRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            if (StringUtils.isNotEmpty(request.getLeverRate())) {
+                params.put("lever_rate", request.getLeverRate());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.SET_POSITION_LEVER,params);
+            logger.debug("body:{}",body);
+            SetPositionLeverResponse response=JSON.parseObject(body,SetPositionLeverResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public PositionModeResponse positionModeResponse() {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.POSITION_MODE,params);
+            logger.debug("body:{}",body);
+            PositionModeResponse response=JSON.parseObject(body,PositionModeResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public PositionModeResponse setPositionModeResponse(SetPositionModeRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getPositionMode())) {
+                params.put("position_mode", request.getPositionMode());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.SET_POSITION_MODE,params);
+            logger.debug("body:{}",body);
+            PositionModeResponse response=JSON.parseObject(body,PositionModeResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public PositionRiskLimitResponse positionRiskLimitResponse(PositionRiskLimitRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            if (StringUtils.isNotEmpty(request.getPositionSide())) {
+                params.put("position_side", request.getPositionSide());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.POSITION_RISKLIMIT,params);
+            logger.debug("body:{}",body);
+            PositionRiskLimitResponse response=JSON.parseObject(body,PositionRiskLimitResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
             throw new ApiException(e);
         }
         throw new ApiException(body);

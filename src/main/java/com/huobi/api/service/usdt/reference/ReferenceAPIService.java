@@ -2,8 +2,6 @@ package com.huobi.api.service.usdt.reference;
 
 import com.huobi.api.request.usdt.account.SwapLiquidationOrdersV3Request;
 import com.huobi.api.response.usdt.account.SwapLiquidationOrdersV3Response;
-import com.huobi.api.response.usdt.account.SwapSwitchAccountTypeResponse;
-import com.huobi.api.response.usdt.account.SwapUnifiedAccountTypeResponse;
 import com.huobi.api.response.usdt.market.*;
 
 public interface ReferenceAPIService {

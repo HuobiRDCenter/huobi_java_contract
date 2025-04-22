@@ -1,7 +1,6 @@
 package com.huobi.api.response.usdt.trade;
 
 import com.google.gson.annotations.SerializedName;
-import com.huobi.api.response.usdt.market.LinearSwapBasisResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

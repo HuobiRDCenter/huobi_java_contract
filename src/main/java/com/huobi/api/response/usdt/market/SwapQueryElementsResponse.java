@@ -1,7 +1,6 @@
 package com.huobi.api.response.usdt.market;
 
 import com.google.gson.annotations.SerializedName;
-import com.sun.deploy.security.WSecureRandom;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

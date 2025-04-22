@@ -2,15 +2,9 @@ package com.huobi.api.service.coin_swap.market;
 
 
 import com.huobi.api.request.coin_swap.account.LinearSwapBasisRequest;
-import com.huobi.api.request.coin_swap.account.SwapLiquidationOrdersRequest;
 import com.huobi.api.request.coin_swap.account.SwapMarketHistoryKlineRequest;
-import com.huobi.api.request.coin_swap.market.SwapSettlementRecordsRequest;
-import com.huobi.api.request.usdt.account.SwapLiquidationOrdersV3Request;
 import com.huobi.api.response.coin_swap.market.*;
-import com.huobi.api.response.usdt.account.SwapLiquidationOrdersV3Response;
 import com.huobi.api.response.usdt.market.BatchMergedV2Response;
-import com.huobi.api.response.usdt.market.SwapQueryElementsResponse;
-import com.huobi.api.response.usdt.market.SwapSettlementRecordsResponse;
 
 public interface MarketAPIService {
     SwapMarketDepthResponse getSwapMarketDepth(String contractCode, String type);// 1.获取行情深度数据
