@@ -84,5 +84,9 @@ public class AccountsSubResponse {
         private String marginAccount;
         @SerializedName("position_mode")
         private String positionMode;
+        @SerializedName("voucher")
+        private String voucher;
+        @SerializedName("voucher_value")
+        private String voucherValue;
     }
 }

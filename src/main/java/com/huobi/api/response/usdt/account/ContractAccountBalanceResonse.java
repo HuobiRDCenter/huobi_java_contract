@@ -65,6 +65,9 @@ public class ContractAccountBalanceResonse {
         @SerializedName("available")
         private String available;
 
+        @SerializedName("withdraw_available")
+        private String withdrawAvailable;
+
         @SerializedName("profit_unreal")
         private String profitUnreal;
 
