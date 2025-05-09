@@ -38,4 +38,7 @@ public class TradeOrderHistoryRequest {
 
     @SerializedName("direct")
     private String direct;
+
+    @SerializedName("margin_mode")
+    private String marginMode;
 }

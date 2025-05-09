@@ -121,6 +121,7 @@ public class HuobiFutureAPIConstants {
     public static final String MULTI_ASSETS_MARGIN_LIST = "/v5/market/multi_assets_margin"; // 22.查询联合保证金支持币种
     public static final String Market_Risk_Limit = "/v5/market/risk/limit"; // 23.查询合约风险限额
     public static final String Position_Risk_Limit = "/v5/position/risk/limit"; // 24.查询持仓风险限额
+    public static final String Get_Trade_Order_Response = "/v5/trade/order"; // 25.查询订单信息
 
 
 
