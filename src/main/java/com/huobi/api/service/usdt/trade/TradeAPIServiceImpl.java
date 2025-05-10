@@ -1139,4 +1139,33 @@ public class TradeAPIServiceImpl implements TradeAPIService {
         }
         throw new ApiException(body);
     }
+
+    @Override
+    public GetTradeOrderResponse getTradeOrderResponse(GetTradeOrderRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            if (StringUtils.isNotEmpty(request.getOrderId())) {
+                params.put("order_id", request.getOrderId());
+            }
+            if (StringUtils.isNotEmpty(request.getClientOrderId())) {
+                params.put("client_order_id", request.getClientOrderId());
+            }
+            body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.Get_Trade_Order_Response,params);
+            logger.debug("body:{}",body);
+            GetTradeOrderResponse response=JSON.parseObject(body,GetTradeOrderResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
 }

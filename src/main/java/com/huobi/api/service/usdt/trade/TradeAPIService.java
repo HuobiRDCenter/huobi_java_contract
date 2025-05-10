@@ -71,5 +71,7 @@ public interface TradeAPIService {
 
     PositionRiskLimitResponse positionRiskLimitResponse(PositionRiskLimitRequest request);
 
+    GetTradeOrderResponse getTradeOrderResponse(GetTradeOrderRequest request);
+
 
 }
