@@ -46,6 +46,9 @@ public class TradeOrderHistoryResponse {
         @SerializedName("price")
         private String price;
 
+        @SerializedName("cancel_reason")
+        private String cancelReason;
+
         @SerializedName("volume")
         private String volume;
 
