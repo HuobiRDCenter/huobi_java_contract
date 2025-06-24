@@ -106,4 +106,26 @@ public class HuobiLinearSwapAPIConstants {
     public static final String FIX_POSITION_MARGIN_CHANGE_RECORD = "/linear-swap-api/v3/fix_position_margin_change_record"; // 5.查询调整逐仓持仓保证金记录
     public static final String SWAP_UNIFIED_ACCOUNT_TYPE = "/linear-swap-api/v3/swap_unified_account_type"; // 6.账户类型查询
     public static final String SWAP_SWITCH_ACCOUNT_TYPE = "/linear-swap-api/v3/swap_switch_account_type"; // 7.账户类型更改接口
+
+    //合约跟单
+    public static final String Copytrading_Trader_Place_Order = "/copytrading/trader/place_order"; // 1.交易员下单
+    public static final String Copytrading_Trader_Query_Contract_Lever = "/copytrading/trader/query_contract_lever"; // 2.查询交易员带单杠杆等级
+    public static final String Copytrading_Trader_Updated_Contract_Lever = "/copytrading/trader/updated_contract_lever"; // 3.修改交易员杠杆
+    public static final String Copytrading_Trader_Close_Order = "/copytrading/trader/close_order"; // 4.交易员平仓
+    public static final String Copytrading_Trader_Close_All_Position = "/copytrading/trader/close_all_position"; // 5.交易员市价全平
+    public static final String Copytrading_Trader_Add_Margin = "/copytrading/trader/add_margin"; // 6.交易员调整逐仓保证金
+    public static final String Copytrading_Trader_Position_List = "/copytrading/trader/position_list"; // 7.查询交易员持仓列表
+    public static final String Copytrading_Trader_Account_Transfer = "/copytrading/trader/account_transfer"; // 8.跟单账户划转
+    public static final String Copytrading_Trader_Current_Positions = "/copytrading/trader/current_positions"; // 9.交易员查询当前带单
+    public static final String Copytrading_Trader_Position_Positions = "/copytrading/trader/position_positions"; // 10.交易员查询历史带单
+    public static final String Copytrading_Trader_Tpsl_Order = "/copytrading/trader/tpsl_order"; // 11.交易员设置止盈止损
+    public static final String Copytrading_Trader_Query_Contract = "/copytrading/trader/query_contract"; // 12.交易员查询带单产品
+    public static final String Copytrading_Trader_Order_Total_Detail = "/copytrading/trader/order_total_detail"; // 13.交易员带单指标
+    public static final String Copytrading_Trader_Profit_History_Details = "/copytrading/trader/profit_history_details"; // 14.交易员历史分润明细
+    public static final String Copytrading_Trader_Total_Profit_History = "/copytrading/trader/total_profit_history"; // 15.交易员历史分润汇总
+    public static final String Copytrading_Trader_Query_Followers = "/copytrading/trader/query_followers"; // 16.查询交易员跟单者
+    public static final String Copytrading_Trader_Remove_Follower = "/copytrading/trader/remove_follower"; // 17.取消交易员跟单者
+    public static final String Copytrading_Trader_Open_Orders = "/copytrading/trader/open_orders"; // 18.查询当前委托
+    public static final String Copytrading_Trader_Tpsl_Open_Orders = "/copytrading/trader/tpsl_open_orders"; // 19.查询当前止盈止损委托
+
 }
