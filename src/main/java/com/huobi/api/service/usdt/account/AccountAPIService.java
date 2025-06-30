@@ -58,4 +58,7 @@ public interface AccountAPIService {
     ContractAccountBalanceResonse getContractAccountBalance(); // 22. 联合保证金查询账户余额
 
     MultiAssetsMarginResponse setMultiAssetsMargin(int assetsMode); // 23.设置联合保证金模式
+
+    QueryAllRebateDetailResponse queryAllRebateDetail(String direct, String fromId, Long limit);
+    QueryBatcherRebateDetailResponse queryBatcherRebateDetail(String inviteeUidList);
 }
