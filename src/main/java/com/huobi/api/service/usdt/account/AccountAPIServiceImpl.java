@@ -610,4 +610,50 @@ public class AccountAPIServiceImpl implements AccountAPIService {
         }
         throw new ApiException(body);
     }
+
+    @Override
+    public QueryAllRebateDetailResponse queryAllRebateDetail(String direct, String fromId, Long limit) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            if (direct != null) {
+                params.put("direct", direct);
+            }
+            if (fromId != null) {
+                params.put("fromId", fromId);
+            }
+            if (limit != null) {
+                params.put("limit", limit);
+            }
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Invitee_Rebate_All_Rebate_Detail, params);
+            logger.debug("body:{}", body);
+            QueryAllRebateDetailResponse response = JSON.parseObject(body, QueryAllRebateDetailResponse.class);
+            if ("ok".equalsIgnoreCase(response.getStatus())) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public QueryBatcherRebateDetailResponse queryBatcherRebateDetail(String inviteeUidList) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            if (inviteeUidList != null) {
+                params.put("inviteeUidList", inviteeUidList);
+            }
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Invitee_Rebate_Batcher_Rebate_Detail, params);
+            logger.debug("body:{}", body);
+            QueryBatcherRebateDetailResponse response = JSON.parseObject(body, QueryBatcherRebateDetailResponse.class);
+            if ("ok".equalsIgnoreCase(response.getStatus())) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
 }
