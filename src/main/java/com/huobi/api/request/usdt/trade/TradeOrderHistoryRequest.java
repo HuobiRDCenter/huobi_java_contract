@@ -12,9 +12,6 @@ public class TradeOrderHistoryRequest {
     @SerializedName("contract_code")
     private String contractCode;
 
-    @SerializedName("business_type")
-    private String businessType;
-
     @SerializedName("state")
     private String state;
 
@@ -41,4 +38,7 @@ public class TradeOrderHistoryRequest {
 
     @SerializedName("margin_mode")
     private String marginMode;
+
+    @SerializedName("margin_mode")
+    private String timeInForce;
 }
