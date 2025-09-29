@@ -931,6 +931,9 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getContractCode())) {
                 params.put("contract_code", request.getContractCode());
             }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
             if (StringUtils.isNotEmpty(request.getState())) {
                 params.put("state", request.getState());
             }
@@ -939,6 +942,9 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             }
             if (StringUtils.isNotEmpty(request.getPriceMatch())) {
                 params.put("price_match", request.getPriceMatch());
+            }
+            if (StringUtils.isNotEmpty(request.getTimeInForce())) {
+                params.put("time_in_force", request.getTimeInForce());
             }
             if (StringUtils.isNotEmpty(request.getStartTime())) {
                 params.put("start_time", request.getStartTime());
