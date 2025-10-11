@@ -7,6 +7,7 @@ import com.huobi.api.exception.ApiException;
 import com.huobi.api.request.usdt.market.MarketRiskLimitRequest;
 import com.huobi.api.request.usdt.account.LinearSwapBasisRequest;
 import com.huobi.api.request.usdt.account.SwapMarketHistoryKlineRequest;
+import com.huobi.api.response.usdt.account.SwapAccountInfoResponse;
 import com.huobi.api.response.usdt.market.*;
 import com.huobi.api.util.HbdmHttpClient;
 import org.apache.commons.lang3.StringUtils;
