@@ -64,6 +64,6 @@ public interface AccountAPIService {
     AccountFeeDeductionCurrency accountFeeDeductionCurrencyResponse(Integer feeOption, String deductionCurrency);
     ProjectQueryEarnProjectList projectQueryEarnProjectListResponse(String currency, Integer pageNum, Integer pageSize);
     EarnOrderDemandAdd earnOrderDemandAddResponse(Long id, BigDecimal amount, String requestId);
-    EarnOrderDemandRedeemOrde earnOrderDemandRedeemOrdeResponse(Long id, BigDecimal amount, String requestId);
+    EarnOrderDemandRedeemOrde earnOrderDemandRedeemOrderResponse(Long id, BigDecimal amount, String requestId);
     EarnOrderUserAssetsList earnOrderUserAssetsListResponse(Integer projectType, String currency, Integer pageNum, Integer pageSize);
 }
