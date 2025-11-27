@@ -656,4 +656,137 @@ public class AccountAPIServiceImpl implements AccountAPIService {
         }
         throw new ApiException(body);
     }
+
+    @Override
+    public AccountFeeDeductionCurrency accountFeeDeductionCurrencyResponse(Integer feeOption, String deductionCurrency) {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            if (feeOption != null) {
+                params.put("fee_option", feeOption);
+            }
+            if (StringUtils.isNotEmpty(deductionCurrency)) {
+                params.put("deduction_currency", deductionCurrency);
+            }
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.Fee_Deduction_Currency, params);
+            logger.debug("body:{}", body);
+            AccountFeeDeductionCurrency response = JSON.parseObject(body, AccountFeeDeductionCurrency.class);
+            if (response != null) {
+                return response;
+            }
+
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public ProjectQueryEarnProjectList projectQueryEarnProjectListResponse(String currency, Integer pageNum, Integer pageSize) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            if (currency != null) {
+                params.put("currency", currency);
+            }
+            if (pageNum != null) {
+                params.put("pageNum", pageNum);
+            }
+            if (pageSize != null) {
+                params.put("pageSize", pageSize);
+            }
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Earn_Project_Query_Earn_Project_List, params);
+            logger.debug("body:{}", body);
+            ProjectQueryEarnProjectList response = JSON.parseObject(body, ProjectQueryEarnProjectList.class);
+            if (response != null) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public EarnOrderDemandAdd earnOrderDemandAddResponse(Long id, BigDecimal amount, String requestId) {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            if (id != null) {
+                params.put("id", id);
+            }
+            if (amount != null) {
+                params.put("amount", amount);
+            }
+            if (StringUtils.isNotEmpty(requestId)) {
+                params.put("requestId", requestId);
+            }
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Earn_Order_Demand_Add, params);
+            logger.debug("body:{}", body);
+            EarnOrderDemandAdd response = JSON.parseObject(body, EarnOrderDemandAdd.class);
+            if (response != null) {
+                return response;
+            }
+
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public EarnOrderDemandRedeemOrde earnOrderDemandRedeemOrderResponse(Long id, BigDecimal amount, String requestId) {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            if (id != null) {
+                params.put("id", id);
+            }
+            if (amount != null) {
+                params.put("amount", amount);
+            }
+            if (StringUtils.isNotEmpty(requestId)) {
+                params.put("requestId", requestId);
+            }
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Earn_Order_Demand_Redeem_Order, params);
+            logger.debug("body:{}", body);
+            EarnOrderDemandRedeemOrde response = JSON.parseObject(body, EarnOrderDemandRedeemOrde.class);
+            if (response != null) {
+                return response;
+            }
+
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public EarnOrderUserAssetsList earnOrderUserAssetsListResponse(Integer projectType, String currency, Integer pageNum, Integer pageSize) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            if (projectType != null) {
+                params.put("projectType", projectType);
+            }
+            if (currency != null) {
+                params.put("currency", currency);
+            }
+            if (pageNum != null) {
+                params.put("pageNum", pageNum);
+            }
+            if (pageSize != null) {
+                params.put("pageSize", pageSize);
+            }
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Earn_Order_User_Assets_List, params);
+            logger.debug("body:{}", body);
+            EarnOrderUserAssetsList response = JSON.parseObject(body, EarnOrderUserAssetsList.class);
+            if (response != null) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
 }
