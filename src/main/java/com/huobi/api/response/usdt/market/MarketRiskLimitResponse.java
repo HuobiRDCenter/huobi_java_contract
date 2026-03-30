@@ -39,5 +39,8 @@ public class MarketRiskLimitResponse {
 
         @SerializedName("min_volume")
         private String minVolume;
+
+        @SerializedName("volume_unit")
+        private String volumeUnit;
     }
 }

@@ -20,4 +20,8 @@ public class MarketRiskLimitRequest {
 
     @SerializedName("tier")
     private String tier;
+
+    @SerializedName("volume_unit")
+    private String volumeUnit;
+
 }
