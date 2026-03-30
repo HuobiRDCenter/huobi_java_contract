@@ -37,7 +37,7 @@ public interface TradeAPIService {
 
     SwapPositionSideResponse swapPositionSideResponse(SwapPositionSideRequest request); // 16.查询持仓模式
 
-    TradeOrderResponse tradeOrderResponse(TradeOrderRequest request);
+    TradeOrderResponse tradeOrderResponse(TradeOrderRequest request); //下单
 
     TradeBachOrderResponse tradeBachOrder(TradeBachOrderRequest request);
 
@@ -71,7 +71,11 @@ public interface TradeAPIService {
 
     PositionRiskLimitResponse positionRiskLimitResponse(PositionRiskLimitRequest request);
 
+    PositionRiskLimitTierResponse positionRiskLimitTierResponse(PositionRiskLimitTierRequest request);
+
+    PositionMarginResponse positionMarginResponse(PositionMarginRequest request);
+
     GetTradeOrderResponse getTradeOrderResponse(GetTradeOrderRequest request);
 
-
+    TradeCancelAfterResponse tradeCancelAfterResponse(TradeCancelAfterRequest request); //下单
 }

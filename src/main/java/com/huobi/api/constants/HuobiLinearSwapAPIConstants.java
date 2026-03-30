@@ -128,14 +128,21 @@ public class HuobiLinearSwapAPIConstants {
     public static final String Copytrading_Trader_Open_Orders = "/copytrading/trader/open_orders"; // 18.查询当前委托
     public static final String Copytrading_Trader_Tpsl_Open_Orders = "/copytrading/trader/tpsl_open_orders"; // 19.查询当前止盈止损委托
 
+    // 合约跟单 V6 接口
+    public static final String CopytradingV6_Trader_Instruments = "/api/v6/copyTrading/trader/instruments";
+    public static final String CopytradingV6_Trader_Statistics = "/api/v6/copyTrading/trader/statistics";
+    public static final String CopytradingV6_Trader_Profit_Sharing_History = "/api/v6/copyTrading/trader/profit-sharing-history";
+    public static final String CopytradingV6_Trader_Profit_Sharing_History_Summary = "/api/v6/copyTrading/trader/profit-sharing-history-summary";
+    public static final String CopytradingV6_Trader_Unrealized_Profit_Sharing_Summary = "/api/v6/copyTrading/trader/unrealized-profit-sharing-summary";
+    public static final String CopytradingV6_Trader_Followers = "/api/v6/copyTrading/trader/followers";
+    public static final String CopytradingV6_Trader_Follower = "/api/v6/copyTrading/trader/follower";
+    public static final String CopytradingV6_Trader_Transfer = "/api/v6/copyTrading/trader/transfer";
+    public static final String CopytradingV6_Trader_Follower_Settings = "/api/v6/copyTrading/trader/follower-settings";
+    public static final String CopytradingV6_Trader_Config = "/api/v6/copyTrading/trader/config";
+    public static final String CopytradingV6_Trader_Apikey = "/api/v6/copyTrading/trader/apikey";
+
     //返佣
     public static final String Invitee_Rebate_All_Rebate_Detail = "/v2/invitee/rebate/all_rebate/detail"; // 查询全部返佣信息
     public static final String Invitee_Rebate_Batcher_Rebate_Detail = "/v2/invitee/rebate/batcher_rebate/detail"; // 查询批量返佣信息
-    public static final String Earn_Project_Query_Earn_Project_List = "/v1/earn/project/queryEarnProjectList";
-    public static final String Earn_Order_Demand_Add = "/v1/earn/order/demand/add";
-    public static final String Earn_Order_Demand_Redeem_Order = "/v1/earn/order/demand/redeem-order";
-    public static final String Earn_Order_User_Assets_List = "/v1/earn/order/user/assets/list";
-
-
 
 }

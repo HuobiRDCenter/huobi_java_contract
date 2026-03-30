@@ -33,6 +33,7 @@ public class HuobiSwapsWSSConstants {
     public static final String PUBLIC_FUNDING_RATE = "public.$contract_code.funding_rate";// 6.订阅资金费率推送(免鉴权)（sub）
     public static final String PUBLIC_CONTRACT_INFO = "public.$contract_code.contract_info";// 7.订阅合约信息变动(免鉴权)（sub）
     public static final String TRIGGER_ORDER_CONTRACT_CODE = "trigger_order.$contract_code";// 8.订阅计划委托订单更新(sub)
+    public static final String MATCH_ORDERS_CONTRACT_CODE = "match_orders.$contract_code";// 9.订阅撮合后的订单数据
 
     //系统状态更新接口
     public static final String PUBLIC_HEARTBEAT = "public.$service.heartbeat";// 1.订阅系统状态更新

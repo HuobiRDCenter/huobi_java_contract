@@ -99,6 +99,9 @@ public class HuobiFutureAPIConstants {
     //联合保证金接口
     public static final String ACCOUNT_BALANCE = "/v5/account/balance"; // 1.查询账户余额
     public static final String ACCOUNT_MULTI_ASSETS_MARGIN = "/v5/account/multi_assets_margin"; // 2.设置联合保证金模式
+    public static final String ACCOUNT_FEE_DEDUCTION_CURRENCY = "/v5/account/fee_deduction_currency"; //查看手续费抵扣币种
+    public static final String ACCOUNT_BILLS = "/v5/account/bills"; //查询流水记录
+
     public static final String TRADE_ORDER = "/v5/trade/order"; // 3.下单
     public static final String TRADE_BACHORDER = "/v5/trade/batch_orders"; // 4.批量下单
     public static final String CANCEL_TRADE_ORDER = "/v5/trade/cancel_order"; // 5.撤单
@@ -115,16 +118,44 @@ public class HuobiFutureAPIConstants {
     public static final String SET_POSITION_LEVER = "/v5/position/lever"; // 16.设置杠杆等级
     public static final String POSITION_MODE = "/api/v5/position/mode"; // 17.查询持仓模式
     public static final String SET_POSITION_MODE = "/api/v5/position/mode"; // 18.设置持仓模式
-    public static final String POSITION_RISKLIMIT = "/v5/position/riskLimit"; // 19.查询持仓风险限额
-    public static final String MARKET_RISK_LIMIT = "/v5/market/risk_limit"; // 20.查询合约风险限额
+    public static final String POSITION_RISK_LIMIT = "/v5/position/risk/limit"; // 19.查询持仓风险限额
+    public static final String POSITION_RISK_LIMIT_TIER = "/v5/position/risk/limit_tier"; // 26.查询持仓风险限额
+    public static final String POSITION_MARGIN = "/v5/position/margin"; // 调整逐仓仓位保证金
+
+    public static final String MARKET_RISK_LIMIT = "/v5/market/risk/limit"; // 20.查询合约风险限额
     public static final String ASSETS_DEDUCTION_CURRENCY = "/v5/assets_deduction_currency"; // 21.查询可抵扣手续费币种
     public static final String MULTI_ASSETS_MARGIN_LIST = "/v5/market/multi_assets_margin"; // 22.查询联合保证金支持币种
-    public static final String Market_Risk_Limit = "/v5/market/risk/limit"; // 23.查询合约风险限额
-    public static final String Position_Risk_Limit = "/v5/position/risk/limit"; // 24.查询持仓风险限额
     public static final String Get_Trade_Order_Response = "/v5/trade/order"; // 25.查询订单信息
-    public static final String Fee_Deduction_Currency = "/v5/account/fee_deduction_currency";
+    public static final String TRADE_CANCEL_AFTER = "/v5/trade/cancel-after";
 
+    /**
+     GET /v5/market/funding_rate
+     GET /v5/market/funding_rate_history
+     GET /v5/market/contract_info
+     GET /v5/market/open_interest
+     GET /v5/market/price_limit
+     GET /v5/market/liquidation_orders
+     GET /v5/market/settlement_history
+     GET /v5/market/elite_account_ratio
+     GET /v5/market/elite_position_ratio
+     GET /v5/market/estimated_settlement_price
+     */
 
+    // 市场数据相关
+    public static final String MARKET_FUNDING_RATE = "/v5/market/funding_rate";
+    public static final String MARKET_FUNDING_RATE_HISTORY = "/v5/market/funding_rate_history";
+    public static final String MARKET_CONTRACT_INFO = "/v5/market/contract_info";
+    public static final String MARKET_OPEN_INTEREST = "/v5/market/open_interest";
+    public static final String MARKET_PRICE_LIMIT = "/v5/market/price_limit";
+    public static final String MARKET_LIQUIDATION_ORDERS = "/v5/market/liquidation_orders";
+    public static final String MARKET_SETTLEMENT_HISTORY = "/v5/market/settlement_history";
+    public static final String MARKET_ELITE_ACCOUNT_RATIO = "/v5/market/elite_account_ratio";
+    public static final String MARKET_ELITE_POSITION_RATIO = "/v5/market/elite_position_ratio";
+    public static final String MARKET_ESTIMATED_SETTLEMENT_PRICE = "/v5/market/estimated_settlement_price";
 
-
+    public static final String ALGO_ORDER = "/v5/algo/order";
+    public static final String ALGO_ORDER_CANCEL = "/v5/algo/cancel-orders";
+    public static final String ALGO_ORDER_QUERY = "/v5/algo/order";
+    public static final String ALGO_ORDER_OPENS_QUERY = "/v5/algo/order/opens";
+    public static final String ALGO_ORDER_HISTORY_QUERY = "/v5/algo/order/history";
 }

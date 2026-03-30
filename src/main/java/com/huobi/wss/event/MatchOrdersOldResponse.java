@@ -10,7 +10,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Data
-public class MatchOrdersResponse {
+public class MatchOrdersOldResponse {
     private String op;
     private String topic;
     private Long ts;

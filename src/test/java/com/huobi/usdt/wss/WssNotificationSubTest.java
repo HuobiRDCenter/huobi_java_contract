@@ -169,7 +169,7 @@ public class WssNotificationSubTest {
         wssNotificationHandle.sub(channels, response -> {
             logger.info("用户收到的数据===============:{}", JSON.toJSON(response));
             Long currentTimeMillis = System.currentTimeMillis();
-            MatchOrdersSubResponse event = JSON.parseObject(response, MatchOrdersSubResponse.class);
+            MatchOrdersSubOldResponse event = JSON.parseObject(response, MatchOrdersSubOldResponse.class);
             logger.info("ts为：{},当前的时间戳为：{},时间间隔为：{}毫秒", event.getTs(), currentTimeMillis, currentTimeMillis - event.getTs());
         });
         Thread.sleep(Integer.MAX_VALUE);
@@ -183,6 +183,19 @@ public class WssNotificationSubTest {
             logger.info("用户收到的数据===============:{}", JSON.toJSON(response));
             Long currentTimeMillis = System.currentTimeMillis();
             MatchOrdersCrossSubResponse event = JSON.parseObject(response, MatchOrdersCrossSubResponse.class);
+            logger.info("ts为：{},当前的时间戳为：{},时间间隔为：{}毫秒", event.getTs(), currentTimeMillis, currentTimeMillis - event.getTs());
+        });
+        Thread.sleep(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void test14() throws URISyntaxException, InterruptedException {
+        List<String> channels = Lists.newArrayList();
+        channels.add("match_orders.BTC-USDT");
+        wssNotificationHandle.sub(channels, response -> {
+            logger.info("用户收到的数据===============:{}", JSON.toJSON(response));
+            Long currentTimeMillis = System.currentTimeMillis();
+            MatchOrdersSubResponse event = JSON.parseObject(response, MatchOrdersSubResponse.class);
             logger.info("ts为：{},当前的时间戳为：{},时间间隔为：{}毫秒", event.getTs(), currentTimeMillis, currentTimeMillis - event.getTs());
         });
         Thread.sleep(Integer.MAX_VALUE);

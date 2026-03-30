@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+
 public class CopytradingAPIServiceImpl implements CopytradingAPIService{
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
