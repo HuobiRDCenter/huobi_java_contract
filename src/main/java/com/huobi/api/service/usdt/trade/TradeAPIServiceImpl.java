@@ -1134,9 +1134,64 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getPositionSide())) {
                 params.put("position_side", request.getPositionSide());
             }
-            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.POSITION_RISKLIMIT,params);
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.POSITION_RISK_LIMIT,params);
             logger.debug("body:{}",body);
             PositionRiskLimitResponse response=JSON.parseObject(body,PositionRiskLimitResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public PositionRiskLimitTierResponse positionRiskLimitTierResponse(PositionRiskLimitTierRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.POSITION_RISK_LIMIT_TIER,params);
+            logger.debug("body:{}",body);
+            PositionRiskLimitTierResponse response=JSON.parseObject(body,PositionRiskLimitTierResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public PositionMarginResponse positionMarginResponse(PositionMarginRequest request) {
+        String body;
+        try{
+            Map<String,Object> params = new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+
+            if (StringUtils.isNotEmpty(request.getPosition_side())) {
+                params.put("position_side", request.getPosition_side());
+            }
+
+            if (StringUtils.isNotEmpty(request.getAmount())) {
+                params.put("amount", request.getAmount());
+            }
+
+            if (StringUtils.isNotEmpty(request.getType())) {
+                params.put("type", request.getType());
+            }
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.POSITION_MARGIN,params);
+            logger.debug("body:{}",body);
+            PositionMarginResponse response=JSON.parseObject(body,PositionMarginResponse.class);
             if (response.getCode() !=  null && response.getCode() == 200){
                 return response;
             }
@@ -1166,6 +1221,29 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.Get_Trade_Order_Response,params);
             logger.debug("body:{}",body);
             GetTradeOrderResponse response=JSON.parseObject(body,GetTradeOrderResponse.class);
+            if (response.getCode() !=  null && response.getCode() == 200){
+                return response;
+            }
+        }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public TradeCancelAfterResponse tradeCancelAfterResponse(TradeCancelAfterRequest request) {
+        String body;
+        try{
+            Map<String,Object> params=new HashMap<>();
+            if (StringUtils.isNotEmpty(request.getOnOff())) {
+                params.put("on_off", request.getOnOff());
+            }
+            if (StringUtils.isNotEmpty(request.getTimeOut())) {
+                params.put("time_out", request.getTimeOut());
+            }
+            body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_CANCEL_AFTER,params);
+            logger.debug("body:{}",body);
+            TradeCancelAfterResponse response=JSON.parseObject(body,TradeCancelAfterResponse.class);
             if (response.getCode() !=  null && response.getCode() == 200){
                 return response;
             }

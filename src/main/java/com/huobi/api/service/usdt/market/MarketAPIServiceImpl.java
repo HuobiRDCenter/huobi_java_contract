@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.huobi.api.constants.HuobiFutureAPIConstants;
 import com.huobi.api.constants.HuobiLinearSwapAPIConstants;
 import com.huobi.api.exception.ApiException;
-import com.huobi.api.request.usdt.market.MarketRiskLimitRequest;
+import com.huobi.api.request.usdt.market.*;
 import com.huobi.api.request.usdt.account.LinearSwapBasisRequest;
 import com.huobi.api.request.usdt.account.SwapMarketHistoryKlineRequest;
 import com.huobi.api.response.usdt.account.SwapAccountInfoResponse;
@@ -354,6 +354,305 @@ public class MarketAPIServiceImpl implements MarketAPIService {
                 return response;
             }
         }catch(Exception e){
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public MarketFundingRateResponse getFundingRate(MarketFundingRateRequest request) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            params.put("contract_code", request.getContractCode());
+
+            // 使用GET请求查询（市场数据接口通常不需要鉴权）
+            body = HbdmHttpClient.getInstance().doGet(url_prex + HuobiFutureAPIConstants.MARKET_FUNDING_RATE, params);
+            logger.debug("查询资金费率返回body:{}", body);
+
+            MarketFundingRateResponse response = JSON.parseObject(body, MarketFundingRateResponse.class);
+            if (response.getCode() != null && response.getCode() == 200){
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public MarketFundingRateHistoryResponse getFundingRateHistory(MarketFundingRateHistoryRequest request) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            params.put("contract_code", request.getContractCode());
+
+            // 可选参数
+            if (request.getStartTime() != null) {
+                params.put("start_time", request.getStartTime());
+            }
+
+            if (request.getEndTime() != null) {
+                params.put("end_time", request.getEndTime());
+            }
+
+            if (request.getFrom() != null) {
+                params.put("from", request.getFrom());
+            }
+
+            if (request.getLimit() != null) {
+                params.put("limit", request.getLimit());
+            }
+
+            if (StringUtils.isNotEmpty(request.getDirect())) {
+                params.put("direct", request.getDirect());
+            }
+
+            // 使用GET请求查询（市场数据接口通常不需要鉴权）
+            body = HbdmHttpClient.getInstance().doGet(url_prex + HuobiFutureAPIConstants.MARKET_FUNDING_RATE_HISTORY, params);
+            logger.debug("查询历史资金费率返回body:{}", body);
+
+            MarketFundingRateHistoryResponse response = JSON.parseObject(body, MarketFundingRateHistoryResponse.class);
+            if (response.getCode() != null && response.getCode() == 200){
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public MarketOpenInterestResponse getOpenInterest(MarketOpenInterestRequest request) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            params.put("contract_code", request.getContractCode());
+
+            // 使用GET请求查询（市场数据接口通常不需要鉴权）
+            body = HbdmHttpClient.getInstance().doGet(url_prex + HuobiFutureAPIConstants.MARKET_OPEN_INTEREST, params);
+            logger.debug("查询持仓总量返回body:{}", body);
+
+            MarketOpenInterestResponse response = JSON.parseObject(body, MarketOpenInterestResponse.class);
+            if (response.getCode() != null && response.getCode() == 200){
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public MarketPriceLimitResponse getPriceLimit(MarketPriceLimitRequest request) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            params.put("contract_code", request.getContractCode());
+
+            // 使用GET请求查询（市场数据接口通常不需要鉴权）
+            body = HbdmHttpClient.getInstance().doGet(url_prex + HuobiFutureAPIConstants.MARKET_PRICE_LIMIT, params);
+            logger.debug("查询价格限制返回body:{}", body);
+
+            MarketPriceLimitResponse response = JSON.parseObject(body, MarketPriceLimitResponse.class);
+            if (response.getCode() != null && response.getCode() == 200){
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public MarketLiquidationOrdersResponse getLiquidationOrders(MarketLiquidationOrdersRequest request) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            // 设置请求参数
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getPair())) {
+                params.put("pair", request.getPair());
+            }
+            if (request.getStartTime() != null) {
+                params.put("start_time", request.getStartTime());
+            }
+            if (request.getEndTime() != null) {
+                params.put("end_time", request.getEndTime());
+            }
+            if (StringUtils.isNotEmpty(request.getDirect())) {
+                params.put("direct", request.getDirect());
+            }
+            if (request.getFrom() != null) {
+                params.put("from", request.getFrom());
+            }
+            if (request.getLimit() != null) {
+                params.put("limit", request.getLimit());
+            }
+
+            // 发送GET请求，市场数据接口不需要鉴权
+            body = HbdmHttpClient.getInstance().doGet(
+                    url_prex + HuobiFutureAPIConstants.MARKET_LIQUIDATION_ORDERS,
+                    params
+            );
+            logger.debug("查询强平订单返回body:{}", body);
+
+            // 解析响应
+            MarketLiquidationOrdersResponse response = JSON.parseObject(body, MarketLiquidationOrdersResponse.class);
+
+            // 检查响应码
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public MarketSettlementHistoryResponse getSettlementHistory(MarketSettlementHistoryRequest request) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            // 设置请求参数
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (request.getStartTime() != null) {
+                params.put("start_time", request.getStartTime());
+            }
+            if (request.getEndTime() != null) {
+                params.put("end_time", request.getEndTime());
+            }
+            if (StringUtils.isNotEmpty(request.getDirect())) {
+                params.put("direct", request.getDirect());
+            }
+            if (StringUtils.isNotEmpty(request.getFrom())) {
+                params.put("from", request.getFrom());
+            }
+            if (request.getLimit() != null) {
+                params.put("limit", request.getLimit());
+            }
+
+            // 发送GET请求，市场数据接口不需要鉴权
+            body = HbdmHttpClient.getInstance().doGet(
+                    url_prex + HuobiFutureAPIConstants.MARKET_SETTLEMENT_HISTORY,
+                    params
+            );
+            logger.debug("查询结算历史返回body:{}", body);
+
+            // 解析响应
+            MarketSettlementHistoryResponse response = JSON.parseObject(body, MarketSettlementHistoryResponse.class);
+
+            // 检查响应码
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public MarketEliteAccountRatioResponse getEliteAccountRatio(MarketEliteAccountRatioRequest request) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            // 设置请求参数
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getPeriod())) {
+                params.put("period", request.getPeriod());
+            }
+
+            // 发送GET请求，市场数据接口不需要鉴权
+            body = HbdmHttpClient.getInstance().doGet(
+                    url_prex + HuobiFutureAPIConstants.MARKET_ELITE_ACCOUNT_RATIO,
+                    params
+            );
+            logger.debug("查询精英账户多空持仓对比返回body:{}", body);
+
+            // 解析响应
+            MarketEliteAccountRatioResponse response = JSON.parseObject(body, MarketEliteAccountRatioResponse.class);
+
+            // 检查响应码
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public MarketElitePositionRatioResponse getElitePositionRatio(MarketElitePositionRatioRequest request) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            // 设置请求参数
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+            if (StringUtils.isNotEmpty(request.getPeriod())) {
+                params.put("period", request.getPeriod());
+            }
+
+            // 发送GET请求，市场数据接口不需要鉴权
+            body = HbdmHttpClient.getInstance().doGet(
+                    url_prex + HuobiFutureAPIConstants.MARKET_ELITE_POSITION_RATIO,
+                    params
+            );
+            logger.debug("查询精英账户多空持仓对比(持仓数)返回body:{}", body);
+
+            // 解析响应
+            MarketElitePositionRatioResponse response = JSON.parseObject(body, MarketElitePositionRatioResponse.class);
+
+            // 检查响应码
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public MarketEstimatedSettlementPriceResponse getEstimatedSettlementPrice(MarketEstimatedSettlementPriceRequest request) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            // 设置请求参数
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+
+            // 发送GET请求，市场数据接口不需要鉴权
+            body = HbdmHttpClient.getInstance().doGet(
+                    url_prex + HuobiFutureAPIConstants.MARKET_ESTIMATED_SETTLEMENT_PRICE,
+                    params
+            );
+            logger.debug("查询预估结算价返回body:{}", body);
+
+            // 解析响应
+            MarketEstimatedSettlementPriceResponse response = JSON.parseObject(body, MarketEstimatedSettlementPriceResponse.class);
+
+            // 检查响应码
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+
+        } catch (Exception e) {
             throw new ApiException(e);
         }
         throw new ApiException(body);

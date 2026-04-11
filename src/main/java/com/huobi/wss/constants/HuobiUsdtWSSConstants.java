@@ -37,6 +37,7 @@ public class HuobiUsdtWSSConstants {
     public static final String TRIGGER_ORDER_CROSS_CONTRACT_CODE = "trigger_order_cross.$contract_code"; // 11.【全仓】订阅计划委托订单更新(sub)
     public static final String MATCHORDERS_CONTRACT_CODE = "matchOrders.$contract_code"; // 12.【逐仓】订阅合约订单撮合数据（sub）
     public static final String MATCHORDERS_CROSS_CONTRACT_CODE = "matchOrders_cross.$contract_code"; // 13.【逐仓】订阅合约订单撮合数据（sub）
+    public static final String MATCH_ORDERS_CONTRACT_CODE = "match_orders.$contract_code";// 14.订阅撮合后的订单数据
 
     //指数与基差数据接口 订阅
     public static final String MARKET_INDEX_SUB = "market.$contract_code.index.$period"; // 1.订阅(sub)指数K线数据
@@ -55,4 +56,6 @@ public class HuobiUsdtWSSConstants {
     //系统状态更新接口
     public static final String PUBLIC_HEARTBEAT = "public.$service.heartbeat"; // 1.【通用】订阅系统状态更新
 
+    public static final String ALGO_ORDERS_CONTRACT_CODE = "algo_orders.$contract_code"; //订阅策略订单频道
+    public static final String ACCOUNT = "account"; //订阅账户变动数据
 }
