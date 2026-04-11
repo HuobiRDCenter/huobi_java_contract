@@ -65,7 +65,7 @@ public class WssNotificationSubTest {
         wssNotificationHandle.sub(channels, response -> {
             logger.info("订阅合约订单撮合数据（sub）用户收到的数据===============:{}", JSON.toJSON(response));
             Long currentTimeMillis = System.currentTimeMillis();
-            MatchOrdersSubResponse event = JSON.parseObject(response, MatchOrdersSubResponse.class);
+            MatchOrdersSubOldResponse event = JSON.parseObject(response, MatchOrdersSubOldResponse.class);
             logger.info("订阅合约订单撮合数据（sub）的ts为：{},当前的时间戳为：{},时间间隔为：{}毫秒", event.getTs(), currentTimeMillis, currentTimeMillis - event.getTs());
         });
         Thread.sleep(Integer.MAX_VALUE);

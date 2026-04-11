@@ -39,6 +39,6 @@ public class TradeOrderHistoryRequest {
     @SerializedName("margin_mode")
     private String marginMode;
 
-    @SerializedName("time_in_force")
+    @SerializedName("margin_mode")
     private String timeInForce;
 }

@@ -2,6 +2,7 @@ package com.huobi.wss.handle;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.huobi.api.enums.OpEnum;
 import com.huobi.wss.SubscriptionListener;
 import com.huobi.wss.util.ApiSignature;
 import com.huobi.wss.util.ZipUtil;
@@ -47,18 +48,29 @@ public class WssNotificationHandle {
     }
 
     public void sub(List<String> channels, SubscriptionListener<String> callback) throws URISyntaxException {
-        doConnect(channels, callback);
+        doConnect(OpEnum.SUB, null, channels, null, callback);
     }
 
+    public void sub(List<String> channels, Map<String, Object> extReq, SubscriptionListener<String> callback) throws URISyntaxException {
+        doConnect(OpEnum.SUB, null, channels, extReq, callback);
+    }
 
-    private void doConnect(List<String> channels, SubscriptionListener<String> callback) throws URISyntaxException {
+    public void cidSub(String cid, List<String> channels, SubscriptionListener<String> callback) throws URISyntaxException {
+        doConnect(OpEnum.SUB, cid, channels, null, callback);
+    }
+
+    public void cidSub(String cid, List<String> channels, Map<String, Object> extReq, SubscriptionListener<String> callback) throws URISyntaxException {
+        doConnect(OpEnum.SUB, cid, channels, extReq, callback);
+    }
+
+    private void doConnect(OpEnum opEnum, String cid, List<String> channels, Map<String, Object> extReq, SubscriptionListener<String> callback) throws URISyntaxException {
         pushUrl="wss://" + host + url;
         webSocketClient = new WebSocketClient(new URI(pushUrl)) {
 
             @Override
             public void onOpen(ServerHandshake serverHandshake) {
                 addAuth();
-                doSub(channels);
+                doSub(opEnum, cid, channels, extReq);
                 dealReconnect();
             }
 
@@ -108,10 +120,16 @@ public class WssNotificationHandle {
     }
 
 
-    private void doSub(List<String> channels) {
+    private void doSub(OpEnum opEnum, String cid, List<String> channels, Map<String, Object> extReq) {
         channels.stream().forEach(e -> {
             JSONObject sub = new JSONObject();
-            sub.put("op", "sub");
+            sub.put("op", opEnum.getValue());
+            if (!StringUtils.isEmpty(cid)) {
+                sub.put("cid", cid);
+            }
+            if (extReq != null && !extReq.isEmpty()) {
+                sub.putAll(extReq);
+            }
             sub.put("topic", e);
             webSocketClient.send(sub.toString());
         });

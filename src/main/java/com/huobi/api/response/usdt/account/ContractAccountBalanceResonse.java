@@ -71,6 +71,9 @@ public class ContractAccountBalanceResonse {
         @SerializedName("profit_unreal")
         private String profitUnreal;
 
+        @SerializedName("isolated_profit_unreal")
+        private String isolatedProfitUnreal;
+
         @SerializedName("initial_margin")
         private String initialMargin;
 

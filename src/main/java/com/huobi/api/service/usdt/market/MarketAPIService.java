@@ -1,6 +1,6 @@
 package com.huobi.api.service.usdt.market;
 
-import com.huobi.api.request.usdt.market.MarketRiskLimitRequest;
+import com.huobi.api.request.usdt.market.*;
 import com.huobi.api.request.usdt.account.LinearSwapBasisRequest;
 import com.huobi.api.request.usdt.account.SwapMarketHistoryKlineRequest;
 import com.huobi.api.response.usdt.market.*;
@@ -35,4 +35,67 @@ public interface MarketAPIService {
     AssetsDeductionCurrencyResponse assetsDeductionCurrencyResponse();
 
     MarketMultiAssetsMarginListResponse marketMultiAssetsMarginListResponse();
+
+    /**
+     * 查询当前资金费率
+     * @param request 请求参数
+     * @return 资金费率响应
+     */
+    MarketFundingRateResponse getFundingRate(MarketFundingRateRequest request);
+
+    /**
+     * 查询历史资金费率
+     * @param request 请求参数
+     * @return 历史资金费率响应
+     */
+    MarketFundingRateHistoryResponse getFundingRateHistory(MarketFundingRateHistoryRequest request);
+
+    /**
+     * 查询当前平台合约持仓总量
+     * @param request 请求参数
+     * @return 持仓总量响应
+     */
+    MarketOpenInterestResponse getOpenInterest(MarketOpenInterestRequest request);
+
+    /**
+     * 查询限价最高买价与最低卖价
+     * @param request 请求参数
+     * @return 价格限制响应
+     */
+    MarketPriceLimitResponse getPriceLimit(MarketPriceLimitRequest request);
+
+    /**
+     * 查询强平订单
+     * @param request 请求参数
+     * @return 强平订单响应
+     */
+    MarketLiquidationOrdersResponse getLiquidationOrders(MarketLiquidationOrdersRequest request);
+
+    /**
+     * 查询平台结算历史
+     * @param request 请求参数
+     * @return 结算历史响应
+     */
+    MarketSettlementHistoryResponse getSettlementHistory(MarketSettlementHistoryRequest request);
+
+    /**
+     * 查询精英账户多空持仓对比-账户数
+     * @param request 请求参数
+     * @return 精英账户多空持仓对比响应
+     */
+    MarketEliteAccountRatioResponse getEliteAccountRatio(MarketEliteAccountRatioRequest request);
+
+    /**
+     * 查询精英账户多空持仓对比-持仓数
+     * @param request 请求参数
+     * @return 精英账户多空持仓对比响应
+     */
+    MarketElitePositionRatioResponse getElitePositionRatio(MarketElitePositionRatioRequest request);
+
+    /**
+     * 查询预估结算价
+     * @param request 请求参数
+     * @return 预估结算价响应
+     */
+    MarketEstimatedSettlementPriceResponse getEstimatedSettlementPrice(MarketEstimatedSettlementPriceRequest request);
 }

@@ -612,6 +612,71 @@ public class AccountAPIServiceImpl implements AccountAPIService {
     }
 
     @Override
+    public AccountFeeDeductionCurrencyResponse getAccountFeeDeductionCurrency() {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_FEE_DEDUCTION_CURRENCY, params);
+            AccountFeeDeductionCurrencyResponse response = JSON.parseObject(body, AccountFeeDeductionCurrencyResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public AccountBillsResponse getAccountBills(AccountBillsRequest request) {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+
+            if (StringUtils.isNotEmpty(request.getContractCode())) {
+                params.put("contract_code", request.getContractCode());
+            }
+
+            if (StringUtils.isNotEmpty(request.getMarginMode())) {
+                params.put("margin_mode", request.getMarginMode());
+            }
+
+            if (StringUtils.isNotEmpty(request.getType())) {
+                params.put("type", request.getType());
+            }
+
+            if (StringUtils.isNotEmpty(request.getStartTime())) {
+                params.put("start_time", request.getStartTime());
+            }
+
+            if (StringUtils.isNotEmpty(request.getEndTime())) {
+                params.put("end_time", request.getEndTime());
+            }
+
+            if (request.getFrom() != null) {
+                params.put("from", request.getFrom());
+            }
+
+            if (request.getLimit() != null) {
+                params.put("limit", request.getLimit());
+            }
+
+            if (StringUtils.isNotEmpty(request.getDirect())) {
+                params.put("direct", request.getDirect());
+            }
+
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_BILLS, params);
+            AccountBillsResponse response = JSON.parseObject(body, AccountBillsResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
     public QueryAllRebateDetailResponse queryAllRebateDetail(String direct, String fromId, Long limit) {
         String body;
         Map<String, Object> params = new HashMap<>();
@@ -668,7 +733,7 @@ public class AccountAPIServiceImpl implements AccountAPIService {
             if (StringUtils.isNotEmpty(deductionCurrency)) {
                 params.put("deduction_currency", deductionCurrency);
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.Fee_Deduction_Currency, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.SWAP_ACCOUNT_INFO, params);
             logger.debug("body:{}", body);
             AccountFeeDeductionCurrency response = JSON.parseObject(body, AccountFeeDeductionCurrency.class);
             if (response != null) {
@@ -695,7 +760,7 @@ public class AccountAPIServiceImpl implements AccountAPIService {
             if (pageSize != null) {
                 params.put("pageSize", pageSize);
             }
-            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Earn_Project_Query_Earn_Project_List, params);
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Invitee_Rebate_All_Rebate_Detail, params);
             logger.debug("body:{}", body);
             ProjectQueryEarnProjectList response = JSON.parseObject(body, ProjectQueryEarnProjectList.class);
             if (response != null) {
@@ -721,7 +786,7 @@ public class AccountAPIServiceImpl implements AccountAPIService {
             if (StringUtils.isNotEmpty(requestId)) {
                 params.put("requestId", requestId);
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Earn_Order_Demand_Add, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.SWAP_ACCOUNT_INFO, params);
             logger.debug("body:{}", body);
             EarnOrderDemandAdd response = JSON.parseObject(body, EarnOrderDemandAdd.class);
             if (response != null) {
@@ -735,7 +800,7 @@ public class AccountAPIServiceImpl implements AccountAPIService {
     }
 
     @Override
-    public EarnOrderDemandRedeemOrde earnOrderDemandRedeemOrderResponse(Long id, BigDecimal amount, String requestId) {
+    public EarnOrderDemandRedeemOrde earnOrderDemandRedeemOrdeResponse(Long id, BigDecimal amount, String requestId) {
         String body;
         try {
             Map<String, Object> params = new HashMap<>();
@@ -748,7 +813,7 @@ public class AccountAPIServiceImpl implements AccountAPIService {
             if (StringUtils.isNotEmpty(requestId)) {
                 params.put("requestId", requestId);
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Earn_Order_Demand_Redeem_Order, params);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.SWAP_ACCOUNT_INFO, params);
             logger.debug("body:{}", body);
             EarnOrderDemandRedeemOrde response = JSON.parseObject(body, EarnOrderDemandRedeemOrde.class);
             if (response != null) {
@@ -778,7 +843,7 @@ public class AccountAPIServiceImpl implements AccountAPIService {
             if (pageSize != null) {
                 params.put("pageSize", pageSize);
             }
-            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Earn_Order_User_Assets_List, params);
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiLinearSwapAPIConstants.Invitee_Rebate_All_Rebate_Detail, params);
             logger.debug("body:{}", body);
             EarnOrderUserAssetsList response = JSON.parseObject(body, EarnOrderUserAssetsList.class);
             if (response != null) {
