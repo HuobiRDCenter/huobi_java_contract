@@ -628,6 +628,61 @@ public class AccountAPIServiceImpl implements AccountAPIService {
     }
 
     @Override
+    public AccountAssetModeResponse setAssetMode(int assetMode) {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("asset_mode", assetMode);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_ASSET_MODE, params);
+            AccountAssetModeResponse response = JSON.parseObject(body, AccountAssetModeResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public AccountAssetModeResponse getAssetMode() {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_ASSET_MODE, params);
+            AccountAssetModeResponse response = JSON.parseObject(body, AccountAssetModeResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public AccountFeeDeductionCurrencyResponse setAccountFeeDeductionCurrency(Integer feeOption, String deductionCurrency) {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            if (feeOption != null) {
+                params.put("fee_option", feeOption);
+            }
+            if (StringUtils.isNotEmpty(deductionCurrency)) {
+                params.put("deduction_currency", deductionCurrency);
+            }
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.SET_ACCOUNT_FEE_DEDUCTION_CURRENCY, params);
+            AccountFeeDeductionCurrencyResponse response = JSON.parseObject(body, AccountFeeDeductionCurrencyResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
     public AccountBillsResponse getAccountBills(AccountBillsRequest request) {
         String body;
         try {
