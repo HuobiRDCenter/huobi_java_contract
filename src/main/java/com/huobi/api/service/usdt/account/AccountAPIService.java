@@ -58,6 +58,9 @@ public interface AccountAPIService {
     ContractAccountBalanceResonse getContractAccountBalance(); // 22. 联合保证金查询账户余额
     MultiAssetsMarginResponse setMultiAssetsMargin(int assetsMode); // 23.设置联合保证金模式
     AccountFeeDeductionCurrencyResponse getAccountFeeDeductionCurrency(); // 查看手续费抵扣币种
+    AccountAssetModeResponse setAssetMode(int assetMode); // 设置资产模式
+    AccountAssetModeResponse getAssetMode(); // 查询资产模式
+    AccountFeeDeductionCurrencyResponse setAccountFeeDeductionCurrency(Integer feeOption, String deductionCurrency); // 设置手续费抵扣币种
     AccountBillsResponse getAccountBills(AccountBillsRequest request); // 查询流水记录
 
     QueryAllRebateDetailResponse queryAllRebateDetail(String direct, String fromId, Long limit);
