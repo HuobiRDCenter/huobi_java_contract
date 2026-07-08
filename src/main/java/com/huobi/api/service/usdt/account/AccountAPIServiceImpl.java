@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -575,6 +576,7 @@ public class AccountAPIServiceImpl implements AccountAPIService {
         }
         throw new ApiException(body);
     }
+
     @Override
     public ContractAccountBalanceResonse getContractAccountBalance() {
         String body;
@@ -617,6 +619,61 @@ public class AccountAPIServiceImpl implements AccountAPIService {
         try {
             Map<String, Object> params = new HashMap<>();
             body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_FEE_DEDUCTION_CURRENCY, params);
+            AccountFeeDeductionCurrencyResponse response = JSON.parseObject(body, AccountFeeDeductionCurrencyResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public AccountAssetModeResponse setAssetMode(int assetMode) {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("asset_mode", assetMode);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_ASSET_MODE, params);
+            AccountAssetModeResponse response = JSON.parseObject(body, AccountAssetModeResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public AccountAssetModeResponse getAssetMode() {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ACCOUNT_ASSET_MODE, params);
+            AccountAssetModeResponse response = JSON.parseObject(body, AccountAssetModeResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        throw new ApiException(body);
+    }
+
+    @Override
+    public AccountFeeDeductionCurrencyResponse setAccountFeeDeductionCurrency(Integer feeOption, String deductionCurrency) {
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            if (feeOption != null) {
+                params.put("fee_option", feeOption);
+            }
+            if (StringUtils.isNotEmpty(deductionCurrency)) {
+                params.put("deduction_currency", deductionCurrency);
+            }
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.SET_ACCOUNT_FEE_DEDUCTION_CURRENCY, params);
             AccountFeeDeductionCurrencyResponse response = JSON.parseObject(body, AccountFeeDeductionCurrencyResponse.class);
             if (response.getCode() != null && response.getCode() == 200) {
                 return response;
@@ -674,6 +731,141 @@ public class AccountAPIServiceImpl implements AccountAPIService {
             throw new ApiException(e);
         }
         throw new ApiException(body);
+    }
+
+    @Override
+    public UniversalTransferRecordsResponse getUniversalTransferRecords(
+            Long userId,
+            Long transferId,
+            String currency,
+            String status,
+            Long startTime,
+            Long endTime,
+            Long from,
+            Integer limit,
+            String direct) {
+
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            if (transferId != null) {
+                params.put("transfer_id", transferId);
+            }
+            if (StringUtils.isNoneEmpty(currency)) {
+                params.put("currency", currency);
+            }
+            if (StringUtils.isNoneEmpty(status)) {
+                params.put("status", status);
+            }
+            if (startTime != null) {
+                params.put("start_time", startTime);
+            }
+            if (endTime != null) {
+                params.put("end_time", endTime);
+            }
+            if (from != null) {
+                params.put("from", from);
+            }
+            if (limit != null) {
+                params.put("limit", limit);
+            }
+            if (StringUtils.isNoneEmpty(direct)) {
+                params.put("direct", direct);
+            }
+
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key,
+                    url_prex + HuobiFutureAPIConstants.ACCOUNT_UNIVERSAL_TRANSFER_RECORDS, params);
+            logger.debug("body:{}", body);
+
+            UniversalTransferRecordsResponse response = JSON.parseObject(body, UniversalTransferRecordsResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        throw new RuntimeException(body);
+    }
+
+    @Override
+    public UniversalTransferResponse universalTransfer(Long userId, AccountUniversalTransferRequest request) {
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            params.put("currency", request.getCurrency());
+            params.put("amount", request.getAmount());
+            params.put("from_account_type", request.getFrom_account_type());
+            params.put("to_account_type", request.getTo_account_type());
+
+            if (StringUtils.isNoneEmpty(request.getFrom_asset_type())) {
+                params.put("from_asset_type", request.getFrom_asset_type());
+            }
+            if (StringUtils.isNoneEmpty(request.getTo_asset_type())) {
+                params.put("to_asset_type", request.getTo_asset_type());
+            }
+
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key,
+                    url_prex + HuobiFutureAPIConstants.ACCOUNT_UNIVERSAL_TRANSFER, params);
+            logger.debug("body:{}", body);
+
+            UniversalTransferResponse response = JSON.parseObject(body, UniversalTransferResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        throw new RuntimeException(body);
+    }
+
+    @Override
+    public InviteeRebateReferralsResponse getReferrals(
+            Long userId,
+            String inviteeUidList,
+            String referralCode,
+            String startTime,
+            String endTime,
+            String direct,
+            String fromId,
+            Long limit) {
+
+        String body;
+        Map<String, Object> params = new HashMap<>();
+        try {
+            if (StringUtils.isNoneEmpty(inviteeUidList)) {
+                params.put("inviteeUidList", inviteeUidList);
+            }
+            if (StringUtils.isNoneEmpty(referralCode)) {
+                params.put("referralCode", referralCode);
+            }
+            if (StringUtils.isNoneEmpty(startTime)) {
+                params.put("startTime", startTime);
+            }
+            if (StringUtils.isNoneEmpty(endTime)) {
+                params.put("endTime", endTime);
+            }
+            if (StringUtils.isNoneEmpty(direct)) {
+                params.put("direct", direct);
+            }
+            if (StringUtils.isNoneEmpty(fromId)) {
+                params.put("fromId", fromId);
+            }
+            if (limit != null) {
+                params.put("limit", limit);
+            }
+
+            body = HbdmHttpClient.getInstance().doGetKey(api_key, secret_key,
+                    url_prex + HuobiLinearSwapAPIConstants.INVITEE_REBATE_REFERRALS, params);
+            logger.debug("body:{}", body);
+
+            InviteeRebateReferralsResponse response = JSON.parseObject(body, InviteeRebateReferralsResponse.class);
+            if (response.getCode() != null && response.getCode() == 200) {
+                return response;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        throw new RuntimeException(body);
     }
 
     @Override
