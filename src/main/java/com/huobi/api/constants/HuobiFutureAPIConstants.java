@@ -100,7 +100,12 @@ public class HuobiFutureAPIConstants {
     public static final String ACCOUNT_BALANCE = "/v5/account/balance"; // 1.查询账户余额
     public static final String ACCOUNT_MULTI_ASSETS_MARGIN = "/v5/account/multi_assets_margin"; // 2.设置联合保证金模式
     public static final String ACCOUNT_FEE_DEDUCTION_CURRENCY = "/v5/account/fee_deduction_currency"; //查看手续费抵扣币种
+    public static final String ACCOUNT_ASSET_MODE = "/v5/account/asset_mode"; // 设置/查询资产模式
+    public static final String SET_ACCOUNT_FEE_DEDUCTION_CURRENCY = "/v5/account/fee_deduction_currency"; // 设置手续费抵扣币种
     public static final String ACCOUNT_BILLS = "/v5/account/bills"; //查询流水记录
+    // 账户相关接口
+    public static final String ACCOUNT_UNIVERSAL_TRANSFER_RECORDS = "/v5/account/universal_transfer_records"; // 查询划转记录
+    public static final String ACCOUNT_UNIVERSAL_TRANSFER = "/v5/account/universal_transfer"; // 执行划转
 
     public static final String TRADE_ORDER = "/v5/trade/order"; // 3.下单
     public static final String TRADE_BACHORDER = "/v5/trade/batch_orders"; // 4.批量下单
@@ -123,7 +128,7 @@ public class HuobiFutureAPIConstants {
     public static final String POSITION_MARGIN = "/v5/position/margin"; // 调整逐仓仓位保证金
 
     public static final String MARKET_RISK_LIMIT = "/v5/market/risk/limit"; // 20.查询合约风险限额
-    public static final String ASSETS_DEDUCTION_CURRENCY = "/v5/assets_deduction_currency"; // 21.查询可抵扣手续费币种
+    public static final String ASSETS_DEDUCTION_CURRENCY = "/v5/market/assets_deduction_currency"; // 21.查询可抵扣手续费币种
     public static final String MULTI_ASSETS_MARGIN_LIST = "/v5/market/multi_assets_margin"; // 22.查询联合保证金支持币种
     public static final String Get_Trade_Order_Response = "/v5/trade/order"; // 25.查询订单信息
     public static final String TRADE_CANCEL_AFTER = "/v5/trade/cancel-after";
