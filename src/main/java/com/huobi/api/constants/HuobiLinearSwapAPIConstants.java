@@ -142,6 +142,7 @@ public class HuobiLinearSwapAPIConstants {
     public static final String CopytradingV6_Trader_Apikey = "/api/v6/copyTrading/trader/apikey";
 
     //返佣
+    public static final String INVITEE_REBATE_REFERRALS = "/v2/invitee/rebate/referrals";
     public static final String Invitee_Rebate_All_Rebate_Detail = "/v2/invitee/rebate/all_rebate/detail"; // 查询全部返佣信息
     public static final String Invitee_Rebate_Batcher_Rebate_Detail = "/v2/invitee/rebate/batcher_rebate/detail"; // 查询批量返佣信息
 
