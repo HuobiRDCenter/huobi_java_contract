@@ -9,6 +9,7 @@ import com.huobi.api.response.usdt.account.MultiAssetsMarginResponse;
 import com.huobi.api.response.usdt.account.*;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 public interface AccountAPIService {
     SwapBalanceValuationResponse getSwapBalanceValuation(String ValuationAsset);// 1.获取账户总资产估值
@@ -62,6 +63,39 @@ public interface AccountAPIService {
     AccountAssetModeResponse getAssetMode(); // 查询资产模式
     AccountFeeDeductionCurrencyResponse setAccountFeeDeductionCurrency(Integer feeOption, String deductionCurrency); // 设置手续费抵扣币种
     AccountBillsResponse getAccountBills(AccountBillsRequest request); // 查询流水记录
+    /**
+     * 查询划转记录
+     */
+    UniversalTransferRecordsResponse getUniversalTransferRecords(
+            Long userId,
+            Long transferId,
+            String currency,
+            String status,
+            Long startTime,
+            Long endTime,
+            Long from,
+            Integer limit,
+            String direct
+    );
+
+    /**
+     * 执行划转
+     */
+    UniversalTransferResponse universalTransfer(Long userId, AccountUniversalTransferRequest request);
+
+    /**
+     * 查询邀请用户列表
+     */
+    InviteeRebateReferralsResponse getReferrals(
+            Long userId,
+            String inviteeUidList,
+            String referralCode,
+            String startTime,
+            String endTime,
+            String direct,
+            String fromId,
+            Long limit
+    );
 
     QueryAllRebateDetailResponse queryAllRebateDetail(String direct, String fromId, Long limit);
     QueryBatcherRebateDetailResponse queryBatcherRebateDetail(String inviteeUidList);
