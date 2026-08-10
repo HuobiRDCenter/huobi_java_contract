@@ -8,6 +8,9 @@ import com.huobi.api.request.usdt.trade.*;
 import com.huobi.api.response.usdt.trade.*;
 import com.huobi.api.service.usdt.reference.CrossReferenceAPIServiceImpl;
 import com.huobi.api.service.usdt.strategy.StrategyAPIServiceImpl;
+import com.huobi.api.service.usdt.algo.AlgoAPIServiceImpl;
+import com.huobi.api.request.usdt.algo.*;
+import com.huobi.api.response.usdt.algo.*;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -17,6 +20,7 @@ import java.math.BigDecimal;
 @FixMethodOrder(MethodSorters.JVM)
 public class SrategyAPITest implements BaseTest{
     StrategyAPIServiceImpl huobiAPIService  = new StrategyAPIServiceImpl("", "");
+    AlgoAPIServiceImpl algoService = new AlgoAPIServiceImpl("", "");
 
     @Test
     public void swapTriggerOrderRequest() {
@@ -213,5 +217,77 @@ public class SrategyAPITest implements BaseTest{
                 .build();
         SwapTrackHisordersResponse response=huobiAPIService.swapTrackHisordersResponse(request);
         logger.debug("16.跟踪委托订单当前委托：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void algoOrder() {
+        try {
+            AlgoOrderRequest request = AlgoOrderRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .type("trigger")
+                    .positionSide("long")
+                    .side("buy")
+                    .marginMode("isolated")
+                    .volume("1")
+                    .triggerPrice("10000")
+                    .triggerPriceType("last")
+                    .build();
+            AlgoOrderResponse response = algoService.algoOrder(request);
+            logger.debug("v5.策略委托下单：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.策略委托下单(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void cancelAlgoOrder() {
+        try {
+            CancelAlgoOrdersRequest request = CancelAlgoOrdersRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            CancelAlgoOrdersResponse response = algoService.cancelAlgoOrder(request);
+            logger.debug("v5.策略委托撤单：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.策略委托撤单(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void queryAlgoOrder() {
+        try {
+            QueryAlgoOrdersRequest request = QueryAlgoOrdersRequest.builder()
+                    .type("trigger")
+                    .build();
+            QueryAlgoOrdersResponse response = algoService.queryAlgoOrder(request);
+            logger.debug("v5.查询策略委托：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询策略委托(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void queryOpenAlgoOrders() {
+        try {
+            QueryOpenAlgoOrdersRequest request = QueryOpenAlgoOrdersRequest.builder()
+                    .type("trigger")
+                    .build();
+            QueryOpenAlgoOrdersResponse response = algoService.queryOpenAlgoOrders(request);
+            logger.debug("v5.查询当前未触发策略委托：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询当前未触发策略委托(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void queryAlgoOrderHistory() {
+        try {
+            QueryAlgoOrderHistoryRequest request = QueryAlgoOrderHistoryRequest.builder()
+                    .type("trigger")
+                    .build();
+            QueryAlgoOrderHistoryResponse response = algoService.queryAlgoOrderHistory(request);
+            logger.debug("v5.查询历史策略委托：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询历史策略委托(预期异常,无key):{}", e.getMessage());
+        }
     }
 }

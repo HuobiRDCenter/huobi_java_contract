@@ -3,6 +3,7 @@ package com.huobi.usdt.api;
 import com.alibaba.fastjson.JSON;
 import com.huobi.api.request.usdt.account.LinearSwapBasisRequest;
 import com.huobi.api.request.usdt.account.SwapMarketHistoryKlineRequest;
+import com.huobi.api.request.usdt.market.*;
 import com.huobi.api.response.usdt.market.*;
 import com.huobi.api.service.usdt.market.MarketAPIServiceImpl;
 import org.junit.FixMethodOrder;
@@ -100,5 +101,110 @@ public class MarketAPITest implements BaseTest {
                 .build();
         LinearSwapBasisResponse response = huobiAPIService.getLinearSwapBasis(request);
         logger.debug("12.获取基差数据:{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void marketRiskLimitResponse() {
+        MarketRiskLimitRequest request = MarketRiskLimitRequest.builder()
+                .contractCode("BTC-USDT")
+                .marginMode("cross")
+                .build();
+        MarketRiskLimitResponse response = huobiAPIService.marketRiskLimitResponse(request);
+        logger.debug("v5.查询合约风险限额：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void assetsDeductionCurrencyResponse() {
+        AssetsDeductionCurrencyResponse response = huobiAPIService.assetsDeductionCurrencyResponse();
+        logger.debug("v5.查询可抵扣手续费币种：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void marketMultiAssetsMarginListResponse() {
+        MarketMultiAssetsMarginListResponse response = huobiAPIService.marketMultiAssetsMarginListResponse();
+        logger.debug("v5.查询联合保证金支持币种：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void getFundingRate() {
+        MarketFundingRateRequest request = MarketFundingRateRequest.builder()
+                .contractCode("BTC-USDT")
+                .build();
+        MarketFundingRateResponse response = huobiAPIService.getFundingRate(request);
+        logger.debug("v5.查询资金费率：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void getFundingRateHistory() {
+        MarketFundingRateHistoryRequest request = MarketFundingRateHistoryRequest.builder()
+                .contractCode("BTC-USDT")
+                .build();
+        MarketFundingRateHistoryResponse response = huobiAPIService.getFundingRateHistory(request);
+        logger.debug("v5.查询历史资金费率：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void getOpenInterest() {
+        MarketOpenInterestRequest request = MarketOpenInterestRequest.builder()
+                .contractCode("BTC-USDT")
+                .build();
+        MarketOpenInterestResponse response = huobiAPIService.getOpenInterest(request);
+        logger.debug("v5.查询合约总持仓量：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void getPriceLimit() {
+        MarketPriceLimitRequest request = MarketPriceLimitRequest.builder()
+                .contractCode("BTC-USDT")
+                .build();
+        MarketPriceLimitResponse response = huobiAPIService.getPriceLimit(request);
+        logger.debug("v5.查询限价：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void getLiquidationOrders() {
+        MarketLiquidationOrdersRequest request = MarketLiquidationOrdersRequest.builder()
+                .contractCode("BTC-USDT")
+                .build();
+        MarketLiquidationOrdersResponse response = huobiAPIService.getLiquidationOrders(request);
+        logger.debug("v5.查询强平订单：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void getSettlementHistory() {
+        MarketSettlementHistoryRequest request = MarketSettlementHistoryRequest.builder()
+                .contractCode("BTC-USDT")
+                .build();
+        MarketSettlementHistoryResponse response = huobiAPIService.getSettlementHistory(request);
+        logger.debug("v5.查询结算历史：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void getEliteAccountRatio() {
+        MarketEliteAccountRatioRequest request = MarketEliteAccountRatioRequest.builder()
+                .contractCode("BTC-USDT")
+                .period("5min")
+                .build();
+        MarketEliteAccountRatioResponse response = huobiAPIService.getEliteAccountRatio(request);
+        logger.debug("v5.查询精英账户多空比：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void getElitePositionRatio() {
+        MarketElitePositionRatioRequest request = MarketElitePositionRatioRequest.builder()
+                .contractCode("BTC-USDT")
+                .period("5min")
+                .build();
+        MarketElitePositionRatioResponse response = huobiAPIService.getElitePositionRatio(request);
+        logger.debug("v5.查询精英持仓多空比：{}", JSON.toJSONString(response));
+    }
+
+    @Test
+    public void getEstimatedSettlementPrice() {
+        MarketEstimatedSettlementPriceRequest request = MarketEstimatedSettlementPriceRequest.builder()
+                .contractCode("BTC-USDT")
+                .build();
+        MarketEstimatedSettlementPriceResponse response = huobiAPIService.getEstimatedSettlementPrice(request);
+        logger.debug("v5.查询预估结算价：{}", JSON.toJSONString(response));
     }
 }
