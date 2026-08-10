@@ -115,14 +115,14 @@ public class HuobiFutureAPIConstants {
     public static final String TRADE_POSITION = "/v5/trade/position"; // 8.市价全平
     public static final String TRADE_POSITIONALL = "/v5/trade/position_all"; // 9.一键全平
     public static final String TRADE_ORDER_OPENS = "/v5/trade/order/opens"; // 10.查询当前委托
-    public static final String TRADE_ORDER_TRADES = "/api/V5/trade/order/details"; // 11.查询成交明细
-    public static final String TRADE_ORDER_HISTORY = "/api/v5/trade/order/history"; // 12.查询历史委托
+    public static final String TRADE_ORDER_TRADES = "/v5/trade/order/details"; // 11.查询成交明细
+    public static final String TRADE_ORDER_HISTORY = "/v5/trade/order/history"; // 12.查询历史委托
     public static final String TRADE_POSITION_OPENS = "/v5/trade/position/opens"; // 13.查询当前持仓
     public static final String TRADE_POSITION_HISTORY = "/v5/trade/position/history"; // 14.查询历史持仓
     public static final String POSITION_LEVER = "/v5/position/lever"; // 15.查询杠杆等级列表
     public static final String SET_POSITION_LEVER = "/v5/position/lever"; // 16.设置杠杆等级
-    public static final String POSITION_MODE = "/api/v5/position/mode"; // 17.查询持仓模式
-    public static final String SET_POSITION_MODE = "/api/v5/position/mode"; // 18.设置持仓模式
+    public static final String POSITION_MODE = "/v5/position/mode"; // 17.查询持仓模式
+    public static final String SET_POSITION_MODE = "/v5/position/mode"; // 18.设置持仓模式
     public static final String POSITION_RISK_LIMIT = "/v5/position/risk/limit"; // 19.查询持仓风险限额
     public static final String POSITION_RISK_LIMIT_TIER = "/v5/position/risk/limit_tier"; // 26.查询持仓风险限额
     public static final String POSITION_MARGIN = "/v5/position/margin"; // 调整逐仓仓位保证金
@@ -159,7 +159,7 @@ public class HuobiFutureAPIConstants {
     public static final String MARKET_ESTIMATED_SETTLEMENT_PRICE = "/v5/market/estimated_settlement_price";
 
     public static final String ALGO_ORDER = "/v5/algo/order";
-    public static final String ALGO_ORDER_CANCEL = "/v5/algo/cancel-orders";
+    public static final String ALGO_ORDER_CANCEL = "/v5/algo/cancel_orders";
     public static final String ALGO_ORDER_QUERY = "/v5/algo/order";
     public static final String ALGO_ORDER_OPENS_QUERY = "/v5/algo/order/opens";
     public static final String ALGO_ORDER_HISTORY_QUERY = "/v5/algo/order/history";
