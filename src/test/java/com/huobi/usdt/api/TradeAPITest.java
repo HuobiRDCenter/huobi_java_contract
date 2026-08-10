@@ -207,4 +207,246 @@ public class TradeAPITest implements BaseTest {
         SwapPositionSideResponse response = huobiAPIService.swapPositionSideResponse(request);
         logger.debug("16.【逐仓】查询持仓模式：{}", JSON.toJSONString(response));
     }
+
+    @Test
+    public void tradeOrderResponse() {
+        try {
+            TradeOrderRequest request = TradeOrderRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .marginMode("cross")
+                    .side("buy")
+                    .type("limit")
+                    .price("10000")
+                    .volume("1")
+                    .build();
+            TradeOrderResponse response = huobiAPIService.tradeOrderResponse(request);
+            logger.debug("v5.合约下单：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.合约下单(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void tradeBachOrder() {
+        try {
+            TradeBachOrderRequest request = TradeBachOrderRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .marginMode("cross")
+                    .build();
+            TradeBachOrderResponse response = huobiAPIService.tradeBachOrder(request);
+            logger.debug("v5.合约批量下单：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.合约批量下单(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void cancelTradeOrder() {
+        try {
+            CancelTradeOrderRequest request = CancelTradeOrderRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            CancelTradeOrderResponse response = huobiAPIService.cancelTradeOrder(request);
+            logger.debug("v5.撤单：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.撤单(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void cannelTradeBatchOrderResponse() {
+        try {
+            CannelTradeBatchOrderRequest request = CannelTradeBatchOrderRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            CannelTradeBatchOrderResponse response = huobiAPIService.cannelTradeBatchOrderResponse(request);
+            logger.debug("v5.批量撤单：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.批量撤单(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void cannelTradeAllOrderResponse() {
+        try {
+            CannelTradeAllOrderRequest request = CannelTradeAllOrderRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            CannelTradeAllOrderResponse response = huobiAPIService.cannelTradeAllOrderResponse(request);
+            logger.debug("v5.全部撤单：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.全部撤单(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void tradePositionResponse() {
+        try {
+            TradePositionRequest request = TradePositionRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            TradePositionResponse response = huobiAPIService.tradePositionResponse(request);
+            logger.debug("v5.市价全平：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.市价全平(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void tradePositionAllResponse() {
+        try {
+            TradePositionAllResponse response = huobiAPIService.tradePositionAllResponse();
+            logger.debug("v5.一键全平：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.一键全平(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void tradeOrderOpensResponse() {
+        try {
+            TradeOrderOpensRequest request = TradeOrderOpensRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            TradeOrderOpensResponse response = huobiAPIService.tradeOrderOpensResponse(request);
+            logger.debug("v5.查询当前委托：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询当前委托(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void tradeOrderTradesResponse() {
+        try {
+            TradeOrderTradesRequest request = TradeOrderTradesRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            TradeOrderTradesResponse response = huobiAPIService.tradeOrderTradesResponse(request);
+            logger.debug("v5.查询成交明细：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询成交明细(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void tradeOrderHistoryResponse() {
+        try {
+            TradeOrderHistoryRequest request = TradeOrderHistoryRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .states("filled")
+                    .build();
+            TradeOrderHistoryResponse response = huobiAPIService.tradeOrderHistoryResponse(request);
+            logger.debug("v5.查询历史委托：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询历史委托(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void getTradeOrderResponse() {
+        try {
+            GetTradeOrderRequest request = GetTradeOrderRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            GetTradeOrderResponse response = huobiAPIService.getTradeOrderResponse(request);
+            logger.debug("v5.查询订单信息：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询订单信息(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void tradeCancelAfterResponse() {
+        try {
+            TradeCancelAfterRequest request = TradeCancelAfterRequest.builder()
+                    .build();
+            TradeCancelAfterResponse response = huobiAPIService.tradeCancelAfterResponse(request);
+            logger.debug("v5.自动撤单：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.自动撤单(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void tradePositionOpensResponse() {
+        try {
+            TradePositionOpensRequest request = TradePositionOpensRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            TradePositionOpensResponse response = huobiAPIService.tradePositionOpensResponse(request);
+            logger.debug("v5.查询当前持仓：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询当前持仓(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void positionLeverResponse() {
+        try {
+            PositionLeverRequest request = PositionLeverRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .marginMode("cross")
+                    .positionSide("long")
+                    .build();
+            PositionLeverResponse response = huobiAPIService.positionLeverResponse(request);
+            logger.debug("v5.查询杠杆等级：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询杠杆等级(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void setPositionLeverResponse() {
+        try {
+            SetPositionLeverRequest request = SetPositionLeverRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .marginMode("isolated")
+                    .leverRate("5")
+                    .positionSide("long")
+                    .build();
+            SetPositionLeverResponse response = huobiAPIService.setPositionLeverResponse(request);
+            logger.debug("v5.设置杠杆等级：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.设置杠杆等级(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void positionRiskLimitResponse() {
+        try {
+            PositionRiskLimitRequest request = PositionRiskLimitRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            PositionRiskLimitResponse response = huobiAPIService.positionRiskLimitResponse(request);
+            logger.debug("v5.查询持仓风险限额：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询持仓风险限额(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void positionRiskLimitTierResponse() {
+        try {
+            PositionRiskLimitTierRequest request = PositionRiskLimitTierRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            PositionRiskLimitTierResponse response = huobiAPIService.positionRiskLimitTierResponse(request);
+            logger.debug("v5.查询持仓风险限额阶梯：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询持仓风险限额阶梯(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void positionMarginResponse() {
+        try {
+            PositionMarginRequest request = PositionMarginRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .build();
+            PositionMarginResponse response = huobiAPIService.positionMarginResponse(request);
+            logger.debug("v5.调整逐仓保证金：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.调整逐仓保证金(预期异常,无key):{}", e.getMessage());
+        }
+    }
 }

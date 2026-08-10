@@ -71,4 +71,7 @@ public class TradeOrderRequest {
 
     @SerializedName("trigger_protect")
     private Boolean triggerProtect;
+
+    @SerializedName("self_match_prevent")
+    private Boolean selfMatchPrevent;
 }

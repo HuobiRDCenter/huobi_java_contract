@@ -589,7 +589,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getSide())) {
                 params.put("side", request.getSide());
             }
-            if (StringUtils.isNotEmpty(request.getTpType())) {
+            if (StringUtils.isNotEmpty(request.getType())) {
                 params.put("type", request.getType());
             }
             if (StringUtils.isNotEmpty(request.getPriceMatch())) {
@@ -634,6 +634,12 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getSlTriggerPriceType())) {
                 params.put("sl_trigger_price_type", request.getSlTriggerPriceType());
             }
+            if (request.getPriceProtect() != null) {
+                params.put("price_protect", request.getPriceProtect());
+            }
+            if (request.getSelfMatchPrevent() != null) {
+                params.put("self_match_prevent", request.getSelfMatchPrevent());
+            }
             body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_ORDER,params);
             logger.debug("body:{}",body);
             TradeOrderResponse response=JSON.parseObject(body,TradeOrderResponse.class);
@@ -663,7 +669,7 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getSide())) {
                 params.put("side", request.getSide());
             }
-            if (StringUtils.isNotEmpty(request.getTpType())) {
+            if (StringUtils.isNotEmpty(request.getType())) {
                 params.put("type", request.getType());
             }
             if (StringUtils.isNotEmpty(request.getPriceMatch())) {
@@ -934,8 +940,8 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getMarginMode())) {
                 params.put("margin_mode", request.getMarginMode());
             }
-            if (StringUtils.isNotEmpty(request.getState())) {
-                params.put("state", request.getState());
+            if (StringUtils.isNotEmpty(request.getStates())) {
+                params.put("states", request.getStates());
             }
             if (StringUtils.isNotEmpty(request.getType())) {
                 params.put("type", request.getType());
@@ -1045,6 +1051,9 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (StringUtils.isNotEmpty(request.getMarginMode())) {
                 params.put("margin_mode", request.getMarginMode());
             }
+            if (StringUtils.isNotEmpty(request.getPositionSide())) {
+                params.put("position_side", request.getPositionSide());
+            }
             body=HbdmHttpClient.getInstance().doGetKey(api_key,secret_key,url_prex + HuobiFutureAPIConstants.POSITION_LEVER,params);
             logger.debug("body:{}",body);
             PositionLeverResponse response=JSON.parseObject(body,PositionLeverResponse.class);
@@ -1070,6 +1079,9 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             }
             if (StringUtils.isNotEmpty(request.getLeverRate())) {
                 params.put("lever_rate", request.getLeverRate());
+            }
+            if (StringUtils.isNotEmpty(request.getPositionSide())) {
+                params.put("position_side", request.getPositionSide());
             }
             body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.SET_POSITION_LEVER,params);
             logger.debug("body:{}",body);

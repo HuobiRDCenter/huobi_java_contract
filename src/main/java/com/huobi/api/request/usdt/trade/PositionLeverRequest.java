@@ -14,4 +14,7 @@ public class PositionLeverRequest {
 
     @SerializedName("margin_mode")
     private String marginMode;
+
+    @SerializedName("position_side")
+    private String positionSide;
 }

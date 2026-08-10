@@ -17,4 +17,7 @@ public class SetPositionLeverRequest {
 
     @SerializedName("lever_rate")
     private String leverRate;
+
+    @SerializedName("position_side")
+    private String positionSide;
 }
