@@ -189,4 +189,68 @@ public class AccountAPITest implements BaseTest {
         SwapApiTradingStatusResponse response = huobiAPIService.getSwapApiTradingStatusResponse();
         logger.debug("22.获取用户API指标禁用信息：{}", JSON.toJSONString(response));
     }
+
+    @Test
+    public void getContractAccountBalance() {
+        try {
+            ContractAccountBalanceResonse response = huobiAPIService.getContractAccountBalance();
+            logger.debug("v5.查询账户余额：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询账户余额(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void setAssetMode() {
+        try {
+            AccountAssetModeResponse response = huobiAPIService.setAssetMode(1);
+            logger.debug("v5.设置资产模式：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.设置资产模式(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void getAssetMode() {
+        try {
+            AccountAssetModeResponse response = huobiAPIService.getAssetMode();
+            logger.debug("v5.查询资产模式：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询资产模式(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void getAccountFeeDeductionCurrency() {
+        try {
+            AccountFeeDeductionCurrencyResponse response = huobiAPIService.getAccountFeeDeductionCurrency();
+            logger.debug("v5.查询手续费抵扣币种：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询手续费抵扣币种(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void setAccountFeeDeductionCurrency() {
+        try {
+            AccountFeeDeductionCurrencyResponse response = huobiAPIService.setAccountFeeDeductionCurrency(1, "htx");
+            logger.debug("v5.设置手续费抵扣币种：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.设置手续费抵扣币种(预期异常,无key):{}", e.getMessage());
+        }
+    }
+
+    @Test
+    public void getAccountBills() {
+        try {
+            AccountBillsRequest request = AccountBillsRequest.builder()
+                    .contractCode("BTC-USDT")
+                    .marginMode("cross")
+                    .build();
+            AccountBillsResponse response = huobiAPIService.getAccountBills(request);
+            logger.debug("v5.查询流水记录：{}", JSON.toJSONString(response));
+        } catch (Exception e) {
+            logger.debug("v5.查询流水记录(预期异常,无key):{}", e.getMessage());
+        }
+    }
 }
