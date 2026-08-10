@@ -10,3 +10,8 @@ target
 .arcconfig
 *.ipr
 *.iws
+
+# 过程文档不提交
+CLAUDE.md
+docs/
+
