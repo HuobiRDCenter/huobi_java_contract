@@ -1,6 +1,7 @@
 package com.huobi.usdt.api;
 
 import com.alibaba.fastjson.JSON;
+import com.huobi.TestKeys;
 import com.huobi.api.request.usdt.account.*;
 import com.huobi.api.response.usdt.account.*;
 import com.huobi.api.service.usdt.account.AccountAPIServiceImpl;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 public class AccountAPITest implements BaseTest {
 
 
-    AccountAPIServiceImpl huobiAPIService = new AccountAPIServiceImpl("", "");
+    AccountAPIServiceImpl huobiAPIService = new AccountAPIServiceImpl(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
 
     @Test
     public void getSwapBalanceValuation(){

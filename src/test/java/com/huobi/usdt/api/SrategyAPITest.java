@@ -2,6 +2,7 @@ package com.huobi.usdt.api;
 
 
 import com.alibaba.fastjson.JSON;
+import com.huobi.TestKeys;
 import com.huobi.api.enums.DirectionEnum;
 import com.huobi.api.enums.OffsetEnum;
 import com.huobi.api.request.usdt.trade.*;
@@ -19,8 +20,8 @@ import java.math.BigDecimal;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class SrategyAPITest implements BaseTest{
-    StrategyAPIServiceImpl huobiAPIService  = new StrategyAPIServiceImpl("", "");
-    AlgoAPIServiceImpl algoService = new AlgoAPIServiceImpl("", "");
+    StrategyAPIServiceImpl huobiAPIService  = new StrategyAPIServiceImpl(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
+    AlgoAPIServiceImpl algoService = new AlgoAPIServiceImpl(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
 
     @Test
     public void swapTriggerOrderRequest() {

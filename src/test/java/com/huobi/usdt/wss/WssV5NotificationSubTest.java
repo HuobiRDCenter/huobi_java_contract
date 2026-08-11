@@ -2,6 +2,7 @@ package com.huobi.usdt.wss;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.huobi.TestKeys;
 import com.huobi.wss.constants.HuobiV5WSSConstants;
 import com.huobi.wss.event.v5.V5NotificationResponse;
 import com.huobi.wss.handle.WssV5NotificationHandle;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class WssV5NotificationSubTest {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    WssV5NotificationHandle handle = new WssV5NotificationHandle("", "");
+    WssV5NotificationHandle handle = new WssV5NotificationHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
 
     private Map<String, Object> contractCode(String code) {
         Map<String, Object> ext = new HashMap<>();

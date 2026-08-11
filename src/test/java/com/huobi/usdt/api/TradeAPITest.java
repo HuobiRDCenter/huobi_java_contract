@@ -1,6 +1,7 @@
 package com.huobi.usdt.api;
 
 import com.alibaba.fastjson.JSON;
+import com.huobi.TestKeys;
 import com.huobi.api.enums.DirectionEnum;
 import com.huobi.api.enums.OffsetEnum;
 import com.huobi.api.request.usdt.trade.*;
@@ -17,7 +18,7 @@ import java.util.List;
 @FixMethodOrder(MethodSorters.JVM)
 public class TradeAPITest implements BaseTest {
 
-    TradeAPIServiceImpl huobiAPIService = new TradeAPIServiceImpl("", "");
+    TradeAPIServiceImpl huobiAPIService = new TradeAPIServiceImpl(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
 
     @Test
     public void linearCancelAfterResponse(){

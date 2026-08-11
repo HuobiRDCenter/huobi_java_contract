@@ -1,6 +1,7 @@
 package com.huobi.usdt.wss;
 
 import com.alibaba.fastjson.JSON;
+import com.huobi.TestKeys;
 import com.huobi.wss.handle.WssTradeHandle;
 import com.huobi.wss.request.WssPlaceOrderData;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class WssTradeTest {
 
     @Test
     public void testPlaceOrder() throws URISyntaxException, InterruptedException {
-        WssTradeHandle handle = new WssTradeHandle("", "");
+        WssTradeHandle handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
         handle.connect(response -> logger.info("收到回报:{}", JSON.toJSON(response)));
         Thread.sleep(2000);
         // 无 key 鉴权会失败，这里仅验证消息可构造发送
@@ -39,7 +40,7 @@ public class WssTradeTest {
 
     @Test
     public void testPlaceBatchOrders() throws URISyntaxException, InterruptedException {
-        WssTradeHandle handle = new WssTradeHandle("", "");
+        WssTradeHandle handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
         handle.connect(response -> logger.info("收到回报:{}", JSON.toJSON(response)));
         Thread.sleep(2000);
         try {
@@ -53,7 +54,7 @@ public class WssTradeTest {
 
     @Test
     public void testCancelOrder() throws URISyntaxException, InterruptedException {
-        WssTradeHandle handle = new WssTradeHandle("", "");
+        WssTradeHandle handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
         handle.connect(response -> logger.info("收到回报:{}", JSON.toJSON(response)));
         Thread.sleep(2000);
         try {
@@ -68,7 +69,7 @@ public class WssTradeTest {
 
     @Test
     public void testCancelBatchOrders() throws URISyntaxException, InterruptedException {
-        WssTradeHandle handle = new WssTradeHandle("", "");
+        WssTradeHandle handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
         handle.connect(response -> logger.info("收到回报:{}", JSON.toJSON(response)));
         Thread.sleep(2000);
         try {
@@ -82,7 +83,7 @@ public class WssTradeTest {
 
     @Test
     public void testCancelAllOrders() throws URISyntaxException, InterruptedException {
-        WssTradeHandle handle = new WssTradeHandle("", "");
+        WssTradeHandle handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
         handle.connect(response -> logger.info("收到回报:{}", JSON.toJSON(response)));
         Thread.sleep(2000);
         try {
