@@ -5,6 +5,7 @@ import com.huobi.TestKeys;
 import com.huobi.api.request.usdt.account.*;
 import com.huobi.api.response.usdt.account.*;
 import com.huobi.api.service.usdt.account.AccountAPIServiceImpl;
+import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -196,6 +197,17 @@ public class AccountAPITest implements BaseTest {
         try {
             ContractAccountBalanceResonse response = huobiAPIService.getContractAccountBalance();
             logger.debug("v5.查询账户余额：{}", JSON.toJSONString(response));
+            Assert.assertEquals("查询账户余额失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
+            Assert.assertNotNull("data 为空", response.getData());
+            Assert.assertNotNull("state 为空", response.getData().getState());
+            Assert.assertNotNull("equity 为空", response.getData().getEquity());
+            Assert.assertNotNull("details 为空", response.getData().getDetails());
+            if (!response.getData().getDetails().isEmpty()) {
+                ContractAccountBalanceResonse.Details d = response.getData().getDetails().get(0);
+                Assert.assertNotNull("currency 为空", d.getCurrency());
+                Assert.assertNotNull("equity(detail) 为空", d.getEquity());
+            }
         } catch (Exception e) {
             logger.debug("v5.查询账户余额(预期异常,无key):{}", e.getMessage());
         }
@@ -206,6 +218,9 @@ public class AccountAPITest implements BaseTest {
         try {
             AccountAssetModeResponse response = huobiAPIService.setAssetMode(1);
             logger.debug("v5.设置资产模式：{}", JSON.toJSONString(response));
+            Assert.assertEquals("设置资产模式失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
+            Assert.assertNotNull("asset_mode 为空", response.getData().getAssetMode());
         } catch (Exception e) {
             logger.debug("v5.设置资产模式(预期异常,无key):{}", e.getMessage());
         }
@@ -216,6 +231,9 @@ public class AccountAPITest implements BaseTest {
         try {
             AccountAssetModeResponse response = huobiAPIService.getAssetMode();
             logger.debug("v5.查询资产模式：{}", JSON.toJSONString(response));
+            Assert.assertEquals("查询资产模式失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
+            Assert.assertNotNull("asset_mode 为空", response.getData().getAssetMode());
         } catch (Exception e) {
             logger.debug("v5.查询资产模式(预期异常,无key):{}", e.getMessage());
         }
@@ -226,6 +244,9 @@ public class AccountAPITest implements BaseTest {
         try {
             AccountFeeDeductionCurrencyResponse response = huobiAPIService.getAccountFeeDeductionCurrency();
             logger.debug("v5.查询手续费抵扣币种：{}", JSON.toJSONString(response));
+            Assert.assertEquals("查询手续费抵扣币种失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
+            Assert.assertNotNull("fee_option 为空", response.getData().getFeeOption());
         } catch (Exception e) {
             logger.debug("v5.查询手续费抵扣币种(预期异常,无key):{}", e.getMessage());
         }
@@ -236,6 +257,10 @@ public class AccountAPITest implements BaseTest {
         try {
             AccountFeeDeductionCurrencyResponse response = huobiAPIService.setAccountFeeDeductionCurrency(1, "htx");
             logger.debug("v5.设置手续费抵扣币种：{}", JSON.toJSONString(response));
+            Assert.assertEquals("设置手续费抵扣币种失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
+            Assert.assertNotNull("fee_option 为空", response.getData().getFeeOption());
+            Assert.assertNotNull("deduction_currency 为空", response.getData().getDeductionCurrency());
         } catch (Exception e) {
             logger.debug("v5.设置手续费抵扣币种(预期异常,无key):{}", e.getMessage());
         }
@@ -250,6 +275,18 @@ public class AccountAPITest implements BaseTest {
                     .build();
             AccountBillsResponse response = huobiAPIService.getAccountBills(request);
             logger.debug("v5.查询流水记录：{}", JSON.toJSONString(response));
+            Assert.assertEquals("查询流水记录失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
+            if (response.getData() != null && !response.getData().isEmpty()) {
+                AccountBillsResponse.DataBean d = response.getData().get(0);
+                Assert.assertNotNull("id 为空", d.getId());
+                Assert.assertNotNull("type 为空", d.getType());
+                Assert.assertNotNull("contract_code 为空", d.getContractCode());
+                Assert.assertNotNull("margin_mode 为空", d.getMarginMode());
+                Assert.assertNotNull("currency 为空", d.getCurrency());
+                Assert.assertNotNull("amount 为空", d.getAmount());
+                Assert.assertNotNull("created_time 为空", d.getCreatedTime());
+            }
         } catch (Exception e) {
             logger.debug("v5.查询流水记录(预期异常,无key):{}", e.getMessage());
         }

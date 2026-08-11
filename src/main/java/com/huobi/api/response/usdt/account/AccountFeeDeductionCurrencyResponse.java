@@ -17,7 +17,9 @@ public class AccountFeeDeductionCurrencyResponse {
     private String message;
     @SerializedName("ts")
     private Long ts;
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
         @SerializedName("fee_option")
         private Integer feeOption;
         @SerializedName("deduction_currency")

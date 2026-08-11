@@ -16,7 +16,9 @@ public class ContractAccountBalanceResonse {
     private String message;
     @SerializedName("ts")
     private Long ts;
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
         @SerializedName("state")
         private String state;
 
@@ -51,7 +53,7 @@ public class ContractAccountBalanceResonse {
 
     @Data
     @AllArgsConstructor
-    public class Details {
+    public static class Details {
 
         @SerializedName("currency")
         private String currency;

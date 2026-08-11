@@ -15,7 +15,9 @@ public class AccountAssetModeResponse {
     private String message;
     @SerializedName("ts")
     private Long ts;
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
         @SerializedName("asset_mode")
         private Integer assetMode;
     }
