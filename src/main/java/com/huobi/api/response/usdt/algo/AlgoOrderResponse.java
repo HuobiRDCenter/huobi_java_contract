@@ -26,7 +26,7 @@ public class AlgoOrderResponse {
 
     @Data
     @AllArgsConstructor
-    private class DataBean {
+    public static class DataBean {
 
         @SerializedName("algo_id")
         private String algoId;
