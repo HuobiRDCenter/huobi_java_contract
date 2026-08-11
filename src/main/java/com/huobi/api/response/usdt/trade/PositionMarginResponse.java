@@ -19,6 +19,8 @@ public class PositionMarginResponse {
     @SerializedName("ts")
     private Long ts;
 
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
     }
 }

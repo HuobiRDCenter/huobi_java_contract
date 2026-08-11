@@ -15,7 +15,9 @@ public class TradeCancelAfterResponse {
     private String message;
     @SerializedName("ts")
     private Long ts;
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
         @SerializedName("current_time")
         private String currentTime;
 

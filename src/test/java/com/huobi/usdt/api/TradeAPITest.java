@@ -1,6 +1,7 @@
 package com.huobi.usdt.api;
 
 import com.alibaba.fastjson.JSON;
+import com.huobi.AssertFields;
 import com.huobi.TestKeys;
 import com.huobi.api.enums.DirectionEnum;
 import com.huobi.api.enums.OffsetEnum;
@@ -222,6 +223,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             TradeOrderResponse response = huobiAPIService.tradeOrderResponse(request);
             logger.debug("v5.合约下单：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.合约下单失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.合约下单(预期异常,无key):{}", e.getMessage());
         }
@@ -236,6 +238,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             TradeBachOrderResponse response = huobiAPIService.tradeBachOrder(request);
             logger.debug("v5.合约批量下单：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.合约批量下单失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.合约批量下单(预期异常,无key):{}", e.getMessage());
         }
@@ -249,6 +252,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             CancelTradeOrderResponse response = huobiAPIService.cancelTradeOrder(request);
             logger.debug("v5.撤单：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.撤单失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.撤单(预期异常,无key):{}", e.getMessage());
         }
@@ -262,6 +266,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             CannelTradeBatchOrderResponse response = huobiAPIService.cannelTradeBatchOrderResponse(request);
             logger.debug("v5.批量撤单：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.批量撤单失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.批量撤单(预期异常,无key):{}", e.getMessage());
         }
@@ -275,6 +280,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             CannelTradeAllOrderResponse response = huobiAPIService.cannelTradeAllOrderResponse(request);
             logger.debug("v5.全部撤单：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.全部撤单失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.全部撤单(预期异常,无key):{}", e.getMessage());
         }
@@ -288,6 +294,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             TradePositionResponse response = huobiAPIService.tradePositionResponse(request);
             logger.debug("v5.市价全平：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.市价全平失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.市价全平(预期异常,无key):{}", e.getMessage());
         }
@@ -298,6 +305,7 @@ public class TradeAPITest implements BaseTest {
         try {
             TradePositionAllResponse response = huobiAPIService.tradePositionAllResponse();
             logger.debug("v5.一键全平：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.一键全平失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.一键全平(预期异常,无key):{}", e.getMessage());
         }
@@ -311,6 +319,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             TradeOrderOpensResponse response = huobiAPIService.tradeOrderOpensResponse(request);
             logger.debug("v5.查询当前委托：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.查询当前委托失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询当前委托(预期异常,无key):{}", e.getMessage());
         }
@@ -324,6 +333,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             TradeOrderTradesResponse response = huobiAPIService.tradeOrderTradesResponse(request);
             logger.debug("v5.查询成交明细：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.查询成交明细失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询成交明细(预期异常,无key):{}", e.getMessage());
         }
@@ -338,6 +348,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             TradeOrderHistoryResponse response = huobiAPIService.tradeOrderHistoryResponse(request);
             logger.debug("v5.查询历史委托：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.查询历史委托失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询历史委托(预期异常,无key):{}", e.getMessage());
         }
@@ -351,6 +362,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             GetTradeOrderResponse response = huobiAPIService.getTradeOrderResponse(request);
             logger.debug("v5.查询订单信息：{}", JSON.toJSONString(response));
+            AssertFields.assertListFirstElementFields("v5.查询订单信息失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询订单信息(预期异常,无key):{}", e.getMessage());
         }
@@ -363,6 +375,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             TradeCancelAfterResponse response = huobiAPIService.tradeCancelAfterResponse(request);
             logger.debug("v5.自动撤单：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.自动撤单失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.自动撤单(预期异常,无key):{}", e.getMessage());
         }
@@ -376,6 +389,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             TradePositionOpensResponse response = huobiAPIService.tradePositionOpensResponse(request);
             logger.debug("v5.查询当前持仓：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.查询当前持仓失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询当前持仓(预期异常,无key):{}", e.getMessage());
         }
@@ -391,6 +405,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             PositionLeverResponse response = huobiAPIService.positionLeverResponse(request);
             logger.debug("v5.查询杠杆等级：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.查询杠杆等级失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询杠杆等级(预期异常,无key):{}", e.getMessage());
         }
@@ -407,6 +422,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             SetPositionLeverResponse response = huobiAPIService.setPositionLeverResponse(request);
             logger.debug("v5.设置杠杆等级：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.设置杠杆等级失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.设置杠杆等级(预期异常,无key):{}", e.getMessage());
         }
@@ -420,6 +436,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             PositionRiskLimitResponse response = huobiAPIService.positionRiskLimitResponse(request);
             logger.debug("v5.查询持仓风险限额：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.查询持仓风险限额失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询持仓风险限额(预期异常,无key):{}", e.getMessage());
         }
@@ -433,6 +450,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             PositionRiskLimitTierResponse response = huobiAPIService.positionRiskLimitTierResponse(request);
             logger.debug("v5.查询持仓风险限额阶梯：{}", JSON.toJSONString(response));
+            AssertFields.assertListFirstElementFields("v5.查询持仓风险限额阶梯失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询持仓风险限额阶梯(预期异常,无key):{}", e.getMessage());
         }
@@ -446,6 +464,7 @@ public class TradeAPITest implements BaseTest {
                     .build();
             PositionMarginResponse response = huobiAPIService.positionMarginResponse(request);
             logger.debug("v5.调整逐仓保证金：{}", JSON.toJSONString(response));
+            AssertFields.assertAllFieldsNotNull("v5.调整逐仓保证金失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.调整逐仓保证金(预期异常,无key):{}", e.getMessage());
         }

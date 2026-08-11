@@ -15,7 +15,9 @@ public class CannelTradeBatchOrderResponse {
     private String message;
     @SerializedName("ts")
     private Long ts;
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
         @SerializedName("order_id")
         private String orderId;
 

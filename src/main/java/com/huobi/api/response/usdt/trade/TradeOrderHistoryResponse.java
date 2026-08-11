@@ -15,7 +15,9 @@ public class TradeOrderHistoryResponse {
     private String message;
     @SerializedName("ts")
     private Long ts;
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
         @SerializedName("id")
         private String id;
 

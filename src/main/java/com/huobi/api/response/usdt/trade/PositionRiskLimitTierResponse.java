@@ -19,7 +19,9 @@ public class PositionRiskLimitTierResponse {
     @SerializedName("ts")
     private Long ts;
 
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
         @SerializedName("contract_code")
         private String contractCode;
 
