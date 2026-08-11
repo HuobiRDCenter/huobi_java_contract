@@ -17,8 +17,10 @@ public class AssetsDeductionCurrencyResponse {
     private String message;
     @SerializedName("ts")
     private Long ts;
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
         @SerializedName("currency")
-        private List currency;
+        private List<String> currency;
     }
 }

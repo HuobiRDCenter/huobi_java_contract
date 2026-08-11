@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 public class MarketMultiAssetsMarginListResponse {
@@ -15,8 +17,10 @@ public class MarketMultiAssetsMarginListResponse {
     private String message;
     @SerializedName("ts")
     private Long ts;
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
         @SerializedName("multi_assets")
-        private String multiAssets;
+        private List<String> multiAssets;
     }
 }
