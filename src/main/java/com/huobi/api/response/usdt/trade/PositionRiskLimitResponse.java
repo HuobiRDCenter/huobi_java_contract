@@ -4,13 +4,15 @@ import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 public class PositionRiskLimitResponse {
     @SerializedName("code")
     private Integer code;
     @SerializedName("data")
-    private DataBean data;
+    private List<DataBean> data;
     @SerializedName("message")
     private String message;
     @SerializedName("ts")

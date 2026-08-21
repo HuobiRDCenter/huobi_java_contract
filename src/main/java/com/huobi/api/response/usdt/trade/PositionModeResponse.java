@@ -15,7 +15,9 @@ public class PositionModeResponse {
     private String message;
     @SerializedName("ts")
     private Long ts;
-    private class DataBean {
+    @Data
+    @AllArgsConstructor
+    public static class DataBean {
         @SerializedName("position_mode")
         private String positionMode;
     }

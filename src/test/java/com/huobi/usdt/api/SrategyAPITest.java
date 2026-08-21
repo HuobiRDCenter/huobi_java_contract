@@ -11,6 +11,7 @@ import com.huobi.api.response.usdt.trade.*;
 import com.huobi.api.service.usdt.reference.CrossReferenceAPIServiceImpl;
 import com.huobi.api.service.usdt.strategy.StrategyAPIServiceImpl;
 import com.huobi.api.service.usdt.algo.AlgoAPIServiceImpl;
+import org.junit.Assert;
 import com.huobi.api.request.usdt.algo.*;
 import com.huobi.api.response.usdt.algo.*;
 import org.junit.FixMethodOrder;
@@ -236,6 +237,8 @@ public class SrategyAPITest implements BaseTest{
                     .build();
             AlgoOrderResponse response = algoService.algoOrder(request);
             logger.debug("v5.策略委托下单：{}", JSON.toJSONString(response));
+            Assert.assertEquals("v5.策略委托下单失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
             AssertFields.assertListFirstElementFields("v5.策略委托下单失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.策略委托下单(预期异常,无key):{}", e.getMessage());
@@ -250,6 +253,8 @@ public class SrategyAPITest implements BaseTest{
                     .build();
             CancelAlgoOrdersResponse response = algoService.cancelAlgoOrder(request);
             logger.debug("v5.策略委托撤单：{}", JSON.toJSONString(response));
+            Assert.assertEquals("v5.策略委托撤单失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
             AssertFields.assertListFirstElementFields("v5.策略委托撤单失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.策略委托撤单(预期异常,无key):{}", e.getMessage());
@@ -264,6 +269,8 @@ public class SrategyAPITest implements BaseTest{
                     .build();
             QueryAlgoOrdersResponse response = algoService.queryAlgoOrder(request);
             logger.debug("v5.查询策略委托：{}", JSON.toJSONString(response));
+            Assert.assertEquals("v5.查询策略委托失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
             AssertFields.assertListFirstElementFields("v5.查询策略委托失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询策略委托(预期异常,无key):{}", e.getMessage());
@@ -278,6 +285,8 @@ public class SrategyAPITest implements BaseTest{
                     .build();
             QueryOpenAlgoOrdersResponse response = algoService.queryOpenAlgoOrders(request);
             logger.debug("v5.查询当前未触发策略委托：{}", JSON.toJSONString(response));
+            Assert.assertEquals("v5.查询当前未触发策略委托失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
             AssertFields.assertListFirstElementFields("v5.查询当前未触发策略委托失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询当前未触发策略委托(预期异常,无key):{}", e.getMessage());
@@ -292,6 +301,8 @@ public class SrategyAPITest implements BaseTest{
                     .build();
             QueryAlgoOrderHistoryResponse response = algoService.queryAlgoOrderHistory(request);
             logger.debug("v5.查询历史策略委托：{}", JSON.toJSONString(response));
+            Assert.assertEquals("v5.查询历史策略委托失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
             AssertFields.assertListFirstElementFields("v5.查询历史策略委托失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询历史策略委托(预期异常,无key):{}", e.getMessage());

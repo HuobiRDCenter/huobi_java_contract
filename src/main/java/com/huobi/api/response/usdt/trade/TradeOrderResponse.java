@@ -23,8 +23,5 @@ public class TradeOrderResponse {
 
         @SerializedName("client_order_id")
         private String clientOrderId;
-
-        @SerializedName("cancel_reason")
-        private String cancelReason;
     }
 }

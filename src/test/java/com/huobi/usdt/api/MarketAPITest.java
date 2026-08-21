@@ -274,6 +274,7 @@ public class MarketAPITest implements BaseTest {
                 Integer.valueOf(200), response.getCode());
         if (response.getData() != null && !response.getData().isEmpty()) {
             MarketEliteAccountRatioResponse.EliteAccountRatioData d = response.getData().get(0);
+            Assert.assertNotNull("contract_code 为空", d.getContractCode());
             Assert.assertNotNull("buy_ratio 为空", d.getBuyRatio());
             Assert.assertNotNull("sell_ratio 为空", d.getSellRatio());
             Assert.assertNotNull("ts 为空", d.getTs());
