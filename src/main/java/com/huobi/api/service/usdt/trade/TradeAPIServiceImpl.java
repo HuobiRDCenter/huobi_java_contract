@@ -656,65 +656,67 @@ public class TradeAPIServiceImpl implements TradeAPIService {
     public TradeBachOrderResponse tradeBachOrder(TradeBachOrderRequest request) {
         String body;
         try{
-            Map<String,Object> params=new HashMap<>();
+            Map<String,Object> order=new HashMap<>();
             if (StringUtils.isNotEmpty(request.getContractCode())) {
-                params.put("contract_code", request.getContractCode());
+                order.put("contract_code", request.getContractCode());
             }
             if (StringUtils.isNotEmpty(request.getMarginMode())) {
-                params.put("margin_mode", request.getMarginMode());
+                order.put("margin_mode", request.getMarginMode());
             }
             if (StringUtils.isNotEmpty(request.getPositionSide())) {
-                params.put("position_side", request.getPositionSide());
+                order.put("position_side", request.getPositionSide());
             }
             if (StringUtils.isNotEmpty(request.getSide())) {
-                params.put("side", request.getSide());
+                order.put("side", request.getSide());
             }
             if (StringUtils.isNotEmpty(request.getType())) {
-                params.put("type", request.getType());
+                order.put("type", request.getType());
             }
             if (StringUtils.isNotEmpty(request.getPriceMatch())) {
-                params.put("price_match", request.getPriceMatch());
+                order.put("price_match", request.getPriceMatch());
             }
             if (StringUtils.isNotEmpty(request.getClientOrderId())) {
-                params.put("client_order_id", request.getClientOrderId());
+                order.put("client_order_id", request.getClientOrderId());
             }
             if (StringUtils.isNotEmpty(request.getPrice())) {
-                params.put("price", request.getPrice());
+                order.put("price", request.getPrice());
             }
             if (StringUtils.isNotEmpty(request.getVolume())) {
-                params.put("volume", request.getVolume());
+                order.put("volume", request.getVolume());
             }
             if (request.getReduceOnly() != null) {
-                params.put("reduce_only", request.getReduceOnly());
+                order.put("reduce_only", request.getReduceOnly());
             }
             if (StringUtils.isNotEmpty(request.getTimeInForce())) {
-                params.put("time_in_force", request.getTimeInForce());
+                order.put("time_in_force", request.getTimeInForce());
             }
             if (StringUtils.isNotEmpty(request.getTpTriggerPrice())) {
-                params.put("tp_trigger_price", request.getTpTriggerPrice());
+                order.put("tp_trigger_price", request.getTpTriggerPrice());
             }
             if (StringUtils.isNotEmpty(request.getTpOrderPrice())) {
-                params.put("tp_order_price", request.getTpOrderPrice());
+                order.put("tp_order_price", request.getTpOrderPrice());
             }
             if (StringUtils.isNotEmpty(request.getTpType())) {
-                params.put("tp_type", request.getTpType());
+                order.put("tp_type", request.getTpType());
             }
             if (StringUtils.isNotEmpty(request.getTpTriggerPriceType())) {
-                params.put("tp_trigger_price_type", request.getTpTriggerPriceType());
+                order.put("tp_trigger_price_type", request.getTpTriggerPriceType());
             }
             if (StringUtils.isNotEmpty(request.getSlTriggerPrice())) {
-                params.put("sl_trigger_price", request.getSlTriggerPrice());
+                order.put("sl_trigger_price", request.getSlTriggerPrice());
             }
             if (StringUtils.isNotEmpty(request.getSlOrderPrice())) {
-                params.put("sl_order_price", request.getSlOrderPrice());
+                order.put("sl_order_price", request.getSlOrderPrice());
             }
             if (StringUtils.isNotEmpty(request.getSlType())) {
-                params.put("sl_type", request.getSlType());
+                order.put("sl_type", request.getSlType());
             }
             if (StringUtils.isNotEmpty(request.getSlTriggerPriceType())) {
-                params.put("sl_trigger_price_type", request.getSlTriggerPriceType());
+                order.put("sl_trigger_price_type", request.getSlTriggerPriceType());
             }
-            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_BACHORDER,params);
+            List<Map<String,Object>> orderList=new ArrayList<>();
+            orderList.add(order);
+            body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.TRADE_BACHORDER,orderList);
             logger.debug("body:{}",body);
             TradeBachOrderResponse response=JSON.parseObject(body,TradeBachOrderResponse.class);
             if (response.getCode() !=  null && response.getCode() == 200){
@@ -756,15 +758,16 @@ public class TradeAPIServiceImpl implements TradeAPIService {
     public CannelTradeBatchOrderResponse cannelTradeBatchOrderResponse(CannelTradeBatchOrderRequest request) {
         String body;
         try{
+            // cancel_batch_orders 是单对象 body：order_id / client_order_id 为字符串数组（opend 文档核实）
             Map<String,Object> params=new HashMap<>();
             if (StringUtils.isNotEmpty(request.getContractCode())) {
                 params.put("contract_code", request.getContractCode());
             }
             if (StringUtils.isNotEmpty(request.getOrderId())) {
-                params.put("order_id", request.getOrderId());
+                params.put("order_id", new ArrayList<>(java.util.Collections.singletonList(request.getOrderId())));
             }
             if (StringUtils.isNotEmpty(request.getClientOrderId())) {
-                params.put("client_order_id", request.getClientOrderId());
+                params.put("client_order_id", new ArrayList<>(java.util.Collections.singletonList(request.getClientOrderId())));
             }
             body=HbdmHttpClient.getInstance().doPost(api_key,secret_key,url_prex + HuobiFutureAPIConstants.CANCEL_TRADE_BATCHORDERS,params);
             logger.debug("body:{}",body);

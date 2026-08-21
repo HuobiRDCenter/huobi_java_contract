@@ -10,7 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AlgoAPIServiceImpl implements AlgoAPIService {
@@ -143,21 +145,23 @@ public class AlgoAPIServiceImpl implements AlgoAPIService {
     @Override
     public CancelAlgoOrdersResponse cancelAlgoOrder(CancelAlgoOrdersRequest request) {
         String body;
-        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> order = new HashMap<>();
         try {
             if (StringUtils.isNotEmpty(request.getAlgoId())) {
-                params.put("algo_id", request.getAlgoId());
+                order.put("algo_id", request.getAlgoId());
             }
 
             if (StringUtils.isNotEmpty(request.getAlgoClientOrderId())) {
-                params.put("algo_client_order_id", request.getAlgoClientOrderId());
+                order.put("algo_client_order_id", request.getAlgoClientOrderId());
             }
 
             if (StringUtils.isNotEmpty(request.getContractCode())) {
-                params.put("contract_code", request.getContractCode());
+                order.put("contract_code", request.getContractCode());
             }
 
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ALGO_ORDER_CANCEL, params);
+            List<Map<String, Object>> orderList = new ArrayList<>();
+            orderList.add(order);
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.ALGO_ORDER_CANCEL, orderList);
             logger.debug("body:{}", body);
             CancelAlgoOrdersResponse response = JSON.parseObject(body, CancelAlgoOrdersResponse.class);
             if (response.getCode() != null && response.getCode() == 200){

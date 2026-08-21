@@ -248,8 +248,27 @@ public class SrategyAPITest implements BaseTest{
     @Test
     public void cancelAlgoOrder() {
         try {
+            // 先下 SPX500 远价触发策略单拿 algo_id，再撤该单（触发价 7280 远离市价~7600，不会触发）
+            // 计划委托(trigger)需 price + trigger_price；dual_side 模式 position_side 必填
+            AlgoOrderRequest placeReq = AlgoOrderRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .type("trigger")
+                    .positionSide("long")
+                    .side("buy")
+                    .marginMode("cross")
+                    .volume("1")
+                    .price("7280")
+                    .triggerPrice("7280")
+                    .triggerPriceType("last")
+                    .build();
+            AlgoOrderResponse placeResp = algoService.algoOrder(placeReq);
+            Assert.assertEquals("v5.策略委托撤单前置下单失败: " + JSON.toJSONString(placeResp),
+                    Integer.valueOf(200), placeResp.getCode());
+            String algoId = placeResp.getData().get(0).getAlgoId();
+
             CancelAlgoOrdersRequest request = CancelAlgoOrdersRequest.builder()
-                    .contractCode("BTC-USDT")
+                    .contractCode("SPX500-USDT")
+                    .algoId(algoId)
                     .build();
             CancelAlgoOrdersResponse response = algoService.cancelAlgoOrder(request);
             logger.debug("v5.策略委托撤单：{}", JSON.toJSONString(response));

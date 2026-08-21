@@ -1,6 +1,7 @@
 package com.huobi.api.response.usdt.algo;
 
 import com.google.gson.annotations.SerializedName;
+import com.huobi.api.annotation.Required;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +36,7 @@ public class CancelAlgoOrdersResponse {
         /**
          * 订单ID
          */
+        @Required
         @SerializedName("algo_id")
         private String algoId;
 

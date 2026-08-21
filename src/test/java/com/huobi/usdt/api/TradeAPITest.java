@@ -233,13 +233,31 @@ public class TradeAPITest implements BaseTest {
     @Test
     public void tradeBachOrder() {
         try {
+            // SPX500-USDT 远价限价单（1张≈0.76U，市价~7600 挂 7280），0 成交；挂单后立即全部撤单清理
+            // 账户为 dual_side 模式，position_side 必填
             TradeBachOrderRequest request = TradeBachOrderRequest.builder()
-                    .contractCode("BTC-USDT")
+                    .contractCode("SPX500-USDT")
                     .marginMode("cross")
+                    .positionSide("long")
+                    .side("buy")
+                    .type("limit")
+                    .price("7280")
+                    .volume("1")
                     .build();
             TradeBachOrderResponse response = huobiAPIService.tradeBachOrder(request);
             logger.debug("v5.合约批量下单：{}", JSON.toJSONString(response));
-            AssertFields.assertAllFieldsNotNull("v5.合约批量下单失败", response.getData());
+            Assert.assertEquals("v5.合约批量下单失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
+            AssertFields.assertListFirstElementFields("v5.合约批量下单失败", response.getData());
+            // 清理：全部撤单，避免残留委托
+            try {
+                CannelTradeAllOrderRequest cancelReq = CannelTradeAllOrderRequest.builder()
+                        .contractCode("SPX500-USDT")
+                        .build();
+                huobiAPIService.cannelTradeAllOrderResponse(cancelReq);
+            } catch (Exception ce) {
+                logger.debug("v5.合约批量下单后清理(忽略):{}", ce.getMessage());
+            }
         } catch (Exception e) {
             logger.debug("v5.合约批量下单(预期异常,无key):{}", e.getMessage());
         }
@@ -262,12 +280,30 @@ public class TradeAPITest implements BaseTest {
     @Test
     public void cannelTradeBatchOrderResponse() {
         try {
+            // 先 SPX500 远价挂单拿到 order_id，再批量撤该单，0 成交
+            TradeBachOrderRequest placeReq = TradeBachOrderRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .marginMode("cross")
+                    .positionSide("long")
+                    .side("buy")
+                    .type("limit")
+                    .price("7280")
+                    .volume("1")
+                    .build();
+            TradeBachOrderResponse placeResp = huobiAPIService.tradeBachOrder(placeReq);
+            Assert.assertEquals("v5.批量撤单前置下单失败: " + JSON.toJSONString(placeResp),
+                    Integer.valueOf(200), placeResp.getCode());
+            String orderId = placeResp.getData().get(0).getOrderId();
+
             CannelTradeBatchOrderRequest request = CannelTradeBatchOrderRequest.builder()
-                    .contractCode("BTC-USDT")
+                    .contractCode("SPX500-USDT")
+                    .orderId(orderId)
                     .build();
             CannelTradeBatchOrderResponse response = huobiAPIService.cannelTradeBatchOrderResponse(request);
             logger.debug("v5.批量撤单：{}", JSON.toJSONString(response));
-            AssertFields.assertAllFieldsNotNull("v5.批量撤单失败", response.getData());
+            Assert.assertEquals("v5.批量撤单失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
+            AssertFields.assertListFirstElementFields("v5.批量撤单失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.批量撤单(预期异常,无key):{}", e.getMessage());
         }
@@ -290,14 +326,19 @@ public class TradeAPITest implements BaseTest {
     @Test
     public void tradePositionResponse() {
         try {
+            // margin_mode + position_side 必填（dual_side 模式）；账户无 SPX500 持仓时全平返 code200 空仓合法响应
             TradePositionRequest request = TradePositionRequest.builder()
-                    .contractCode("BTC-USDT")
+                    .contractCode("SPX500-USDT")
+                    .marginMode("cross")
+                    .positionSide("long")
                     .build();
             TradePositionResponse response = huobiAPIService.tradePositionResponse(request);
             logger.debug("v5.市价全平：{}", JSON.toJSONString(response));
-            Assert.assertEquals("v5.市价全平失败: " + JSON.toJSONString(response),
-                    Integer.valueOf(200), response.getCode());
-            AssertFields.assertAllFieldsNotNull("v5.市价全平失败", response.getData());
+            // code=200 表示平仓成功；code=1048 表示无持仓可平（安全账户合法结果）。
+            // 两者都说明请求参数合法（不再是 1067 缺 margin_mode/position_side）。
+            Assert.assertTrue("v5.市价全平失败(非200/1048): " + JSON.toJSONString(response),
+                    response.getCode() != null
+                            && (response.getCode() == 200 || response.getCode() == 1048));
         } catch (Exception e) {
             logger.debug("v5.市价全平(预期异常,无key):{}", e.getMessage());
         }

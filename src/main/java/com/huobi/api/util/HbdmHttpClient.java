@@ -6,6 +6,8 @@ import okhttp3.*;
 import org.apache.commons.collections4.MapUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -63,6 +65,30 @@ public class HbdmHttpClient {
         try {
             RequestBody body = RequestBody.create(JSON_TYPE, JSON.toJSONString(params));
             Request.Builder builder = new Request.Builder().url(uri + "?" + toQueryString(params)).post(body);
+            Request request = builder.build();
+            Response response = httpClient.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            throw new RuntimeException("IOException 目标url：" + uri, e);
+        }
+    }
+
+    /**
+     * 发送数组请求体的 POST 请求（V5 批量接口专用）。
+     *
+     * 按 HTX 签名说明（opend id=5578）：POST 请求业务参数不参与签名，
+     * 只对 AccessKeyId/SignatureMethod/SignatureVersion/Timestamp 四个鉴权参数签名，
+     * 业务参数放在 body 中。批量接口的 body 是顶层 JSON 数组（无 orders_data 包装）。
+     *
+     * @param orderList 订单 Map 列表，序列化为 [{...},{...}] 数组作为请求体
+     */
+    public String doPost(String appKey, String appSecretKey, String uri, List<Map<String, Object>> orderList) {
+        Map<String, Object> signParams = new HashMap<>();
+        ApiSignature sign = new ApiSignature();
+        sign.createSignature(appKey, appSecretKey, "POST", uri, signParams);
+        try {
+            RequestBody body = RequestBody.create(JSON_TYPE, JSON.toJSONString(orderList));
+            Request.Builder builder = new Request.Builder().url(uri + "?" + toQueryString(signParams)).post(body);
             Request request = builder.build();
             Response response = httpClient.newCall(request).execute();
             return response.body().string();
