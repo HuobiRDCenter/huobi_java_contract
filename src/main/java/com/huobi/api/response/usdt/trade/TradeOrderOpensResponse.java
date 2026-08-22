@@ -4,21 +4,26 @@ import com.huobi.api.annotation.Required;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class TradeOrderOpensResponse {
 
     @SerializedName("code")
     private Integer code;
     @SerializedName("data")
-    private DataBean data;
+    private List<DataBean> data;
     @SerializedName("message")
     private String message;
     @SerializedName("ts")
     private Long ts;
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class DataBean {
         @Required
         @SerializedName("id")
@@ -40,7 +45,6 @@ public class TradeOrderOpensResponse {
         @SerializedName("type")
         private String type;
 
-        @Required
         @SerializedName("price_match")
         private String priceMatch;
 
@@ -48,7 +52,6 @@ public class TradeOrderOpensResponse {
         @SerializedName("order_id")
         private String orderId;
 
-        @Required
         @SerializedName("client_order_id")
         private String clientOrderId;
 
@@ -76,54 +79,42 @@ public class TradeOrderOpensResponse {
         @SerializedName("order_source")
         private String orderSource;
 
-        @Required
         @SerializedName("reduce_only")
         private Boolean reduceOnly;
 
-        @Required
         @SerializedName("time_in_force")
         private String timeInForce;
 
-        @Required
         @SerializedName("tp_trigger_price")
         private String tpTriggerPrice;
 
-        @Required
         @SerializedName("tp_order_price")
         private String tpOrderPrice;
 
-        @Required
         @SerializedName("tp_type")
         private String tpType;
 
         @SerializedName("tp_trigger_price_type")
         private Integer tpTriggerPriceType;
 
-        @Required
         @SerializedName("sl_trigger_price")
         private String slTriggerPrice;
 
-        @Required
         @SerializedName("sl_order_price")
         private String slOrderPrice;
 
-        @Required
         @SerializedName("sl_type")
         private String slType;
 
-        @Required
         @SerializedName("sl_trigger_price_type")
         private Integer slTriggerPriceType;
 
-        @Required
         @SerializedName("trade_avg_price")
         private String tradeAvgPrice;
 
-        @Required
         @SerializedName("trade_volume")
         private String tradeVolume;
 
-        @Required
         @SerializedName("trade_turnover")
         private String tradeTurnover;
 
@@ -131,7 +122,6 @@ public class TradeOrderOpensResponse {
         @SerializedName("fee_currency")
         private String feeCurrency;
 
-        @Required
         @SerializedName("fee")
         private String fee;
 
@@ -141,7 +131,6 @@ public class TradeOrderOpensResponse {
         @SerializedName("deduction_amount")
         private String deductionAmount;
 
-        @Required
         @SerializedName("profit")
         private String profit;
 
@@ -157,11 +146,9 @@ public class TradeOrderOpensResponse {
         @SerializedName("updated_time")
         private String updatedTime;
 
-        @Required
         @SerializedName("price_protect")
         private Boolean priceProtect;
 
-        @Required
         @SerializedName("self_match_prevent")
         private String selfMatchPrevent;
     }

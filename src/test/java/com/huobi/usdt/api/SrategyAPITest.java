@@ -298,7 +298,23 @@ public class SrategyAPITest implements BaseTest{
 
     @Test
     public void queryOpenAlgoOrders() {
+        // 先下 SPX500 远价触发策略单（不撤）产生未触发策略 → 查当前未触发 → 断言 → 撤清理
+        String algoId = null;
         try {
+            AlgoOrderRequest placeReq = AlgoOrderRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .type("trigger")
+                    .positionSide("long")
+                    .side("buy")
+                    .marginMode("cross")
+                    .volume("1")
+                    .price("7300")
+                    .triggerPrice("7300")
+                    .triggerPriceType("last")
+                    .build();
+            AlgoOrderResponse placeResp = algoService.algoOrder(placeReq);
+            algoId = placeResp.getData().get(0).getAlgoId();
+
             QueryOpenAlgoOrdersRequest request = QueryOpenAlgoOrdersRequest.builder()
                     .type("trigger")
                     .build();
@@ -309,12 +325,44 @@ public class SrategyAPITest implements BaseTest{
             AssertFields.assertListFirstElementFields("v5.查询当前未触发策略委托失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询当前未触发策略委托(预期异常,无key):{}", e.getMessage());
+        } finally {
+            try {
+                if (algoId != null) {
+                    CancelAlgoOrdersRequest cancelReq = CancelAlgoOrdersRequest.builder()
+                            .contractCode("SPX500-USDT")
+                            .algoId(algoId)
+                            .build();
+                    algoService.cancelAlgoOrder(cancelReq);
+                }
+            } catch (Exception ce) {
+                logger.debug("v5.查询未触发策略后清理(忽略):{}", ce.getMessage());
+            }
         }
     }
 
     @Test
     public void queryAlgoOrderHistory() {
+        // 先下 SPX500 远价触发策略单 + 撤单产生历史策略 → 查历史策略 → 断言
         try {
+            AlgoOrderRequest placeReq = AlgoOrderRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .type("trigger")
+                    .positionSide("long")
+                    .side("buy")
+                    .marginMode("cross")
+                    .volume("1")
+                    .price("7300")
+                    .triggerPrice("7300")
+                    .triggerPriceType("last")
+                    .build();
+            AlgoOrderResponse placeResp = algoService.algoOrder(placeReq);
+            String algoId = placeResp.getData().get(0).getAlgoId();
+            CancelAlgoOrdersRequest cancelReq = CancelAlgoOrdersRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .algoId(algoId)
+                    .build();
+            algoService.cancelAlgoOrder(cancelReq);
+
             QueryAlgoOrderHistoryRequest request = QueryAlgoOrderHistoryRequest.builder()
                     .type("trigger")
                     .build();

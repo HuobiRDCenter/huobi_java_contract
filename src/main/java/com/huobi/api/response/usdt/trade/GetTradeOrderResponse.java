@@ -1,6 +1,7 @@
 package com.huobi.api.response.usdt.trade;
 
 import com.google.gson.annotations.SerializedName;
+import com.huobi.api.annotation.Required;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,45 +20,57 @@ public class GetTradeOrderResponse {
     @Data
     @AllArgsConstructor
     public static class DataBean {
+        @Required
         @SerializedName("id")
         private String id;
 
+        @Required
         @SerializedName("contract_code")
         private String contractCode;
 
+        @Required
         @SerializedName("side")
         private String side;
 
+        @Required
         @SerializedName("position_side")
         private String positionSide;
 
+        @Required
         @SerializedName("type")
         private String type;
 
         @SerializedName("price_match")
         private String priceMatch;
 
+        @Required
         @SerializedName("order_id")
         private String orderId;
 
         @SerializedName("client_order_id")
         private String clientOrderId;
 
+        @Required
         @SerializedName("margin_mode")
         private String marginMode;
 
+        @Required
         @SerializedName("price")
         private String price;
 
+        @Required
         @SerializedName("volume")
         private String volume;
 
+        @Required
         @SerializedName("lever_rate")
         private Long leverRate;
 
+        @Required
         @SerializedName("state")
         private String state;
 
+        @Required
         @SerializedName("order_source")
         private String orderSource;
 
@@ -100,6 +113,7 @@ public class GetTradeOrderResponse {
         @SerializedName("trade_turnover")
         private String tradeTurnover;
 
+        @Required
         @SerializedName("fee_currency")
         private String feeCurrency;
 
@@ -112,12 +126,15 @@ public class GetTradeOrderResponse {
         @SerializedName("profit")
         private String profit;
 
+        @Required
         @SerializedName("contract_type")
         private String contractType;
 
+        @Required
         @SerializedName("created_time")
         private Long createdTime;
 
+        @Required
         @SerializedName("updated_time")
         private Long updatedTime;
     }

@@ -4,20 +4,25 @@ import com.google.gson.annotations.SerializedName;
 import com.huobi.api.annotation.Required;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class TradeOrderTradesResponse {
     @SerializedName("code")
     private Integer code;
     @SerializedName("data")
-    private DataBean data;
+    private List<DataBean> data;
     @SerializedName("message")
     private String message;
     @SerializedName("ts")
     private Long ts;
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class DataBean {
         @Required
         @SerializedName("id")

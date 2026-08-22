@@ -1,6 +1,7 @@
 package com.huobi.api.response.usdt.algo;
 
 import com.google.gson.annotations.SerializedName;
+import com.huobi.api.annotation.Required;
 import lombok.*;
 
 import java.util.List;
@@ -35,42 +36,54 @@ public class QueryOpenAlgoOrdersResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class DataBean {
+        @Required
         @SerializedName("id")
         private String id;
 
+        @Required
         @SerializedName("volume")
         private String volume;
 
+        @Required
         @SerializedName("type")
         private String type;
 
+        @Required
         @SerializedName("state")
         private String state;
 
+        @Required
         @SerializedName("side")
         private String side;
 
+        @Required
         @SerializedName("algo_id")
         private String algoId;
 
         @SerializedName("algo_client_order_id")
         private String algoClientOrderId;
 
+        @Required
         @SerializedName("contract_code")
         private String contractCode;
 
+        @Required
         @SerializedName("position_side")
         private String positionSide;
 
+        @Required
         @SerializedName("margin_mode")
         private String marginMode;
 
+        @Required
         @SerializedName("created_time")
         private String createdTime;
 
+        @Required
         @SerializedName("updated_time")
         private String updatedTime;
 
+        @Required
         @SerializedName("order_source")
         private String orderSource;
 

@@ -1,6 +1,7 @@
 package com.huobi.api.response.usdt.algo;
 
 import com.google.gson.annotations.SerializedName;
+import com.huobi.api.annotation.Required;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,36 +39,45 @@ public class QueryAlgoOrderHistoryResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class HistoryAlgoOrderData {
+        @Required
         @SerializedName("id")
         private String id;
 
+        @Required
         @SerializedName("volume")
         private String volume;
 
+        @Required
         @SerializedName("type")
         private String type;
 
+        @Required
         @SerializedName("state")
         private String state;
 
+        @Required
         @SerializedName("side")
         private String side;
 
         @SerializedName("price")
         private String price;
 
+        @Required
         @SerializedName("algo_id")
         private String algoId;
 
         @SerializedName("algo_client_order_id")
         private String algoClientOrderId;
 
+        @Required
         @SerializedName("contract_code")
         private String contractCode;
 
+        @Required
         @SerializedName("position_side")
         private String positionSide;
 
+        @Required
         @SerializedName("margin_mode")
         private String marginMode;
 

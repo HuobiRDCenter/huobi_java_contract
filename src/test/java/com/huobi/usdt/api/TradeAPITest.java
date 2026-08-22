@@ -359,29 +359,88 @@ public class TradeAPITest implements BaseTest {
 
     @Test
     public void tradeOrderOpensResponse() {
+        // 先下 SPX500 远价限价单（不撤）产生未成交委托 → 查当前委托 → 断言 → 撤清理
+        String orderId = null;
         try {
+            TradeBachOrderRequest placeReq = TradeBachOrderRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .marginMode("cross")
+                    .positionSide("long")
+                    .side("buy")
+                    .type("limit")
+                    .price("7300")
+                    .volume("1")
+                    .build();
+            TradeBachOrderResponse placeResp = huobiAPIService.tradeBachOrder(placeReq);
+            orderId = placeResp.getData().get(0).getOrderId();
+
             TradeOrderOpensRequest request = TradeOrderOpensRequest.builder()
-                    .contractCode("BTC-USDT")
+                    .contractCode("SPX500-USDT")
+                    .marginMode("cross")
                     .build();
             TradeOrderOpensResponse response = huobiAPIService.tradeOrderOpensResponse(request);
             logger.debug("v5.查询当前委托：{}", JSON.toJSONString(response));
             Assert.assertEquals("v5.查询当前委托失败: " + JSON.toJSONString(response),
                     Integer.valueOf(200), response.getCode());
-            AssertFields.assertAllFieldsNotNull("v5.查询当前委托失败", response.getData());
+            AssertFields.assertListFirstElementFields("v5.查询当前委托失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询当前委托(预期异常,无key):{}", e.getMessage());
+        } finally {
+            // 清理：撤掉挂单
+            try {
+                if (orderId != null) {
+                    CannelTradeBatchOrderRequest cancelReq = CannelTradeBatchOrderRequest.builder()
+                            .contractCode("SPX500-USDT")
+                            .orderId(orderId)
+                            .build();
+                    huobiAPIService.cannelTradeBatchOrderResponse(cancelReq);
+                }
+            } catch (Exception ce) {
+                logger.debug("v5.查询当前委托后清理(忽略):{}", ce.getMessage());
+            }
         }
     }
 
     @Test
     public void tradeOrderTradesResponse() {
+        // 市价买入 1 张成交 → 查成交明细 → 立即全平清理
         try {
-            TradeOrderTradesRequest request = TradeOrderTradesRequest.builder()
-                    .contractCode("BTC-USDT")
+            TradeOrderRequest placeReq = TradeOrderRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .marginMode("cross")
+                    .positionSide("long")
+                    .side("buy")
+                    .type("market")
+                    .volume("1")
                     .build();
-            TradeOrderTradesResponse response = huobiAPIService.tradeOrderTradesResponse(request);
-            logger.debug("v5.查询成交明细：{}", JSON.toJSONString(response));
-            AssertFields.assertAllFieldsNotNull("v5.查询成交明细失败", response.getData());
+            TradeOrderResponse placeResp = huobiAPIService.tradeOrderResponse(placeReq);
+            Assert.assertEquals("v5.查询成交明细前置下单失败: " + JSON.toJSONString(placeResp),
+                    Integer.valueOf(200), placeResp.getCode());
+            String orderId = placeResp.getData().getOrderId();
+
+            try {
+                TradeOrderTradesRequest request = TradeOrderTradesRequest.builder()
+                        .contractCode("SPX500-USDT")
+                        .orderId(orderId)
+                        .build();
+                TradeOrderTradesResponse response = huobiAPIService.tradeOrderTradesResponse(request);
+                logger.debug("v5.查询成交明细：{}", JSON.toJSONString(response));
+                Assert.assertEquals("v5.查询成交明细失败: " + JSON.toJSONString(response),
+                        Integer.valueOf(200), response.getCode());
+                AssertFields.assertListFirstElementFields("v5.查询成交明细失败", response.getData());
+            } finally {
+                // 清理：市价全平该持仓
+                try {
+                    TradePositionRequest closeReq = TradePositionRequest.builder()
+                            .contractCode("SPX500-USDT")
+                            .marginMode("cross")
+                            .positionSide("long")
+                            .build();
+                    huobiAPIService.tradePositionResponse(closeReq);
+                } catch (Exception ce) {
+                    logger.debug("v5.查询成交明细后清理(忽略):{}", ce.getMessage());
+                }
+            }
         } catch (Exception e) {
             logger.debug("v5.查询成交明细(预期异常,无key):{}", e.getMessage());
         }
@@ -389,16 +448,35 @@ public class TradeAPITest implements BaseTest {
 
     @Test
     public void tradeOrderHistoryResponse() {
+        // 先下 SPX500 远价单+撤单产生历史委托 → 查历史委托 → 断言
+        String orderId = null;
         try {
+            TradeBachOrderRequest placeReq = TradeBachOrderRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .marginMode("cross")
+                    .positionSide("long")
+                    .side("buy")
+                    .type("limit")
+                    .price("7300")
+                    .volume("1")
+                    .build();
+            TradeBachOrderResponse placeResp = huobiAPIService.tradeBachOrder(placeReq);
+            orderId = placeResp.getData().get(0).getOrderId();
+            CannelTradeBatchOrderRequest cancelReq = CannelTradeBatchOrderRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .orderId(orderId)
+                    .build();
+            huobiAPIService.cannelTradeBatchOrderResponse(cancelReq);
+
             TradeOrderHistoryRequest request = TradeOrderHistoryRequest.builder()
-                    .contractCode("BTC-USDT")
-                    .states("filled")
+                    .contractCode("SPX500-USDT")
+                    .marginMode("cross")
                     .build();
             TradeOrderHistoryResponse response = huobiAPIService.tradeOrderHistoryResponse(request);
             logger.debug("v5.查询历史委托：{}", JSON.toJSONString(response));
             Assert.assertEquals("v5.查询历史委托失败: " + JSON.toJSONString(response),
                     Integer.valueOf(200), response.getCode());
-            AssertFields.assertAllFieldsNotNull("v5.查询历史委托失败", response.getData());
+            AssertFields.assertListFirstElementFields("v5.查询历史委托失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询历史委托(预期异常,无key):{}", e.getMessage());
         }
@@ -406,15 +484,42 @@ public class TradeAPITest implements BaseTest {
 
     @Test
     public void getTradeOrderResponse() {
+        // 先下 SPX500 远价单拿 order_id → 查该订单信息 → 断言 → 撤清理
+        String orderId = null;
         try {
+            TradeBachOrderRequest placeReq = TradeBachOrderRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .marginMode("cross")
+                    .positionSide("long")
+                    .side("buy")
+                    .type("limit")
+                    .price("7300")
+                    .volume("1")
+                    .build();
+            TradeBachOrderResponse placeResp = huobiAPIService.tradeBachOrder(placeReq);
+            orderId = placeResp.getData().get(0).getOrderId();
+
             GetTradeOrderRequest request = GetTradeOrderRequest.builder()
-                    .contractCode("BTC-USDT")
+                    .contractCode("SPX500-USDT")
+                    .orderId(orderId)
                     .build();
             GetTradeOrderResponse response = huobiAPIService.getTradeOrderResponse(request);
             logger.debug("v5.查询订单信息：{}", JSON.toJSONString(response));
             AssertFields.assertListFirstElementFields("v5.查询订单信息失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.查询订单信息(预期异常,无key):{}", e.getMessage());
+        } finally {
+            try {
+                if (orderId != null) {
+                    CannelTradeBatchOrderRequest cancelReq = CannelTradeBatchOrderRequest.builder()
+                            .contractCode("SPX500-USDT")
+                            .orderId(orderId)
+                            .build();
+                    huobiAPIService.cannelTradeBatchOrderResponse(cancelReq);
+                }
+            } catch (Exception ce) {
+                logger.debug("v5.查询订单信息后清理(忽略):{}", ce.getMessage());
+            }
         }
     }
 
@@ -433,15 +538,43 @@ public class TradeAPITest implements BaseTest {
 
     @Test
     public void tradePositionOpensResponse() {
+        // 市价买入 1 张成交产生持仓 → 查当前持仓 → 断言 → 立即全平清理
+        // SPX500 1张面值小，几秒内持仓，全平滑点损失<0.1U
         try {
-            TradePositionOpensRequest request = TradePositionOpensRequest.builder()
-                    .contractCode("BTC-USDT")
+            TradeOrderRequest placeReq = TradeOrderRequest.builder()
+                    .contractCode("SPX500-USDT")
+                    .marginMode("cross")
+                    .positionSide("long")
+                    .side("buy")
+                    .type("market")
+                    .volume("1")
                     .build();
-            TradePositionOpensResponse response = huobiAPIService.tradePositionOpensResponse(request);
-            logger.debug("v5.查询当前持仓：{}", JSON.toJSONString(response));
-            Assert.assertEquals("v5.查询当前持仓失败: " + JSON.toJSONString(response),
-                    Integer.valueOf(200), response.getCode());
-            AssertFields.assertAllFieldsNotNull("v5.查询当前持仓失败", response.getData());
+            TradeOrderResponse placeResp = huobiAPIService.tradeOrderResponse(placeReq);
+            Assert.assertEquals("v5.查询当前持仓前置下单失败: " + JSON.toJSONString(placeResp),
+                    Integer.valueOf(200), placeResp.getCode());
+
+            try {
+                TradePositionOpensRequest request = TradePositionOpensRequest.builder()
+                        .contractCode("SPX500-USDT")
+                        .build();
+                TradePositionOpensResponse response = huobiAPIService.tradePositionOpensResponse(request);
+                logger.debug("v5.查询当前持仓：{}", JSON.toJSONString(response));
+                Assert.assertEquals("v5.查询当前持仓失败: " + JSON.toJSONString(response),
+                        Integer.valueOf(200), response.getCode());
+                AssertFields.assertListFirstElementFields("v5.查询当前持仓失败", response.getData());
+            } finally {
+                // 清理：市价全平该持仓
+                try {
+                    TradePositionRequest closeReq = TradePositionRequest.builder()
+                            .contractCode("SPX500-USDT")
+                            .marginMode("cross")
+                            .positionSide("long")
+                            .build();
+                    huobiAPIService.tradePositionResponse(closeReq);
+                } catch (Exception ce) {
+                    logger.debug("v5.查询当前持仓后清理(忽略):{}", ce.getMessage());
+                }
+            }
         } catch (Exception e) {
             logger.debug("v5.查询当前持仓(预期异常,无key):{}", e.getMessage());
         }
