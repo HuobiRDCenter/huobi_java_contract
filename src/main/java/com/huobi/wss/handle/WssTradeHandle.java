@@ -172,6 +172,22 @@ public class WssTradeHandle {
         }
     }
 
+    /**
+     * 关闭连接并释放线程池资源，避免 handle 不再使用后连接泄漏与线程堆积。
+     * 测试或上层使用方在不再订阅/交易时应显式调用。
+     */
+    public void close() {
+        try {
+            if (webSocketClient != null) {
+                webSocketClient.close();
+            }
+        } catch (Throwable t) {
+            logger.error("close webSocketClient异常", t);
+        }
+        scheduledExecutorService.shutdownNow();
+        executorService.shutdownNow();
+    }
+
     private void dealReconnect() {
         try {
             scheduledExecutorService.scheduleAtFixedRate(new Runnable() {

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.huobi.TestKeys;
 import com.huobi.wss.handle.WssTradeHandle;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -32,6 +33,14 @@ import java.util.concurrent.atomic.AtomicReference;
 public class WssTradeTest {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private WssTradeHandle handle;
+
+    @After
+    public void tearDown() {
+        if (handle != null) {
+            handle.close();
+        }
+    }
 
     /** SPX500-USDT 远价限价单（7300，low_limit≈7296），0 成交，用于 WS 下单/撤单验证 */
     private Map<String, Object> spxLimitOrderData() {
@@ -60,7 +69,7 @@ public class WssTradeTest {
         CountDownLatch authLatch = new CountDownLatch(1);
         CountDownLatch recvLatch = new CountDownLatch(1);
         AtomicReference<JSONObject> placeData = new AtomicReference<>();
-        WssTradeHandle handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
+        handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
         handle.connect(response -> {
             logger.info("trade 回报:{}", JSON.toJSON(response));
             JSONObject msg = JSON.parseObject(response);
@@ -85,7 +94,7 @@ public class WssTradeTest {
         CountDownLatch authLatch = new CountDownLatch(1);
         CountDownLatch recvLatch = new CountDownLatch(1);
         AtomicReference<JSONArray> batchData = new AtomicReference<>();
-        WssTradeHandle handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
+        handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
         handle.connect(response -> {
             logger.info("trade 回报:{}", JSON.toJSON(response));
             JSONObject msg = JSON.parseObject(response);
@@ -116,7 +125,7 @@ public class WssTradeTest {
         CountDownLatch cancelLatch = new CountDownLatch(1);
         AtomicReference<String> placedOrderId = new AtomicReference<>();
         AtomicReference<JSONObject> cancelData = new AtomicReference<>();
-        WssTradeHandle handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
+        handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
         handle.connect(response -> {
             logger.info("trade 回报:{}", JSON.toJSON(response));
             JSONObject msg = JSON.parseObject(response);
@@ -161,7 +170,7 @@ public class WssTradeTest {
         CountDownLatch cancelLatch = new CountDownLatch(1);
         AtomicReference<String> placedOrderId = new AtomicReference<>();
         AtomicReference<JSONArray> cancelData = new AtomicReference<>();
-        WssTradeHandle handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
+        handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
         handle.connect(response -> {
             logger.info("trade 回报:{}", JSON.toJSON(response));
             JSONObject msg = JSON.parseObject(response);
@@ -210,7 +219,7 @@ public class WssTradeTest {
         CountDownLatch cancelLatch = new CountDownLatch(1);
         AtomicReference<JSONObject> placeData = new AtomicReference<>();
         AtomicReference<JSONArray> cancelData = new AtomicReference<>();
-        WssTradeHandle handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
+        handle = new WssTradeHandle(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
         handle.connect(response -> {
             logger.info("trade 回报:{}", JSON.toJSON(response));
             JSONObject msg = JSON.parseObject(response);

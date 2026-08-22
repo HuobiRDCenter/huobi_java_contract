@@ -15,6 +15,7 @@ import com.huobi.api.service.usdt.algo.AlgoAPIServiceImpl;
 import com.huobi.api.service.usdt.trade.TradeAPIServiceImpl;
 import com.huobi.wss.constants.HuobiV5WSSConstants;
 import com.huobi.wss.handle.WssV5NotificationHandle;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -43,10 +44,37 @@ public class WssV5NotificationSubTest {
     TradeAPIServiceImpl tradeService = new TradeAPIServiceImpl(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
     AlgoAPIServiceImpl algoService = new AlgoAPIServiceImpl(TestKeys.ACCESS_KEY, TestKeys.SECRET_KEY);
 
+    @After
+    public void tearDown() {
+        handle.close();
+    }
+
     private Map<String, Object> contractCode(String code) {
         Map<String, Object> ext = new HashMap<>();
         ext.put("contract_code", code);
         return ext;
+    }
+
+    /**
+     * 等待订阅 ack 到达（op:sub 且 err-code:0）后再触发数据，避免"订阅未就绪就下单"导致推送丢失。
+     * callback 收到 sub ack 时 countDown，此处最多等 10s；超时则继续（不 fail，由后续 latch 断言兜底）。
+     */
+    private void awaitSubscribed(CountDownLatch subAckLatch, String topic) throws InterruptedException {
+        boolean ready = subAckLatch.await(10, TimeUnit.SECONDS);
+        logger.info("{} 订阅就绪:{}", topic, ready);
+    }
+
+    /** callback 首行调用：识别 sub ack 帧（op:sub && err-code:0）则 countDown 订阅 latch 并返回 true 表示已处理。 */
+    private static boolean isSubAck(String response, CountDownLatch subAckLatch) {
+        try {
+            JSONObject msg = JSON.parseObject(response);
+            if ("sub".equalsIgnoreCase(msg.getString("op")) && Integer.valueOf(0).equals(msg.getInteger("err-code"))) {
+                subAckLatch.countDown();
+                return true;
+            }
+        } catch (Exception ignored) {
+        }
+        return false;
     }
 
     /**
@@ -189,15 +217,17 @@ public class WssV5NotificationSubTest {
     @Test
     public void testSubOrders() throws URISyntaxException, InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch subAckLatch = new CountDownLatch(1);
         java.util.concurrent.atomic.AtomicReference<String> errorRef = new java.util.concurrent.atomic.AtomicReference<>();
         List<String> topics = Lists.newArrayList(HuobiV5WSSConstants.TOPIC_ORDERS);
         handle.sub(topics, contractCode("SPX500-USDT"), response -> {
+            if (isSubAck(response, subAckLatch)) return;
             logger.info("orders 推收到:{}", JSON.toJSON(response));
             if (checkNotifyData("orders", response, errorRef)) {
                 latch.countDown();
             }
         });
-        Thread.sleep(3000); // 等鉴权+订阅 ack
+        awaitSubscribed(subAckLatch, "orders");
         String orderId = spxBuyLimitOrder(); // 触发订单推送
         boolean ok = latch.await(20, TimeUnit.SECONDS);
         cancelSpxOrder(orderId); // 清理挂单
@@ -208,15 +238,17 @@ public class WssV5NotificationSubTest {
     @Test
     public void testSubTrade() throws URISyntaxException, InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch subAckLatch = new CountDownLatch(1);
         java.util.concurrent.atomic.AtomicReference<String> errorRef = new java.util.concurrent.atomic.AtomicReference<>();
         List<String> topics = Lists.newArrayList(HuobiV5WSSConstants.TOPIC_TRADE);
         handle.sub(topics, contractCode("SPX500-USDT"), response -> {
+            if (isSubAck(response, subAckLatch)) return;
             logger.info("trade 推收到:{}", JSON.toJSON(response));
             if (checkNotifyData("trade", response, errorRef)) {
                 latch.countDown();
             }
         });
-        Thread.sleep(3000);
+        awaitSubscribed(subAckLatch, "trade");
         spxBuyMarketAndClose(); // 成交触发 trade 推送
         boolean ok = latch.await(20, TimeUnit.SECONDS);
         Assert.assertTrue("trade 推送 20s 内未收到", ok);
@@ -226,15 +258,17 @@ public class WssV5NotificationSubTest {
     @Test
     public void testSubTradeDetail() throws URISyntaxException, InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch subAckLatch = new CountDownLatch(1);
         java.util.concurrent.atomic.AtomicReference<String> errorRef = new java.util.concurrent.atomic.AtomicReference<>();
         List<String> topics = Lists.newArrayList(HuobiV5WSSConstants.TOPIC_TRADE_DETAIL);
         handle.sub(topics, contractCode("SPX500-USDT"), response -> {
+            if (isSubAck(response, subAckLatch)) return;
             logger.info("trade_detail 推收到:{}", JSON.toJSON(response));
             if (checkNotifyData("trade_detail", response, errorRef)) {
                 latch.countDown();
             }
         });
-        Thread.sleep(3000);
+        awaitSubscribed(subAckLatch, "trade_detail");
         spxBuyMarketAndClose(); // 成交触发 trade_detail 推送
         boolean ok = latch.await(20, TimeUnit.SECONDS);
         Assert.assertTrue("trade_detail 推送 20s 内未收到", ok);
@@ -244,16 +278,18 @@ public class WssV5NotificationSubTest {
     @Test
     public void testSubPositions() throws URISyntaxException, InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch subAckLatch = new CountDownLatch(1);
         java.util.concurrent.atomic.AtomicReference<String> errorRef = new java.util.concurrent.atomic.AtomicReference<>();
         List<String> topics = Lists.newArrayList(HuobiV5WSSConstants.TOPIC_POSITIONS);
         handle.sub(topics, contractCode("SPX500-USDT"), response -> {
+            if (isSubAck(response, subAckLatch)) return;
             logger.info("positions 推收到:{}", JSON.toJSON(response));
             // positions 订阅先推空 snapshot，checkNotifyData 对空帧返回 false 跳过，只对 filled 帧断言放行
             if (checkNotifyData("positions", response, errorRef)) {
                 latch.countDown();
             }
         });
-        Thread.sleep(3000);
+        awaitSubscribed(subAckLatch, "positions");
         spxBuyMarketAndClose(); // 成交产生持仓触发 positions 推送
         boolean ok = latch.await(20, TimeUnit.SECONDS);
         Assert.assertTrue("positions 推送 20s 内未收到", ok);
@@ -263,15 +299,17 @@ public class WssV5NotificationSubTest {
     @Test
     public void testSubAccount() throws URISyntaxException, InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch subAckLatch = new CountDownLatch(1);
         java.util.concurrent.atomic.AtomicReference<String> errorRef = new java.util.concurrent.atomic.AtomicReference<>();
         List<String> topics = Lists.newArrayList(HuobiV5WSSConstants.TOPIC_ACCOUNT);
         handle.sub(topics, contractCode("SPX500-USDT"), response -> {
+            if (isSubAck(response, subAckLatch)) return;
             logger.info("account 推收到:{}", JSON.toJSON(response));
             if (checkNotifyData("account", response, errorRef)) {
                 latch.countDown();
             }
         });
-        Thread.sleep(3000);
+        awaitSubscribed(subAckLatch, "account");
         spxBuyMarketAndClose(); // 账户余额变化触发 account 推送
         boolean ok = latch.await(20, TimeUnit.SECONDS);
         Assert.assertTrue("account 推送 20s 内未收到", ok);
@@ -281,15 +319,17 @@ public class WssV5NotificationSubTest {
     @Test
     public void testSubMatchOrders() throws URISyntaxException, InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch subAckLatch = new CountDownLatch(1);
         java.util.concurrent.atomic.AtomicReference<String> errorRef = new java.util.concurrent.atomic.AtomicReference<>();
         List<String> topics = Lists.newArrayList(HuobiV5WSSConstants.TOPIC_MATCH_ORDERS);
         handle.sub(topics, contractCode("SPX500-USDT"), response -> {
+            if (isSubAck(response, subAckLatch)) return;
             logger.info("match_orders 推收到:{}", JSON.toJSON(response));
             if (checkNotifyData("match_orders", response, errorRef)) {
                 latch.countDown();
             }
         });
-        Thread.sleep(3000);
+        awaitSubscribed(subAckLatch, "match_orders");
         spxBuyMarketAndClose(); // 撮合触发 match_orders 推送
         boolean ok = latch.await(20, TimeUnit.SECONDS);
         Assert.assertTrue("match_orders 推送 20s 内未收到", ok);
@@ -299,15 +339,17 @@ public class WssV5NotificationSubTest {
     @Test
     public void testSubAlgoOrders() throws URISyntaxException, InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch subAckLatch = new CountDownLatch(1);
         java.util.concurrent.atomic.AtomicReference<String> errorRef = new java.util.concurrent.atomic.AtomicReference<>();
         List<String> topics = Lists.newArrayList(HuobiV5WSSConstants.TOPIC_ALGO_ORDERS);
         handle.sub(topics, contractCode("SPX500-USDT"), response -> {
+            if (isSubAck(response, subAckLatch)) return;
             logger.info("algo_orders 推收到:{}", JSON.toJSON(response));
             if (checkNotifyData("algo_orders", response, errorRef)) {
                 latch.countDown();
             }
         });
-        Thread.sleep(3000);
+        awaitSubscribed(subAckLatch, "algo_orders");
         String algoId = spxAlgoOrder(); // 策略下单触发 algo_orders 推送
         boolean ok = latch.await(20, TimeUnit.SECONDS);
         cancelSpxAlgo(algoId); // 清理策略单
