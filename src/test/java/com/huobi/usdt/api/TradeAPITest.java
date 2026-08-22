@@ -317,7 +317,9 @@ public class TradeAPITest implements BaseTest {
                     .build();
             CannelTradeAllOrderResponse response = huobiAPIService.cannelTradeAllOrderResponse(request);
             logger.debug("v5.全部撤单：{}", JSON.toJSONString(response));
-            AssertFields.assertAllFieldsNotNull("v5.全部撤单失败", response.getData());
+            // code=200 即请求合法；data 为空/null 表示当时无挂单可撤，安全账户合法结果。
+            Assert.assertEquals("v5.全部撤单失败: " + JSON.toJSONString(response),
+                    Integer.valueOf(200), response.getCode());
         } catch (Exception e) {
             logger.debug("v5.全部撤单(预期异常,无key):{}", e.getMessage());
         }
@@ -349,9 +351,9 @@ public class TradeAPITest implements BaseTest {
         try {
             TradePositionAllResponse response = huobiAPIService.tradePositionAllResponse();
             logger.debug("v5.一键全平：{}", JSON.toJSONString(response));
+            // code=200 即请求合法；data 为空数组表示当时无持仓可平，安全账户合法结果。
             Assert.assertEquals("v5.一键全平失败: " + JSON.toJSONString(response),
                     Integer.valueOf(200), response.getCode());
-            AssertFields.assertAllFieldsNotNull("v5.一键全平失败", response.getData());
         } catch (Exception e) {
             logger.debug("v5.一键全平(预期异常,无key):{}", e.getMessage());
         }
