@@ -73,7 +73,7 @@ public class WssV5NotificationHandle {
 
             @Override
             public void onMessage(String s) {
-                logger.debug("onMessage:{}", s);
+                executorService.execute(() -> dispatch(s, callback));
             }
 
             @Override
@@ -82,16 +82,7 @@ public class WssV5NotificationHandle {
                     try {
                         lastPingTime = System.currentTimeMillis();
                         String message = new String(ZipUtil.decompress(bytes.array()), "UTF-8");
-                        JSONObject JSONMessage = JSONObject.parseObject(message);
-                        Object opVal = JSONMessage.get("op");
-                        // 推送数据 op=notify
-                        if (opVal != null && opVal.toString().equalsIgnoreCase("notify")) {
-                            callback.onReceive(message);
-                        }
-                        // 心跳 op=ping, 回 pong
-                        if (opVal != null && opVal.toString().equalsIgnoreCase("ping")) {
-                            dealPong(JSONMessage.get("ts"));
-                        }
+                        dispatch(message, callback);
                     } catch (Exception e) {
                         logger.error("onMessage异常", e);
                     }
@@ -123,6 +114,29 @@ public class WssV5NotificationHandle {
                 sub.putAll(extReq);
             }
             webSocketClient.send(sub.toString());
+        }
+    }
+
+    /**
+     * 统一处理文本帧与 gzip 帧解码后的消息：notify 触发 callback、ping 回 pong、其余 ack 仅记录日志。
+     * V5 notification 推送为明文文本帧（非 gzip），故 onMessage(String) 也需分发 notify。
+     */
+    private void dispatch(String message, SubscriptionListener<String> callback) {
+        try {
+            logger.debug("onMessage:{}", message);
+            JSONObject JSONMessage = JSONObject.parseObject(message);
+            Object opVal = JSONMessage.get("op");
+            if (opVal == null) {
+                return;
+            }
+            String op = opVal.toString();
+            if (op.equalsIgnoreCase("notify")) {
+                callback.onReceive(message);
+            } else if (op.equalsIgnoreCase("ping")) {
+                dealPong(JSONMessage.get("ts"));
+            }
+        } catch (Exception e) {
+            logger.error("dispatch异常", e);
         }
     }
 

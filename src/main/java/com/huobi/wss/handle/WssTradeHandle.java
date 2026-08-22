@@ -16,6 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -62,7 +63,7 @@ public class WssTradeHandle {
 
             @Override
             public void onMessage(String s) {
-                logger.debug("onMessage:{}", s);
+                executorService.execute(() -> dispatch(s, callback));
             }
 
             @Override
@@ -70,20 +71,7 @@ public class WssTradeHandle {
                 executorService.execute(() -> {
                     try {
                         String message = new String(ZipUtil.decompress(bytes.array()), "UTF-8");
-                        JSONObject JSONMessage = JSONObject.parseObject(message);
-                        Object opVal = JSONMessage.get("op");
-                        // 成交回报/撤单回报 op=notify
-                        if (opVal != null && opVal.toString().equalsIgnoreCase("notify")) {
-                            callback.onReceive(message);
-                        }
-                        // 请求响应 op=recv (鉴权/下单应答等)
-                        if (opVal != null && opVal.toString().equalsIgnoreCase("recv")) {
-                            callback.onReceive(message);
-                        }
-                        // 心跳
-                        if (opVal != null && opVal.toString().equalsIgnoreCase("ping")) {
-                            dealPong(JSONMessage.get("ts"));
-                        }
+                        dispatch(message, callback);
                     } catch (Exception e) {
                         logger.error("onMessage异常", e);
                     }
@@ -103,12 +91,33 @@ public class WssTradeHandle {
         webSocketClient.connect();
     }
 
+    /**
+     * 统一处理文本帧与 gzip 帧解码后的消息：ping 回 pong，其余帧（auth 鉴权 ack / recv 请求应答 / notify 推送）均交 callback。
+     * V5 trade ws 的鉴权与下单回报为明文文本帧（非 gzip），故 onMessage(String) 也需分发。
+     */
+    private void dispatch(String message, SubscriptionListener<String> callback) {
+        try {
+            logger.debug("onMessage:{}", message);
+            JSONObject JSONMessage = JSONObject.parseObject(message);
+            Object opVal = JSONMessage.get("op");
+            if (opVal != null && opVal.toString().equalsIgnoreCase("ping")) {
+                dealPong(JSONMessage.get("ts"));
+                return;
+            }
+            // 其余帧（auth ack / recv 请求应答 / notify 推送 / 无 op 的应答帧）均交 callback
+            callback.onReceive(message);
+        } catch (Exception e) {
+            logger.error("dispatch异常", e);
+        }
+    }
+
     public void placeOrder(Map<String, Object> data) {
         sendOp("place_order", data);
     }
 
-    public void placeBatchOrders(Map<String, Object> data) {
-        sendOp("place_batch_orders", data);
+    /** place_batch_orders 的 data 是订单数组（opend 文档：data 类型 array）。 */
+    public void placeBatchOrders(List<Object> orders) {
+        sendOp("place_batch_orders", orders);
     }
 
     public void cancelOrder(Map<String, Object> data) {
@@ -123,7 +132,7 @@ public class WssTradeHandle {
         sendOp("cancel_all_orders", data);
     }
 
-    private void sendOp(String op, Map<String, Object> data) {
+    private void sendOp(String op, Object data) {
         if (webSocketClient == null || !webSocketClient.isOpen()) {
             throw new IllegalStateException("WebSocket 未连接，请先调用 connect()");
         }
